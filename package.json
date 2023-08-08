@@ -1,0 +1,24 @@
+{
+  "name": "finalproject_bs",
+  "version": "1.0.0",
+  "description": "help team members to share different ideas for the final project ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amr006/Final.Project_BS.git"
+  },
+  "keywords": [
+    "BrainStorm",
+    "finalProject",
+    "team"
+  ],
+  "author": "Amr006 , WebGhoul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amr006/Final.Project_BS/issues"
+  },
+  "homepage": "https://github.com/Amr006/Final.Project_BS#readme"
+}
