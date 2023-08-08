@@ -5,14 +5,15 @@ const ip = "localhost";
 const Port = process.env.PORT || 3000 ;
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+
 const session = require('express-session')
 const helmet = require('helmet')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
-
+const teamController = require("./controllers/teamControllers")
+const ideaController = require("./controllers/ideasControllers")
 //app.use(express.static("public"));
 const corsOptions = {
   origin: [
@@ -50,7 +51,11 @@ app.use(session({
 
 
 
+app.get("/Teams" , teamController.displayTeams )
+app.post("/Teams" , teamController.createTeam)
 
+app.get("/Ideas", ideaController.displayIdeas )
+app.post("/Ideas", ideaController.postIdeas)
 
 // app.use(express.static(path.join(__dirname , '../client/build')))
 // app.get("*" , function (req,res) {
