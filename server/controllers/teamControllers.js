@@ -1,13 +1,19 @@
-const Teams = require('Teams');
+const Teams = require('../models/Teams');
 const bcrypt = require('bcryptjs');
+const asyncHandler = require("express-async-handler");
 
-
-const createTeam = (req,res,next) => {
+const createTeam = asyncHandler (async(req,res,next) => {
   const {Name , Password} = req.body 
 
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(Password, salt);
-  
+  const check = await Teams.findOne({Name:Name})
+  if(check)
+  {
+    return res.status(402).json({
+      message : "This Name Already Used"
+    })
+  }
   const newTeam = new Teams({
     Name : Name,
     Password : hash
@@ -26,11 +32,11 @@ const createTeam = (req,res,next) => {
   }
   )
 }
+)
 
+const displayTeams = asyncHandler( (req, res, next) => {
 
-const displayTeams = (req, res, next) => {
-
-  Teams.find()
+  Teams.find().select('-Password')
   .then((result) => {
     return res.status(200).json({
       data : result
@@ -42,6 +48,11 @@ const displayTeams = (req, res, next) => {
     })
   }
   )
-}
+})
+
+const EnterRoom = asyncHandler ( (req,res,next) => {
+  
+})
+
 
 module.exports = {createTeam ,  displayTeams}

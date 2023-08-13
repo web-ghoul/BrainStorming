@@ -6,7 +6,8 @@ const TeamSchema = Schema({
 
   Name :{
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   Password : {
     type: String,

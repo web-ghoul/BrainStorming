@@ -1,21 +1,22 @@
-const Ideas = require('Ideas');
+const Ideas = require('../models/Ideas');
 
 const postIdeas = (req,res,next) => {
 
   const {Idea  , Description , Image , Points , Team , WrittenBy} = req.body
 
-  if(!Name || !WrittenBy)
+  if(!Idea || !WrittenBy)
   {
     return res.status(400).json({
       message: "Please fill both Idea and WrittenBy"})
   }
 
-  const newIdea = new Idea({
+  const newIdea = new Ideas({
     Idea,
     Description,
     Image,
     Points,
     Team,
+    WrittenBy,
   })
   newIdea.save().then((result) => {
     return res.status(200).json({
@@ -31,7 +32,9 @@ const postIdeas = (req,res,next) => {
 
 const displayIdeas = (req, res, next) => {
 
-  Ideas.find()
+  const teamId = req.params.id ;
+
+  Ideas.find({Team : teamId})
   .then((result) => {
     return res.status(200).json({
       data : result

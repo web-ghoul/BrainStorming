@@ -3,17 +3,25 @@ const app = express();
 require("dotenv").config();
 const ip = "localhost";
 const Port = process.env.PORT || 3000 ;
-const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 
 const session = require('express-session')
 const helmet = require('helmet')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const swaggerUI = require('swagger-ui-express')
+const swaggerJsDoc = require('swagger-jsdoc')
+
 
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
-const teamController = require("./controllers/teamControllers")
-const ideaController = require("./controllers/ideasControllers")
+const routes = require('./routes/mainRoutes')
+const logger = require("./logger/index")
+const morgan = require('morgan');
+
+// logger.error("hello error")
+// logger.debug("heelo debug")
+// logger.warn("hello warn")
+// logger.info("ghello info")
 //app.use(express.static("public"));
 const corsOptions = {
   origin: [
@@ -27,10 +35,33 @@ const corsOptions = {
   exposedHeaders: ['set-cookie'],
 };
 
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Hello World',
+      version: '1.0.0',
+      description: " A simple Express library api"
+    },
+    servers: [
+      {
+        url: "http://localhost:3000"
+      }
+    ],
+    //apis: ["./routes/*.js"]
+
+  },
+  apis: ['./routes/*.js'], // files containing annotations as above
+};
+
+const openapiSpecification = swaggerJsDoc(options);
+
+
 
 app.use(express.json()) //can remove
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(morgan('combined'))
+app.use("/api-docs" , swaggerUI.serve , swaggerUI.setup(openapiSpecification));
 
 app.use(helmet({
   contentSecurityPolicy: {
@@ -50,12 +81,8 @@ app.use(session({
 }));
 
 
+app.use("/api" , routes)
 
-app.get("/Teams" , teamController.displayTeams )
-app.post("/Teams" , teamController.createTeam)
-
-app.get("/Ideas", ideaController.displayIdeas )
-app.post("/Ideas", ideaController.postIdeas)
 
 // app.use(express.static(path.join(__dirname , '../client/build')))
 // app.get("*" , function (req,res) {
