@@ -1,0 +1,15 @@
+.footer{
+    padding: 40px 0;
+    border-top: 4px solid var(--main);
+}
+
+.links img{
+    width: 35px;
+    height: auto;
+}
+
+@media (1200px <= width >= 99px) {
+    .footer_contain{
+        
+    }
+}
