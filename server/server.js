@@ -58,8 +58,8 @@ const openapiSpecification = swaggerJsDoc(options);
 
 
 
-app.use(express.json()) //can remove
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({extended: true  , limit: "25mb" }));
 app.use(morgan('combined'))
 app.use("/api-docs" , swaggerUI.serve , swaggerUI.setup(openapiSpecification));
 
@@ -80,6 +80,11 @@ app.use(session({
   saveUninitialized: false,
 }));
 
+app.post("/uploadImage", (req, res) => {
+  uploadImage(req.body.image)
+    .then((url) => res.send(url))
+    .catch((err) => res.status(500).send(err));
+});
 
 app.use("/api" , routes)
 
