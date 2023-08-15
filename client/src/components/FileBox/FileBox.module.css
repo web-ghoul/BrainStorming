@@ -1,0 +1,7 @@
+.file{
+    border: 2px solid var(--main);
+    background-color: var(--main-alt);
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+}

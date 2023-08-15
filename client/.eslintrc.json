@@ -1,0 +1,3 @@
+{
+  "extends": ["next/font","next/core-web-vitals"]
+}

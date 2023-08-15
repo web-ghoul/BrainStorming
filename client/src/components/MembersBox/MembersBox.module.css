@@ -1,0 +1,9 @@
+.members_box{
+    border: 1px solid var(--gray);
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.members{
+    padding: 20px;
+}

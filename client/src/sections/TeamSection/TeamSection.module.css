@@ -1,0 +1,17 @@
+.room_head{
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    height: 200px;
+}
+
+.tabs{
+    background-color: #fff;
+    position: relative;
+    z-index: 2;
+    width: -moz-fit-content;
+    width:fit-content;
+    left: 50%;
+    transform: translateX(-50%);
+}

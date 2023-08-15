@@ -1,0 +1,232 @@
+:root{
+  --ubuntu-font:'Ubuntu', sans-serif;
+  --cairo-font:'Cairo', sans-serif;
+  --tran: ease-in-out all .3s;
+  --main:#037ef3;
+  --main-alt:#0099e5;
+  --white:#fff;
+  --black:#111;
+  --gray:#999;
+  --black-alt:#222;
+  --youtube:#ff0000;
+  --linkedin:#0a66c2;
+  --facebook:#1877f2;
+  --instagram:#fcaf45;
+  --gmail:#ea4335;
+  --whatsapp:#25d366;
+  --github:#333;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: var(--cairo-font) !important;
+}
+
+html,
+body {
+  min-height: 100vh;
+  background-color: var(--white);
+}
+
+main{
+  min-height: 100vh;
+}
+
+.overlay{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgb(0,0,0,0.5);
+  width: 100%;
+  height: 100%;
+}
+
+a{
+  text-decoration: none !important;
+  color: inherit;
+}
+
+.flex{
+  display: flex !important;
+}
+
+.grid{
+  display: grid !important;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
+.jcc{
+  justify-content: center !important;
+}
+
+.jcfs{
+  justify-content: flex-start !important;
+}
+
+.jcfe{
+  justify-content: flex-end !important;
+}
+
+.jcsb{
+  justify-content: space-between !important;
+}
+
+.jcs{
+  justify-content: stretch !important;
+}
+
+.aic{
+  align-items: center !important;
+}
+
+.aifs{
+  align-items: flex-start !important;
+}
+
+.aife{
+  align-items: flex-end !important;
+}
+
+.asfs{
+  align-self: flex-start !important;
+}
+
+.ass{
+  align-self: stretch !important;
+}
+
+.acfs{
+  align-content: flex-start !important;
+}
+
+.acs{
+  align-content: stretch !important;
+}
+
+.tac{
+  text-align: center !important;
+}
+
+.ttuc{
+  text-transform: uppercase !important;
+}
+
+.ttlc{
+  text-transform: lowercase !important;
+}
+
+.ttcap{
+  text-transform: capitalize !important;
+}
+
+.g5{
+  gap: 5px !important;
+}
+
+.g10{
+  gap: 10px !important;
+}
+
+.g20{
+  gap: 20px !important;
+}
+
+.g30{
+  gap: 30px !important;
+}
+
+.g40{
+  gap: 40px !important;
+}
+
+.g50{
+  gap: 50px !important;
+}
+
+.ubuntu-font{
+  font-family: var(--ubuntu-font) !important;
+}
+
+.fw500{
+  font-weight: 500 !important;
+}
+
+.fw600{
+  font-weight: 600 !important;
+}
+
+.fw700{
+  font-weight: 700 !important;
+}
+
+.fw800{
+  font-weight: 800 !important;
+}
+
+@media (max-width:992px) {
+  main .container{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .g5{
+    gap: 3px !important;
+  }
+
+  .g10{
+    gap: 8px !important;
+  }
+  
+  .g20{
+    gap: 16px !important;
+  }
+  
+  .g30{
+    gap: 25px !important;
+  }
+  
+  .g40{
+    gap: 30px !important;
+  }
+  
+  .g50{
+    gap: 40px !important;
+  }
+}
+
+@media (max-width:768px) {
+  main .container{
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .g5{
+    gap: 2px !important;
+  }
+
+  .g10{
+    gap: 5px !important;
+  }
+  
+  .g20{
+    gap: 10px !important;
+  }
+  
+  .g30{
+    gap: 20px !important;
+  }
+  
+  .g40{
+    gap: 25px !important;
+  }
+  
+  .g50{
+    gap: 30px !important;
+  }
+}
