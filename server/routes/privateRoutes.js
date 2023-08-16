@@ -2,7 +2,7 @@ const teamController = require("../controllers/teamControllers")
 const ideaController = require("../controllers/ideasControllers")
 const express = require('express')
 const router = express.Router();
-
+const protect = require('../middleware/authMiddleware')
 
 
 /**
@@ -26,28 +26,6 @@ const router = express.Router();
  *           type: string
  *           description: The password for the team.
  */
-/**
- * @swagger
- * /api/Teams:
- *   get:
- *     summary: Get a list of all teams
- *     tags: [Teams]
- *     responses:
- *       200:
- *         description: Successful response with the list of teams
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Team'
- *       404:
- *         description: Teams not found
- */
-router.get("/Teams", teamController.displayTeams);
 
 /**
  * @swagger
@@ -67,7 +45,7 @@ router.get("/Teams", teamController.displayTeams);
  *       404:
  *         description: Team creation failed
  */
-router.post("/Teams", teamController.createTeam);
+router.post("/Teams" , protect ,teamController.createTeam);
 /**
  * @swagger
  * tags:
@@ -99,7 +77,7 @@ router.post("/Teams", teamController.createTeam);
  *           description: The author of the idea.
  */
 
-router.get("/Ideas/:id", ideaController.displayIdeas);
+router.get("/Ideas/:id", protect ,ideaController.displayIdeas);
 
 /**
  * @swagger
@@ -154,7 +132,7 @@ router.get("/Ideas/:id", ideaController.displayIdeas);
  *       500:
  *         description: Error message
  */
-router.post("/Ideas", ideaController.postIdeas);
+router.post("/Ideas", protect ,ideaController.postIdeas);
 
 
 

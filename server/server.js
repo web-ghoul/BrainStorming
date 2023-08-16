@@ -11,10 +11,11 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const swaggerUI = require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
-
+const uploadImage = require("./utils/uploadImage");
 
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
-const routes = require('./routes/mainRoutes')
+const privateRoutes = require('./routes/privateRoutes')
+const publicRoutes = require('./routes/publicRoutes')
 const logger = require("./logger/index")
 const morgan = require('morgan');
 
@@ -86,7 +87,8 @@ app.post("/uploadImage", (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
-app.use("/api" , routes)
+app.use("/api" , publicRoutes)
+app.use("/api/user" , privateRoutes)
 
 
 // app.use(express.static(path.join(__dirname , '../client/build')))
