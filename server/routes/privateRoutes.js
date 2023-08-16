@@ -45,7 +45,7 @@ const protect = require('../middleware/authMiddleware')
  *       404:
  *         description: Team creation failed
  */
-router.post("/Teams" , protect ,teamController.createTeam);
+router.post("/Teams" ,protect, teamController.createTeam);
 /**
  * @swagger
  * tags:
@@ -77,7 +77,7 @@ router.post("/Teams" , protect ,teamController.createTeam);
  *           description: The author of the idea.
  */
 
-router.get("/Ideas/:id", protect ,ideaController.displayIdeas);
+router.get("/Ideas/:id",protect, ideaController.displayIdeas);
 
 /**
  * @swagger
@@ -132,7 +132,7 @@ router.get("/Ideas/:id", protect ,ideaController.displayIdeas);
  *       500:
  *         description: Error message
  */
-router.post("/Ideas", protect ,ideaController.postIdeas);
+router.post("/Ideas",protect, ideaController.postIdeas);
 
 
 

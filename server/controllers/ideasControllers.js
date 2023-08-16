@@ -1,4 +1,4 @@
-const Ideas = require('../models/Ideas');
+const Ideas = require('../models/IdeasSchema');
 
 const postIdeas = (req,res,next) => {
 

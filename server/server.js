@@ -26,7 +26,8 @@ const morgan = require('morgan');
 //app.use(express.static("public"));
 const corsOptions = {
   origin: [
-    'http://localhost:3001'
+    'http://localhost:3001',
+    'http://localhost:4000'
     
     
 
@@ -60,7 +61,7 @@ const openapiSpecification = swaggerJsDoc(options);
 
 
 app.use(express.json({ limit: "25mb" }));
-app.use(express.urlencoded({extended: true  , limit: "25mb" }));
+app.use(express.urlencoded({extended: true }));
 app.use(morgan('combined'))
 app.use("/api-docs" , swaggerUI.serve , swaggerUI.setup(openapiSpecification));
 
@@ -87,9 +88,9 @@ app.post("/uploadImage", (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
-app.use("/api" , publicRoutes)
-app.use("/api/user" , privateRoutes)
 
+app.use("/api/user" , privateRoutes)
+app.use("/api" , publicRoutes)
 
 // app.use(express.static(path.join(__dirname , '../client/build')))
 // app.get("*" , function (req,res) {

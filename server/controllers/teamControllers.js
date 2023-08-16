@@ -116,4 +116,4 @@ const EnterTeam = asyncHandler ( async(req,res,next) => {
 
 
 
-module.exports = {createTeam ,  displayTeams , joinTeam}
+module.exports = {createTeam ,  displayTeams , joinTeam , EnterTeam}
