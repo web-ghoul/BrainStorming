@@ -88,6 +88,14 @@ app.post("/uploadImage", (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
+app.post("/uploadMultipleImages", (req, res) => {
+  uploadImage
+    .uploadMultipleImages(req.body.images)
+    .then((urls) => res.send(urls))
+    .catch((err) => res.status(500).send(err));
+});
+
+
 
 app.use("/api/user" , privateRoutes)
 app.use("/api" , publicRoutes)
