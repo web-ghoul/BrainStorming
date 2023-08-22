@@ -13,7 +13,9 @@ cloudinary.config({
 const opts = {
   overwrite: true,
   invalidate: true,
-  resource_type: "auto",
+  resource_type: 'raw', // Important for PDF files
+  folder: 'pdfs', // Specify the folder in Cloudinary where you want to store the PDFs
+  format: 'pdf' // Specify the format of the uploaded file
 };
 
 const uploadImage = (image) => {
