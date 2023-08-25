@@ -4,35 +4,58 @@
  *   schemas:
  *     User:
  *       type: object
- *       required:
- *         - Email
- *         - Password
- *         - Name
  *       properties:
  *         Email:
  *           type: string
  *           format: email
  *           description: The email address of the user.
+ *           example: user@example.com
  *         Password:
  *           type: string
- *           description: The password of the user.
+ *           description: The password for the user.
+ *           minLength: 5
+ *           example: mysecretpassword
  *         Name:
  *           type: string
  *           description: The name of the user.
- *         verified:
+ *           example: JohnDoe
+ *         Verified:
  *           type: boolean
- *           default: false
  *           description: Indicates whether the user is verified.
- *         role:
+ *           example: false
+ *         Teams:
+ *           type: array
+ *           items:
+ *             type: string
+ *             description: The IDs of teams the user belongs to.
+ *             format: ObjectId
+ *           description: An array of team IDs the user belongs to.
+ *           example: [6155f7cfcf971234567890ab, 6155f7cfcf971234567890cd]
+ *         Image:
  *           type: string
- *           default: User
- *           description: The role of the user.
+ *           description: The URL to the user's profile image.
+ *           example: https://example.com/profile-image.jpg
+ *         About:
+ *           type: string
+ *           description: A brief description about the user.
+ *           example: Software Developer and Music Enthusiast
+ *         Bio:
+ *           type: string
+ *           description: The user's bio or additional information.
+ *           example: Exploring the world of code and music.
+ *       required:
+ *         - Email
+ *         - Password
+ *         - Name
  *       example:
  *         Email: user@example.com
- *         Password: mysecurepassword
- *         Name: John Doe
- *         verified: false
- *         role: User
+ *         Password: mysecretpassword
+ *         Name: JohnDoe
+ *         Verified: false
+ *         Teams: [6155f7cfcf971234567890ab]
+ *         Image: https://example.com/profile-image.jpg
+ *         About: Software Developer and Music Enthusiast
+ *         Bio: Exploring the world of code and music.
  */
 
 
@@ -85,20 +108,20 @@
  *         schema:
  *           type: object
  *           properties:
- *             email_reg:
+ *             email:
  *               type: string
  *               format: email
  *               description: The email address of the user for registration.
- *             password_reg:
+ *             password:
  *               type: string
  *               description: The password of the user for registration.
- *             username_reg:
+ *             username:
  *               type: string
  *               description: The username of the user for registration.
  *         example:
- *           email_reg: user@example.com
- *           password_reg: mysecurepassword
- *           username_reg: john_doe
+ *           email: user@example.com
+ *           password: mysecurepassword
+ *           username: john_doe
  *     responses:
  *       200:
  *         description: User successfully registered.
@@ -201,16 +224,16 @@
  *         schema:
  *           type: object
  *           properties:
- *             email_log:
+ *             email:
  *               type: string
  *               format: email
  *               description: The email address of the user for login.
- *             password_log:
+ *             password:
  *               type: string
  *               description: The password of the user for login.
  *         example:
- *           email_log: user@example.com
- *           password_log: mysecurepassword
+ *           email: user@example.com
+ *           password: mysecurepassword
  *     responses:
  *       200:
  *         description: User successfully logged in.
@@ -257,11 +280,11 @@
  *         schema:
  *           type: object
  *           properties:
- *             forgot_pass_email:
+ *             email:
  *               type: string
  *               description: The username of the user for password reset.
  *         example:
- *           forgot_pass_email: john_doe
+ *           email: john_doe
  *     responses:
  *       200:
  *         description: Password reset email sent.
@@ -365,12 +388,12 @@
  *             hashedUniqueString:
  *               type: string
  *               description: The hashed unique string for password reset.
- *             new_password:
+ *             password:
  *               type: string
  *               description: The new password for the user.
  *         example:
  *           hashedUniqueString: 6d2b7be0-1b58-4ccf-85b2-09d6e97c1060
- *           new_password: mynewsecurepassword
+ *           password: mynewsecurepassword
  *     responses:
  *       200:
  *         description: Password successfully reset.
@@ -391,4 +414,675 @@
  *           application/json:
  *             example:
  *               error: An internal server error occurred.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Teams
+ *   description: Team management endpoints
+ */
+
+/**
+ * @swagger
+ * /Teams:
+ *   post:
+ *     summary: Create a new team
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the team.
+ *               password:
+ *                 type: string
+ *                 description: The password for the team.
+ *             required:
+ *               - name
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Team created successfully.
+ *       401:
+ *         description: Unauthorized, token failed or no token provided.
+ *       402:
+ *         description: This Name Already Used.
+ *       404:
+ *         description: Error while creating the team.
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * /api/protect:
+ *   x-swagger-router-controller: protectMiddleware
+ *   post:
+ *     summary: Middleware for protecting routes
+ *     description: Middleware that verifies the provided JWT token to protect routes.
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Bearer token obtained after successful login.
+ *         example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *     responses:
+ *       200:
+ *         description: Token is valid, user is authorized.
+ *       401:
+ *         description: Token is invalid or missing, user is unauthorized.
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Team:
+ *       type: object
+ *       properties:
+ *         Name:
+ *           type: string
+ *           description: The name of the team.
+ *           example: MyTeam
+ *         Password:
+ *           type: string
+ *           description: The password for the team.
+ *           example: mysecretpassword
+ *         Members:
+ *           type: array
+ *           items:
+ *             type: string
+ *             description: The names or IDs of team members.
+ *           description: An array of team members' names or IDs.
+ *           example: [JohnDoe, JaneSmith]
+ *         Image:
+ *           type: string
+ *           description: The URL to the team's image.
+ *           example: https://example.com/team-image.jpg
+ *       required:
+ *         - Name
+ *         - Password
+ *       example:
+ *         Name: MyTeam
+ *         Password: mysecretpassword
+ *         Members: [JohnDoe, JaneSmith]
+ *         Image: https://example.com/team-image.jpg
+ */
+
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Idea:
+ *       type: object
+ *       properties:
+ *         Idea:
+ *           type: string
+ *           description: The main idea or title of the idea.
+ *           example: New App Feature
+ *         Description:
+ *           type: string
+ *           description: A description of the idea.
+ *           example: Implement a user-friendly interface for the new app feature.
+ *         Images:
+ *           type: array
+ *           items:
+ *             type: string
+ *             description: URLs to images related to the idea.
+ *           description: An array of image URLs related to the idea.
+ *           example: [https://example.com/image1.jpg, https://example.com/image2.jpg]
+ *         Files:
+ *           type: array
+ *           items:
+ *             type: string
+ *             description: URLs to files related to the idea.
+ *           description: An array of file URLs related to the idea.
+ *           example: [https://example.com/file1.pdf, https://example.com/file2.doc]
+ *         Team:
+ *           type: string
+ *           description: The ID of the team associated with the idea.
+ *           format: ObjectId
+ *           example: 6155f7cfcf971234567890ab
+ *         Record:
+ *           type: string
+ *           description: A record or reference related to the idea.
+ *           example: Meeting notes from brainstorming session.
+ *         WrittenBy:
+ *           type: string
+ *           description: The name of the person who wrote the idea.
+ *           example: JohnDoe
+ *       required:
+ *         - Idea
+ *         - Team
+ *       example:
+ *         Idea: New App Feature
+ *         Description: Implement a user-friendly interface for the new app feature.
+ *         Images: [https://example.com/image1.jpg, https://example.com/image2.jpg]
+ *         Files: [https://example.com/file1.pdf, https://example.com/file2.doc]
+ *         Team: 6155f7cfcf971234567890ab
+ *         Record: Meeting notes from brainstorming session.
+ *         WrittenBy: JohnDoe
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Teams
+ *   description: Team management endpoints
+ */
+
+/**
+ * @swagger
+ * /EnterTeam/{id}:
+ *   get:
+ *     summary: Check if user is part of a team
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the team.
+ *     responses:
+ *       200:
+ *         description: Successfully entered the team.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Entered team successfully.
+ *       403:
+ *         description: User is not part of the team or access denied.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: FLAG{THE_EAZY_FLAG}
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Teams
+ *   description: Team management endpoints
+ */
+
+/**
+ * @swagger
+ * /JoinTeam:
+ *   patch:
+ *     summary: Join a team
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 description: The password of the team.
+ *                 example: mysecretpassword
+ *               TeamId:
+ *                 type: string
+ *                 description: The ID of the team.
+ *                 example: 6155f7cfcf971234567890ab
+ *     responses:
+ *       200:
+ *         description: Successfully joined the team.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Joined team successfully!
+ *       403:
+ *         description: User is already part of the team or password is incorrect.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Already joined the team or Password is incorrect.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User profile endpoints
+ */
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management endpoints
+ */
+
+/**
+ * @swagger
+ * /Profile/{id}:
+ *   get:
+ *     summary: Get user profile by ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *           required: true
+ *         description: The ID of the user profile to retrieve.
+ *     responses:
+ *       200:
+ *         description: User profile retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   description: User profile data.
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         description: User's ID.
+ *                         example: 6155f7cfcf971234567890ab
+ *                       Email:
+ *                         type: string
+ *                         description: User's email.
+ *                         example: user@example.com
+ *                       Name:
+ *                         type: string
+ *                         description: User's name.
+ *                         example: John Doe
+ *                       Verified:
+ *                         type: boolean
+ *                         description: User's verification status.
+ *                         example: true
+ *                       Teams:
+ *                         type: array
+ *                         description: List of team IDs the user is a member of.
+ *                         items:
+ *                           type: string
+ *                           example: 6155f7cfcf971234567890cd
+ *                       Image:
+ *                         type: string
+ *                         description: URL of the user's profile image.
+ *                         example: http://example.com/profile.jpg
+ *                       About:
+ *                         type: string
+ *                         description: User's profile about text.
+ *                         example: Software Engineer
+ *                       Bio:
+ *                         type: string
+ *                         description: User's bio text.
+ *                         example: Coding enthusiast
+ *       404:
+ *         description: User not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: User not found !
+ */
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Ideas
+ *   description: Idea management endpoints
+ */
+
+/**
+ * @swagger
+ * /Ideas:
+ *   post:
+ *     summary: Create a new idea
+ *     tags: [Ideas]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               Idea:
+ *                 type: string
+ *                 description: The idea description.
+ *                 example: An innovative idea.
+ *               Description:
+ *                 type: string
+ *                 description: Additional description for the idea.
+ *                 example: A detailed explanation of the idea.
+ *               Team:
+ *                 type: string
+ *                 description: The ID of the team associated with the idea.
+ *                 example: 6155f7cfcf971234567890ab
+ *               files:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: An array of files related to the idea.
+ *                 example: ["file1.pdf", "file2.docx"]
+ *     responses:
+ *       200:
+ *         description: Idea added successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Idea added successfully.
+ *       400:
+ *         description: Missing required fields.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Please fill Brainwave.
+ *       500:
+ *         description: Error while uploading files and images.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Error while uploading files and images!
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Ideas
+ *   description: Idea management endpoints
+ */
+
+/**
+ * @swagger
+ * /Ideas/{id}:
+ *   get:
+ *     summary: Display ideas by team ID
+ *     tags: [Ideas]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the team.
+ *         example: 6155f7cfcf971234567890ab
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved ideas.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   description: List of ideas for the specified team.
+ *                   items:
+ *                     $ref: '#/components/schemas/Idea'
+ *       404:
+ *         description: Ideas not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Ideas not found.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Ideas
+ *   description: Idea management endpoints
+ */
+
+/**
+ * @swagger
+ * /DeleteIdeas/{id}:
+ *   delete:
+ *     summary: Delete an idea by ID
+ *     tags: [Ideas]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the idea to be deleted.
+ *         example: 6155f7cfcf971234567890ab
+ *     responses:
+ *       200:
+ *         description: Idea deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Data deleted successfully.
+ *       403:
+ *         description: Access denied or data not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Access denied or data not found.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Ideas
+ *   description: Idea management endpoints
+ */
+
+/**
+ * @swagger
+ * /updateIdea/{id}:
+ *   put:
+ *     summary: Update an idea by ID
+ *     tags: [Ideas]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the idea to be updated.
+ *         example: 6155f7cfcf971234567890ab
+ *       - in: body
+ *         name: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             Idea:
+ *               type: string
+ *               description: Updated idea content.
+ *               example: New idea content.
+ *             Description:
+ *               type: string
+ *               description: Updated idea description.
+ *               example: New idea description.
+ *     responses:
+ *       200:
+ *         description: Idea updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Data updated successfully.
+ *       403:
+ *         description: Access denied or data not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Access denied or data not found.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management endpoints
+ */
+
+/**
+ * @swagger
+ * /uploadProfileImage:
+ *   patch:
+ *     summary: Upload profile image
+ *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - in: formData
+ *         name: file
+ *         type: file
+ *         required: true
+ *         description: The image file to be uploaded for the profile picture.
+ *     responses:
+ *       200:
+ *         description: Image updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Confirmation message.
+ *                   example: Image updated successfully !
+ *                 data:
+ *                   type: object
+ *                   description: Updated user data with new profile image URL.
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: User's ID.
+ *                       example: 6155f7cfcf971234567890ab
+ *                     Email:
+ *                       type: string
+ *                       description: User's email.
+ *                       example: user@example.com
+ *                     Name:
+ *                       type: string
+ *                       description: User's name.
+ *                       example: John Doe
+ *                     Image:
+ *                       type: string
+ *                       description: URL of the updated profile image.
+ *                       example: http://example.com/profile.jpg
+ *       404:
+ *         description: Image not provided or user not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: You have to set an image.
+ *       500:
+ *         description: Error while uploading files and images.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Error while uploading files and images !
  */

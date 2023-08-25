@@ -17,9 +17,14 @@ const TeamSchema = Schema({
   Members: {
     type: [String],
     default: []
-  }
+  },
+  Image:{
+    type: String ,
+
+  },
 
 
-})
+
+},{timestamps: true,})
 
 module.exports = mongoose.model('Team', TeamSchema)

@@ -1071,22 +1071,22 @@ const register = async(req, res, next) => {
   }
   
 
-  User.findOne({ Email: req.body.email_reg }).then((result) => {
+  User.findOne({ Email: req.body.email }).then((result) => {
     if (result) {
       res.status(403).json({
         message: "Email Already Used!",
       });
     } else {
-      bcrypt.hash(req.body.password_reg, 10, function (err, hashedPass) {
+      bcrypt.hash(req.body.password, 10, function (err, hashedPass) {
         if (err) {
           res.status(404).json({
             error: err,
           });
         }
         let user = new User({
-          Name: req.body.username_reg,
+          Name: req.body.username,
           Password: hashedPass,
-          Email: req.body.email_reg,
+          Email: req.body.email,
         });
         user
           .save()
@@ -1191,7 +1191,7 @@ const verify = (req, res, next) => {
 };
 
 const login = (req, res, next) => {
-  User.findOne({ Email: req.body.email_log })
+  User.findOne({ Email: req.body.email })
     .then((user) => {
       if (user) {
         if (!user.Verified) {
@@ -1201,7 +1201,7 @@ const login = (req, res, next) => {
           });
         } else {
           bcrypt.compare(
-            req.body.password_log,
+            req.body.password,
             user.Password,
             function (err, result) {
               if (err) {
@@ -1246,7 +1246,7 @@ const login = (req, res, next) => {
 };
 
 const forgetPasswordRequest = (req, res, next) => {
-  const email = req.body.forgot_pass_email;
+  const email = req.body.email;
 
   User.findOne({ Email: email })
     .then((result) => {
@@ -1353,7 +1353,7 @@ const resetPassword = async(req, res, next) => {
   const data = await Userverification.findOne({ uniqueString: hashedUniqueString });
   if (data) {
     await Userverification.deleteOne({ uniqueString: hashedUniqueString })
-    const newPassword = req.body.new_password;
+    const newPassword = req.body.password;
     
     bcrypt.hash(newPassword, 10, (err, hashedPass) => {
       if (err) {

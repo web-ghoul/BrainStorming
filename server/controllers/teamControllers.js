@@ -4,11 +4,11 @@ const bcrypt = require('bcryptjs');
 const asyncHandler = require("express-async-handler");
 
 const createTeam = asyncHandler (async(req,res,next) => {
-  const {Name , Password} = req.body 
+  const {name , password} = req.body 
 
   const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(Password, salt);
-  const check = await Teams.findOne({Name:Name})
+  const hash = bcrypt.hashSync(password, salt);
+  const check = await Teams.findOne({Name:name})
   if(check)
   {
     return res.status(402).json({
@@ -16,7 +16,7 @@ const createTeam = asyncHandler (async(req,res,next) => {
     })
   }
   const newTeam = new Teams({
-    Name : Name,
+    Name : name,
     Password : hash
   })
 
@@ -53,7 +53,7 @@ const displayTeams = asyncHandler( (req, res, next) => {
 
 const joinTeam = asyncHandler ( async(req,res,next) => {
 
-  const {Password , TeamId} = req.body 
+  const {password , TeamId} = req.body 
 
   const data = await Teams.findOne({_id : TeamId})
 
@@ -62,7 +62,7 @@ const joinTeam = asyncHandler ( async(req,res,next) => {
       message : "Already joind the team"
     })
   } else {
-    bcrypt.compare(Password , data.Password , async(err , result) => {
+    bcrypt.compare(password , data.Password , async(err , result) => {
       if (err) {
         res.status(403).json({
           error: err,
@@ -94,7 +94,7 @@ const joinTeam = asyncHandler ( async(req,res,next) => {
 
 const EnterTeam = asyncHandler ( async(req,res,next) => {
 
-  const {TeamId} = req.body 
+  const TeamId = req.params.id 
 
   const data = await Teams.findOne({_id : TeamId})
   
@@ -113,7 +113,6 @@ const EnterTeam = asyncHandler ( async(req,res,next) => {
   }
 
 })
-
 
 
 module.exports = {createTeam ,  displayTeams , joinTeam , EnterTeam}

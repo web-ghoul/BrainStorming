@@ -1,11 +1,12 @@
 const teamController = require("../controllers/teamControllers")
 const ideaController = require("../controllers/ideasControllers")
+const userControler = require('../controllers/userControllers')
 const express = require('express')
 const router = express.Router();
 
 /**
  * @swagger
- * /api/Teams:
+ * /Teams:
  *   get:
  *     summary: Get a list of all teams
  *     tags: [Teams]
@@ -26,6 +27,6 @@ const router = express.Router();
  */
 router.get("/Teams",teamController.displayTeams);
 
-
+router.get("/Profile/:id" , userControler.getProfile )
 
 module.exports = router;

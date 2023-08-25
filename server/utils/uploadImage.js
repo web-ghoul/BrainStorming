@@ -10,33 +10,39 @@ cloudinary.config({
   api_secret: api_secret,
 });
 
-const opts = {
-  overwrite: true,
-  invalidate: true,
-  resource_type: 'raw', // Important for PDF files
-  folder: 'pdfs', // Specify the folder in Cloudinary where you want to store the PDFs
-  format: 'pdf' // Specify the format of the uploaded file
-};
 
-const uploadImage = (image) => {
+const uploadImage = (file) => {
   //imgage = > base64
+  console.log("hello")
+  var folderName ;
+  if (file && file.mimetype.startsWith('image/')) {
+    folderName = "images"
+  } else {
+    folderName = "files"
+  }
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(image, opts, (error, result) => {
-      if (result && result.secure_url) {
-        console.log(result.secure_url);
-        return resolve(result.secure_url);
+    cloudinary.uploader.upload(file.path ,{folder: folderName}, (error, result) => {
+      if (result ) {
+        console.log(result);
+        return resolve({url:result.secure_url , type : folderName});
       }
       console.log(error.message);
       return reject({ message: error.message });
     });
   });
 };
-module.exports = (image) => {
-  //imgage = > base64
+module.exports = (file) => {
+  console.log("hello")
+  var folderName ;
+  if (file && file.mimetype.startsWith('image/')) {
+    folderName = "profileImages"
+  } else {
+    return false
+  }
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(image, opts, (error, result) => {
-      if (result && result.secure_url) {
-        console.log(result.secure_url);
+    cloudinary.uploader.upload(file.path ,{folder: folderName}, (error, result) => {
+      if (result ) {
+        console.log(result);
         return resolve(result.secure_url);
       }
       console.log(error.message);

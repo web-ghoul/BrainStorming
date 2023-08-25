@@ -1,9 +1,9 @@
 const Joi = require('joi');
 
 const registerSchema = Joi.object({
-  email_reg : Joi.string().email().lowercase().required(),
-  password_reg : Joi.string().min(6).required(),
-  username_reg : Joi.string().required(),
+  email : Joi.string().email().lowercase().required(),
+  password : Joi.string().min(6).required(),
+  username : Joi.string().required(),
 
 })
 

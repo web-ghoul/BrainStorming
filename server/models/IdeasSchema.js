@@ -11,17 +11,17 @@ const IdeaSchema = Schema({
   ,
   Description : {
     type: String,
-    required: false
+    
   }
   ,
-  Image : {
-    type: String,
-    required: false
+  Images: {
+    type : [String]
+
   }
   ,
-  Points : {
+  Files : {
     type: [String],
-    required: false
+    
   }
   ,
   Team : {
@@ -30,12 +30,15 @@ const IdeaSchema = Schema({
     required: true
   }
   ,
-  WrittenBy : {
+  Record : {
     type: String,
-    required: true
+    
+  },
+  WrittenBy:{
+    type: String ,
   }
   
 
-})
+},{timestamps: true,})
 
 module.exports = mongoose.model('Idea', IdeaSchema)

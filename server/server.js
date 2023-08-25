@@ -13,6 +13,8 @@ const swaggerJsDoc = require('swagger-jsdoc')
 const path = require('path');
 var fs = require('fs')
 const morgan = require('morgan');
+const xss = require('xss-clean');
+const multer = require('multer');
 
 const uploadImage = require("./utils/uploadImage");
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
@@ -20,6 +22,7 @@ const privateRoutes = require('./routes/privateRoutes')
 const publicRoutes = require('./routes/publicRoutes')
 const logger = require("./logger/index")
 const Routes = require('./routes/authRoutes')
+const signuploadwidgetRouter = require('./routes/signuploadwidget')
 
 
 // logger.error("hello error")
@@ -30,9 +33,8 @@ const Routes = require('./routes/authRoutes')
 const corsOptions = {
   origin: [
     'http://localhost:3001',
-    'http://localhost:4000'
-    
-    
+    'http://localhost:4000',
+    "http://127.0.0.1:5500"
 
     // your origins here
   ],
@@ -75,11 +77,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      connectSrc: ["'self'", 'http://localhost:4000' ]
+      connectSrc: ["'self'", 'http://localhost:4000' , "http://127.0.0.1:5500"]
     }
   }
 }));
-
+app.use(xss());
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(session({
@@ -87,6 +89,31 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
 }));
+const storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+      callback(null, __dirname + '/uploads');
+  },
+  // Sets file(s) to be saved in uploads folder in same directory
+  filename: function (req, file, callback) {
+      callback(null, file.originalname);
+  }
+  // Sets saved filename(s) to be original filename(s)
+})
+
+// Set saved storage options:
+const upload = multer({ storage: storage })
+app.use('/api/signuploadwidget', signuploadwidgetRouter)
+
+app.post("/api", upload.array("files"), (req, res) => {
+// Sets multer to intercept files named "files" on uploaded form data
+
+    console.log(req.body); // Logs form body values
+    console.log(req.files); // Logs any files
+    
+    uploadImage(req.files[0])
+    .then((url) =>  console.log(url))
+    .catch((err) => res.status(500).send(err));
+});
 
 app.post("/uploadImage", (req, res) => {
   uploadImage(req.body.image)
@@ -94,10 +121,15 @@ app.post("/uploadImage", (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
-app.post("/uploadMultipleImages", (req, res) => {
+app.post("/uploadMultipleImages", upload.array("files"), (req, res) => {
+  console.log("hello")
+  
   uploadImage
-    .uploadMultipleImages(req.body.images)
-    .then((urls) => res.send(urls))
+    .uploadMultipleImages(req.files)
+    .then((urls) => {
+      console.log(urls)
+      res.send(urls)
+    })
     .catch((err) => res.status(500).send(err));
 });
 
@@ -118,7 +150,7 @@ app.get('/', (req, res, next) => {
   res.status(200).json(treasureMap);
 });
 
-app.use("/api/user" , privateRoutes)
+app.use("/api" , privateRoutes)
 app.use("/api" , publicRoutes)
 app.use("/api" , Routes)
 // app.use(express.static(path.join(__dirname , '../client/build')))

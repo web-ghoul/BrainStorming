@@ -32,9 +32,20 @@ const UserSchema = Schema({
   Teams : {
     type : [Schema.Types.ObjectId],
     ref : "Team"
+  },
+  Image : {
+    type: String ,
+
+  },
+  About:{
+    type : String ,
+
+  },
+  Bio: {
+    type : String
   }
 
-});
+},{timestamps: true,});
 
 
 

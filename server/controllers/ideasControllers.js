@@ -1,22 +1,56 @@
 const Ideas = require('../models/IdeasSchema');
+const uploadImage = require("../utils/uploadImage");
+const logger = require("../logger/index")
+const asyncHandler = require("express-async-handler");
 
-const postIdeas = (req,res,next) => {
+const postIdeas = asyncHandler (async(req,res,next) => {
 
-  const {Idea  , Description , Image , Points , Team , WrittenBy} = req.body
+  const {Idea  , Description , Team } = req.body
 
-  if(!Idea || !WrittenBy)
+  if(!Idea )
   {
     return res.status(400).json({
-      message: "Please fill both Idea and WrittenBy"})
+      message: "Please fill Brainwave"})
   }
 
+  console.log(req.files)
+  logger.info(req.body)
+  var arrayOfUrls ;
+  if(req.files != undefined){
+  try{
+  arrayOfUrls  = await uploadImage.uploadMultipleImages(req.files)
+  logger.info(arrayOfUrls)
+
+  } catch(err){
+    return res.status(500).json({
+      message : "Error while uploading files and images !"
+    })
+  }
+
+  
+
+  var imagesArray 
+  var filesArray
+  
+  for(let i = 0 ; i < arrayOfUrls.length ; i++)
+  {
+    if(arrayOfUrls[i].type == "files")
+    {
+      filesArray.push(arrayOfUrls[i].url)
+    }
+    else
+    {
+      imagesArray.push(arrayOfUrls[i].url)
+    }
+  }
+  }
   const newIdea = new Ideas({
     Idea,
     Description,
-    Image,
-    Points,
+    Images : imagesArray,
+    Files : filesArray,
     Team,
-    WrittenBy,
+    WrittenBy:req.userName,
   })
   newIdea.save().then((result) => {
     return res.status(200).json({
@@ -28,9 +62,9 @@ const postIdeas = (req,res,next) => {
 
 
 }
+)
 
-
-const displayIdeas = (req, res, next) => {
+const displayIdeas = asyncHandler((req, res, next) => {
 
   const teamId = req.params.id ;
 
@@ -46,12 +80,45 @@ const displayIdeas = (req, res, next) => {
     })
   }
   )
+})
+
+const deleteIdea = asyncHandler(async(req, res, next) => {
+
+  const data = await Ideas.findOne({_id : req.params.id})
+
+  if(data && data.WrittenBy == req.userName)
+  {
+    await Ideas.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ message: 'Data deleted successfully.' });
+  }
+  else
+  {
+    return res.status(403).json({ error: 'Access denied or data not found.' });
+  }
+
+})
+
+const updateIdea = asyncHandler(async(req,res,next) => {
+  
+  const {Idea  , Description} = req.body
+
+  const data = await Ideas.findOne({_id : req.params.id})
+
+  if(data && data.WrittenBy == req.userName)
+  {
+    data.Idea = Idea 
+    data.Description = Description
+    await data.save()
+    return res.status(200).json({ message: 'Data updated successfully.' });
+  }
+  else
+  {
+    return res.status(403).json({ error: 'Access denied or data not found.' });
+  }
+
+
 }
+)
 
-const deleteIdea = (req, res, next) => {
 
-  const {ideaId} = req.params
-
-}
-
-module.exports = {displayIdeas , postIdeas , deleteIdea}
+module.exports = {displayIdeas , postIdeas , deleteIdea , updateIdea}
