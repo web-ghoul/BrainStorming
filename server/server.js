@@ -22,7 +22,7 @@ const privateRoutes = require('./routes/privateRoutes')
 const publicRoutes = require('./routes/publicRoutes')
 const logger = require("./logger/index")
 const Routes = require('./routes/authRoutes')
-const signuploadwidgetRouter = require('./routes/signuploadwidget')
+
 
 
 // logger.error("hello error")
@@ -102,7 +102,7 @@ const storage = multer.diskStorage({
 
 // Set saved storage options:
 const upload = multer({ storage: storage })
-app.use('/api/signuploadwidget', signuploadwidgetRouter)
+
 
 app.post("/api", upload.array("files"), (req, res) => {
 // Sets multer to intercept files named "files" on uploaded form data
