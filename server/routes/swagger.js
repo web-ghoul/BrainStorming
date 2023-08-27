@@ -1086,3 +1086,51 @@
  *                   description: Error message.
  *                   example: Error while uploading files and images !
  */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: Authentication endpoints
+ */
+
+/**
+ * @swagger
+ * /google:
+ *   get:
+ *     summary: Authenticate with Google using OAuth 2.0
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Redirects the user to the Google OAuth consent page.
+ *         headers:
+ *           Location:
+ *             schema:
+ *               type: string
+ *               description: URL to the Google OAuth consent page.
+ *               example: https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=profile%20email&state=YOUR_STATE
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: Authentication endpoints
+ */
+
+/**
+ * @swagger
+ * /facebook:
+ *   get:
+ *     summary: Authenticate with Facebook using OAuth 2.0
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Redirects the user to the Facebook OAuth consent page.
+ *         headers:
+ *           Location:
+ *             schema:
+ *               type: string
+ *               description: URL to the Facebook OAuth consent page.
+ *               example: https://www.facebook.com/v12.0/dialog/oauth?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=email
+ */
