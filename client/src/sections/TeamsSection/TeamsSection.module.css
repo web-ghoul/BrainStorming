@@ -1,14 +1,10 @@
-.rooms_section{
-    position: relative;
+.rooms_section {
+  position: relative;
 }
 
-.brain{
-    position: absolute;
-    top:2%;
-    left: 2%;
-    z-index: 0;
-}
-
-.rooms_box{
-    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+.brain {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  z-index: 0;
 }

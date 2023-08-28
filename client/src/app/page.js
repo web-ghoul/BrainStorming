@@ -1,16 +1,11 @@
-import React from "react"
-import {Box} from '@mui/material'
-import MainSection from "@/sections/MainSection/MainSection"
-
-export const metadata = {
-  title: "BrainStorming",
-  description: "App for help student to share our ideas with our teams",
-};
+"use client";
+import React from "react";
+import MainSection from "@/sections/MainSection/MainSection";
 
 export default function Home() {
   return (
-    <Box>
-      <MainSection/>
-    </Box>
-  )
+    <>
+      <MainSection />
+    </>
+  );
 }

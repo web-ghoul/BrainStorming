@@ -1,42 +1,61 @@
-import React,{useState} from 'react';
-import {Divider,Box,SwipeableDrawer,Button,ListItem,List,ListItemIcon,ListItemButton,ListItemText} from '@mui/material';
-import {Home,Help} from '@mui/icons-material';
-import Logo from '../Logo/Logo';
+"use client";
+import React, { useContext, useState } from "react";
+import {
+  Divider,
+  Box,
+  SwipeableDrawer,
+  Button,
+  ListItem,
+  List,
+  ListItemIcon,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+import { Home, Help } from "@mui/icons-material";
+import Logo from "../Logo/Logo";
+import { DrawerContext } from "@/context/DrawerContext";
 
-const Sidebar = ({toggleDrawer, open}) => {
+const Sidebar = () => {
+  const { toggleDrawer, openDrawer } = useContext(DrawerContext);
   const list = () => (
     <Box
-      sx={{ width: 250}}
+      sx={{ width: 250 }}
       role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      onClick={toggleDrawer}
+      onKeyDown={toggleDrawer}
     >
-      <List sx={{padding:0}}>
-        <ListItem className={`flex jcc aic`} disablePadding sx={{padding:0,height:{lg:"70px",md:"60px",sm:"50px",xs:"40px"}}}>
-          <Logo title={true} color={"#333"}/>
+      <List sx={{ padding: 0 }}>
+        <ListItem
+          className={`flex jcc aic`}
+          disablePadding
+          sx={{
+            padding: 0,
+            height: { lg: "70px", md: "60px", sm: "50px", xs: "40px" },
+          }}
+        >
+          <Logo title={true} color={"#333"} />
         </ListItem>
       </List>
-      <Divider/>
+      <Divider />
       <List>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Home/>
+              <Home />
             </ListItemIcon>
             <ListItemText primary={"Home"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
-            </ListItemIcon>
+            <ListItemIcon></ListItemIcon>
             <ListItemText primary={"Rooms"} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
-              <Help/>
+              <Help />
             </ListItemIcon>
             <ListItemText primary={"About"} />
           </ListItemButton>
@@ -49,7 +68,7 @@ const Sidebar = ({toggleDrawer, open}) => {
     <Box>
       <SwipeableDrawer
         anchor={"right"}
-        open={open}
+        open={openDrawer}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
@@ -57,6 +76,6 @@ const Sidebar = ({toggleDrawer, open}) => {
       </SwipeableDrawer>
     </Box>
   );
-}
+};
 
-export default Sidebar
+export default Sidebar;

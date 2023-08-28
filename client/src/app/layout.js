@@ -1,49 +1,59 @@
-"use client"
-import Header from '../components/Header/Header'
-import './globals.css'
-import {Container,Box} from '@mui/material'
-import Footer from '../components/Footer/Footer'
-import Sidebar from '../components/Sidebar/Sidebar'
-import { useEffect, useState } from 'react'
-import {theme} from "./theme"
-import { ThemeProvider } from "@emotion/react"
+"use client";
+import "./globals.css";
+import { ModeProvider } from "@/context/ModeContext";
+import { TeamModalProvider } from "@/context/TeamModalContext";
+import { DrawerProvider } from "@/context/DrawerContext";
+import Main from "./Main/Main";
+import { theme } from "./theme";
+import { BackLoadingProvider } from "@/context/BackLoadingContext";
+import { CarouselProvider } from "@/context/CarouselContext";
+import { Provider } from "react-redux";
+import { store } from "../store/store";
+import { LoadingButtonProvider } from "@/context/LoadingButtonContext";
+import { ThemeProvider } from "@mui/material/styles";
+import { ProfileModalProvider } from "@/context/ProfileModalContext";
 
 export default function RootLayout({ children }) {
-  const [page,setPage] = useState(children.props.childProp.segment)
-
-  const [open,setOpen] = useState(false)
-  
-  const toggleDrawer = (o) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-    setOpen(o)
-  };
-
-  useEffect(()=>{
-    setPage(children.props.childProp.segment)
-  },[page])
   return (
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap"
+          rel="stylesheet"
+        />
+        <meta
+          name="description"
+          content="App for help student to share our ideas with our teams"
+        />
+        <title>BrainStorming</title>
       </head>
       <body>
-        <ThemeProvider theme={theme}>
-          <Box component={"main"}>
-            <Sidebar toggleDrawer={toggleDrawer} open={open} setOpen={setOpen}/>
-            {(page !== "login" && page !== "register") && <Header toggleDrawer={toggleDrawer}/>}
-            {children}
-            {(page !== "login" && page !== "register") && <Footer/>}
-          </Box>
-        </ThemeProvider>
+        <Provider store={store}>
+          <LoadingButtonProvider>
+            <ModeProvider>
+              <CarouselProvider>
+                <BackLoadingProvider>
+                  <TeamModalProvider>
+                    <ProfileModalProvider>
+                      <DrawerProvider>
+                        <ThemeProvider theme={theme}>
+                          <Main>{children}</Main>
+                        </ThemeProvider>
+                      </DrawerProvider>
+                    </ProfileModalProvider>
+                  </TeamModalProvider>
+                </BackLoadingProvider>
+              </CarouselProvider>
+            </ModeProvider>
+          </LoadingButtonProvider>
+        </Provider>
       </body>
     </html>
-  )
+  );
 }
