@@ -1,25 +1,109 @@
-form{
-    grid-template-columns: repeat(2,1fr);
-    min-height: 80vh;
+form {
+  grid-template-columns: repeat(2, 1fr);
+  width: 80vw;
+  height: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.team_form ,.profile_form{
+  grid-template-columns: repeat(1, 1fr);
+  width: 60vw;
+  padding: 20px;
+}
+
+.team_form div div label {
+  min-width: auto;
+}
+
+.form_contain {
+  padding: 20px;
+}
+
+.form_image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.add_new_team_title svg {
+  font-size: 40px;
+}
+
+.forgot_password:hover {
+  color: var(--main);
+}
+
+@media (max-width: 1200px) {
+  form {
+    width: 85vw;
+    border-radius: 8px;
+  }
+
+  .team_form {
+    width: 70vw;
+    padding: 18px;
+  }
+
+  .form_contain {
+    padding: 18px;
+  }
+
+  .add_new_team_title svg {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 992px) {
+  form {
+    width: 90vw;
+    border-radius: 6px;
+  }
+
+  .team_form {
     width: 80vw;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    background-color: var(--white);
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    padding: 15px;
+  }
+
+  .form_contain {
+    padding: 16px;
+  }
+
+  .add_new_team_title svg {
+    font-size: 35px;
+  }
 }
 
-.form_contain{
-    padding: 20px;
-}
+@media (max-width: 768px) {
+  form {
+    width: 98vw;
+    grid-template-columns: repeat(1, 1fr);
+  }
 
-.form_image{
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50% 50%;
-    width: 100%;
-    height: 100%;
+  form > div:last-child {
+    order: -1;
+  }
+
+  .team_form {
+    width: 90vw;
+    padding: 10px;
+  }
+
+  .form_contain {
+    padding: 10px;
+  }
+
+  .add_new_team_title svg {
+    font-size: 30px;
+  }
 }

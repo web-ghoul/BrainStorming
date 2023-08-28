@@ -1,0 +1,46 @@
+.user_back {
+  width: 100%;
+  height: 300px;
+  position: relative;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.change_cover_button {
+  position: absolute;
+  right: 120px;
+  top: 20px;
+}
+
+@media (1200px >= width >=992px) {
+  .user_back {
+    height: 280px;
+  }
+
+  .change_cover_button {
+    right: 30px;
+    top: 20px;
+  }
+}
+
+@media (992px >= width >= 768px) {
+  .user_back {
+    height: 260px;
+  }
+
+  .change_cover_button {
+    right: 30px;
+    top: 20px;
+  }
+}
+
+@media (768px >= width >= 0px) {
+  .user_back {
+    height: 240px;
+  }
+
+  .change_cover_button {
+    right: 20px;
+  }
+}

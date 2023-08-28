@@ -1,20 +1,20 @@
-:root{
-  --ubuntu-font:'Ubuntu', sans-serif;
-  --cairo-font:'Cairo', sans-serif;
-  --tran: ease-in-out all .3s;
-  --main:#037ef3;
-  --main-alt:#0099e5;
-  --white:#fff;
-  --black:#111;
-  --gray:#999;
-  --black-alt:#222;
-  --youtube:#ff0000;
-  --linkedin:#0a66c2;
-  --facebook:#1877f2;
-  --instagram:#fcaf45;
-  --gmail:#ea4335;
-  --whatsapp:#25d366;
-  --github:#333;
+:root {
+  --ubuntu-font: "Ubuntu", sans-serif;
+  --cairo-font: "Cairo", sans-serif;
+  --tran: ease-in-out all 0.3s;
+  --main: #037ef3;
+  --main-alt: #0099e5;
+  --white: #fff;
+  --black: #111;
+  --gray: #999;
+  --black-alt: #222;
+  --youtube: #ff0000;
+  --linkedin: #0a66c2;
+  --facebook: #1877f2;
+  --instagram: #fcaf45;
+  --gmail: #ea4335;
+  --whatsapp: #25d366;
+  --github: #333;
 }
 
 * {
@@ -30,203 +30,305 @@ body {
   background-color: var(--white);
 }
 
-main{
-  min-height: 100vh;
+.sc-aXZVg,
+.guZdik {
+  max-width: 100% !important;
+  height: 100% !important;
+  display: grid !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px;
 }
 
-.overlay{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: rgb(0,0,0,0.5);
+.sc-aXZVg input,
+.guZdik input {
   width: 100%;
   height: 100%;
 }
 
-a{
+.sc-aXZVg svg,
+.guZdik svg {
+  width: 50px !important;
+  height: 50px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  position: relative !important;
+}
+
+.sc-aXZVg div,
+.guZdik div {
+  display: grid !important;
+  justify-content: center !important;
+}
+
+.sc-aXZVg span,
+.guZdik span {
+  text-align: center !important;
+  max-width: 100% !important;
+}
+
+.sc-aXZVg span:first-child,
+.guZdik span:first-child {
+  font-size: 18px !important;
+}
+
+.overlay {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgb(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+a {
   text-decoration: none !important;
   color: inherit;
 }
 
-.flex{
+.flex {
   display: flex !important;
 }
 
-.grid{
+.grid {
   display: grid !important;
 }
 
-.flex-wrap{
+.flex_wrap {
   flex-wrap: wrap;
 }
 
-.jcc{
+.jcc {
   justify-content: center !important;
 }
 
-.jcfs{
+.jcfs {
   justify-content: flex-start !important;
 }
 
-.jcfe{
+.jcfe {
   justify-content: flex-end !important;
 }
 
-.jcsb{
+.jcsb {
   justify-content: space-between !important;
 }
 
-.jcs{
+.jcs {
   justify-content: stretch !important;
 }
 
-.aic{
+.aic {
   align-items: center !important;
 }
 
-.aifs{
+.aifs {
   align-items: flex-start !important;
 }
 
-.aife{
+.aife {
   align-items: flex-end !important;
 }
 
-.asfs{
+.ais {
+  align-items: stretch !important;
+}
+
+.asfs {
   align-self: flex-start !important;
 }
 
-.ass{
+.ass {
   align-self: stretch !important;
 }
 
-.acfs{
+.acfs {
   align-content: flex-start !important;
 }
 
-.acs{
+.acs {
   align-content: stretch !important;
 }
 
-.tac{
+.tac {
   text-align: center !important;
 }
 
-.ttuc{
+.ttuc {
   text-transform: uppercase !important;
 }
 
-.ttlc{
+.ttlc {
   text-transform: lowercase !important;
 }
 
-.ttcap{
+.ttcap {
   text-transform: capitalize !important;
 }
 
-.g5{
+.g5 {
   gap: 5px !important;
 }
 
-.g10{
+.g10 {
   gap: 10px !important;
 }
 
-.g20{
+.g20 {
   gap: 20px !important;
 }
 
-.g30{
+.g30 {
   gap: 30px !important;
 }
 
-.g40{
+.g40 {
   gap: 40px !important;
 }
 
-.g50{
+.g50 {
   gap: 50px !important;
 }
 
-.ubuntu-font{
+.ubuntu-font {
   font-family: var(--ubuntu-font) !important;
 }
 
-.fw500{
+.fw500 {
   font-weight: 500 !important;
 }
 
-.fw600{
+.fw600 {
   font-weight: 600 !important;
 }
 
-.fw700{
+.fw700 {
   font-weight: 700 !important;
 }
 
-.fw800{
+.fw800 {
   font-weight: 800 !important;
 }
 
-@media (max-width:992px) {
-  main .container{
+@media (max-width: 992px) {
+  main .container {
     padding-top: 20px;
     padding-bottom: 20px;
   }
 
-  .g5{
+  .g5 {
     gap: 3px !important;
   }
 
-  .g10{
+  .g10 {
     gap: 8px !important;
   }
-  
-  .g20{
+
+  .g20 {
     gap: 16px !important;
   }
-  
-  .g30{
+
+  .g30 {
     gap: 25px !important;
   }
-  
-  .g40{
+
+  .g40 {
     gap: 30px !important;
   }
-  
-  .g50{
+
+  .g50 {
     gap: 40px !important;
   }
 }
 
-@media (max-width:768px) {
-  main .container{
+@media (max-width: 768px) {
+  main .container {
     padding-top: 20px;
     padding-bottom: 20px;
   }
 
-  .g5{
+  .g5 {
     gap: 2px !important;
   }
 
-  .g10{
+  .g10 {
     gap: 5px !important;
   }
-  
-  .g20{
+
+  .g20 {
     gap: 10px !important;
   }
-  
-  .g30{
+
+  .g30 {
     gap: 20px !important;
   }
-  
-  .g40{
+
+  .g40 {
     gap: 25px !important;
   }
-  
-  .g50{
+
+  .g50 {
     gap: 30px !important;
+  }
+}
+@media (max-width: 1200px) {
+  .css-bbskgl-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 16px;
+  }
+
+  .css-1k9ck60-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 15px;
+  }
+
+  .css-1o5m5w-MuiFormHelperText-root {
+    font-size: 12px;
+  }
+
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 12px !important;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 992px) {
+  .css-bbskgl-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 14px;
+  }
+
+  .css-1k9ck60-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 12px;
+  }
+
+  .css-1o5m5w-MuiFormHelperText-root {
+    font-size: 10px;
+  }
+
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 10px !important;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .css-bbskgl-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 12px;
+  }
+
+  .css-1k9ck60-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 10px;
+  }
+
+  .css-1o5m5w-MuiFormHelperText-root {
+    font-size: 8px;
+  }
+
+  .css-g7wv60-MuiInputBase-root-MuiOutlinedInput-root {
+    border-radius: 2px;
+  }
+
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 8px !important;
+    font-size: 14px;
   }
 }

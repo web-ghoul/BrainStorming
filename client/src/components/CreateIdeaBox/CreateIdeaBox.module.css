@@ -1,9 +1,9 @@
-.create_idea_box{
-    border: 1px solid var(--gray);
-    padding: 20px;
-    background-color: var(--white);
+.create_idea_box {
+  border: 1px solid var(--gray);
+  padding: 20px;
+  background-color: var(--white);
 }
 
-.icon_buttons button svg{
-    color: var(--main);
+.icon_buttons button svg {
+  color: var(--main);
 }

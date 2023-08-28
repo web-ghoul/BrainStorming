@@ -1,6 +1,8 @@
 import React from "react";
-import sparkImg1 from "../../../../public/images/brain5.jpg";
-import sparkImg2 from "../../../../public/images/0c649a86-362c-4deb-9ac6-966f99d5d50e.jpg";
+import sparkImg1 from "../../../../public/images/back1.jpg";
+import sparkImg2 from "../../../../public/images/back2.jpg";
+import sparkImg3 from "../../../../public/images/back0.png";
+import sparkImg4 from "../../../../public/images/backGif.gif";
 import avatarImg1 from "../../../../public/images/avatar1.jpg";
 import avatarImg2 from "../../../../public/images/avatar2.jpg";
 import avatarImg3 from "../../../../public/images/avatar3.jpg";
@@ -20,12 +22,12 @@ const SparksSection = () => {
       record: false,
       images: [
         sparkImg1,
+        sparkImg2,
+        sparkImg3,
+        sparkImg4,
         sparkImg1,
-        sparkImg1,
-        sparkImg1,
-        sparkImg1,
-        sparkImg1,
-        sparkImg1,
+        sparkImg2,
+        sparkImg3,
       ],
     },
     {
@@ -42,7 +44,7 @@ const SparksSection = () => {
       brainwave: "Brainwave 1",
       files: ["File 1", "File 2"],
       record: false,
-      images: [sparkImg1, sparkImg2, sparkImg1, sparkImg1, sparkImg1],
+      images: [sparkImg1, sparkImg2, sparkImg3, sparkImg4],
     },
     {
       avatar: avatarImg3,
@@ -73,11 +75,11 @@ const SparksSection = () => {
     },
   ];
   return (
-    <Container className={`grid jcs aic g30`}>
+    <Box className={`grid jcs aic g30`}>
       {data.map((spark, i) => (
         <Spark key={i} data={spark} />
       ))}
-    </Container>
+    </Box>
   );
 };
 

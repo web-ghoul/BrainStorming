@@ -1057,7 +1057,7 @@ const sendVerificationEmail = async ({ _id, Email }, type, res) => {
 };
 
 const register = async(req, res, next) => {
-
+  console.log(req.body)
   try{
     const validate = await validation.registerSchema.validateAsync(req.body)
   
