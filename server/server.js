@@ -13,11 +13,12 @@ const swaggerJsDoc = require('swagger-jsdoc')
 const path = require('path');
 var fs = require('fs')
 const morgan = require('morgan');
-const xss = require('xss-clean');
+const xss = require('xss-clean')
 const multer = require('multer');
 const passport = require("passport");
 const rateLimit = require('express-rate-limit')
 var hpp = require('hpp');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 const uploadImage = require("./utils/uploadImage");
@@ -106,7 +107,14 @@ app.use(helmet({
 app.use(xss());
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
-app.use(hpp()); 
+// app.use(hpp()); 
+// app.use(
+//   mongoSanitize({
+//     allowDots: true,
+//     replaceWith: '_',
+//   }),
+// );
+// app.use(xss())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   name : "session",
@@ -152,7 +160,6 @@ app.post("/uploadImage", (req, res) => {
 
 app.post("/uploadMultipleImages", upload.array("files"), (req, res) => {
   console.log("hello")
-  
   uploadImage
     .uploadMultipleImages(req.files)
     .then((urls) => {

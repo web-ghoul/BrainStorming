@@ -37,7 +37,7 @@ router.delete("/DeleteIdea/:id" , protect , ideaController.deleteIdea)
 
 router.put("/updateIdea/:id" , protect, ideaController.updateIdea)
 
-router.patch("/uploadProfileImage" , protect , userControler.setProfilePic)
+router.patch("/uploadProfileImage" , protect , upload.array("files") , userControler.setProfilePic)
 
 
 
