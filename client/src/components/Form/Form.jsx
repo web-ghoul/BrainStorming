@@ -18,30 +18,34 @@ import ChangeAvatar from "./ChangeAvatar/ChangeAvatar";
 import ChangeCover from "./ChangeCover/ChangeCover";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
+import { MainButton } from "@/MUIComponents/MainButton/MainButton";
+import { useRouter } from "next/navigation";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
   const { id, unique } = useParams();
+  const router = useRouter();
+  const [file, setFile] = useState([]);
 
-  const handleVerifyAccount = async () => {
-    await axios
-      .get(process.env.NEXT_PUBLIC_SERVER_URL + `/verify/${id}/${unique}`)
-      .then((res) => {
-        try {
-          handleAlertToastify(res.data.message, "success");
-        } catch (error) {
-          handleAlertToastify("Email Verified Successfully", "success");
-        }
-        redirect(process.env.NEXT_PUBLIC_LOGIN_PAGE);
-      })
-      .catch((err) => {
-        try {
-          handleAlertToastify(err.response.data.message, "error");
-        } catch (error) {
-          handleAlertToastify("Error", "e");
-        }
-      });
-  };
+  // const handleVerifyAccount = async () => {
+  //   await axios
+  //     .get(process.env.NEXT_PUBLIC_SERVER_URL + `/verify/${id}/${unique}`)
+  //     .then((res) => {
+  //       try {
+  //         handleAlertToastify(res.data.message, "success");
+  //       } catch (error) {
+  //         handleAlertToastify("Email Verified Successfully", "success");
+  //       }
+  //       redirect(process.env.NEXT_PUBLIC_LOGIN_PAGE);
+  //     })
+  //     .catch((err) => {
+  //       try {
+  //         handleAlertToastify(err.response.data.message, "error");
+  //       } catch (error) {
+  //         handleAlertToastify("Error", "e");
+  //       }
+  //     });
+  // };
 
   const handleResetPassword = async () => {
     await axios
@@ -146,10 +150,9 @@ const Form = ({ type }) => {
       .required("Password is required"),
   });
 
-  const [file, setFile] = useState(null);
 
-  const handleChangeFile = (file) => {
-    setFile(file);
+  const handleChangeFile = (e) => {
+    setFile(e.target.value);
   };
 
   const loginFormik = useFormik({
@@ -161,6 +164,8 @@ const Form = ({ type }) => {
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
+          Cookies.set("token", res.data.token);
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -218,6 +223,7 @@ const Form = ({ type }) => {
         })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          router(process.env.NEXT_PUBLIC_LOGIN_PAGE);
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -238,10 +244,10 @@ const Form = ({ type }) => {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log(res);
+          handleAlertToastify(res.data.message, "success");
         })
         .catch((err) => {
-          console.log(err);
+          handleAlertToastify(err.response.data.message, "error");
         });
       setButtonLoading(false);
     },
@@ -269,14 +275,33 @@ const Form = ({ type }) => {
     },
   });
 
+  const handleChangeAvatar = async (e) => {
+    e.preventDefault()
+    setButtonLoading(true);
+    const formData = new FormData()
+    formData.append("files",file)
+    console.log(file,formData)
+    return ;
+    await axios
+      .patch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
+        file,
+        {headers:{
+          Authorization: `Bearer ${Cookies.get("token")}`
+        }}
+      )
+      .then((res) => {
+        handleAlertToastify(res.data.message,"success")
+      })
+      .catch((err) => {
+        handleAlertToastify(err.response.data.message,"error")
+      });
+    setButtonLoading(false);
+  };
+
   useEffect(() => {
     if (type === "reset_password") {
       handleResetPassword();
-    }
-
-    if (type === "verify") {
-      handleVerifyAccount();
-      return;
     }
   }, [type]);
 
@@ -296,9 +321,7 @@ const Form = ({ type }) => {
             ? addNewTeamFormik.handleSubmit
             : type === "join_team"
             ? joinTeamFormik.handleSubmit
-            : () => {
-                "";
-              }
+            : type === "change_avatar" && handleChangeAvatar
         }
         className={`grid jcs aifs ${
           (type === "add_new_team" || type === "join_team") && "team_form"
@@ -326,7 +349,7 @@ const Form = ({ type }) => {
           <ChangeCover formik={forgotPasswordFormik} />
         ) : (
           type === "change_avatar" && (
-            <ChangeAvatar formik={forgotPasswordFormik} />
+            <ChangeAvatar handleChangeFile={handleChangeFile} />
           )
         )}
       </form>
