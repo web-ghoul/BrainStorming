@@ -3,6 +3,39 @@ const uploadImage = require("../utils/uploadImage");
 const logger = require("../logger/index")
 const asyncHandler = require("express-async-handler");
 
+
+/*
+const express = require('express');
+const router = express.Router();
+const fs = require('fs').promises;
+const path = require('path');
+
+// Define a route to delete files
+router.delete('/delete-file/:filename', async (req, res) => {
+  const filename = req.params.filename;
+
+  const filePath = path.join(__dirname, '../uploads', filename);
+
+  try {
+    // Check if the file exists
+    await fs.access(filePath);
+
+    // Delete the file
+    await fs.unlink(filePath);
+
+    res.status(200).json({ message: 'File deleted successfully' });
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      res.status(404).json({ message: 'File not found' });
+    } else {
+      res.status(500).json({ message: 'An error occurred while deleting the file' });
+    }
+  }
+});
+
+*/
+
+
 const postIdeas = asyncHandler (async(req,res,next) => {
 
   const {Idea  , Description , Team } = req.body

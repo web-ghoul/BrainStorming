@@ -2,7 +2,6 @@ const User = require("../models/UserSchema");
 const Userverification = require("../models/verifyaccountsSchema");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
 const validation = require('../utils/validation_schema')
@@ -1211,19 +1210,19 @@ const login = (req, res, next) => {
               }
               if (result) {
                 let token = jwt.sign(
-                  { Id: user.id, Name: user.Name, Role: user.Role },
+                  { Id: user.id, Name: user.Name},
                   process.env.SECRET_KEY,
                   {
                     expiresIn: "30h",
                   }
                 );
-                res.cookie("token", token);
-                // secret = Tokens.secretSync()
+                const expirationDate = new Date();
+                expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
+                res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
                 var csrfToken = uuidv4()
                 res.status(200).json({
                   message: "login successfully !",
                   token: token,
-                  role: user.Role,
                   csrfToken: csrfToken
                 });
               } else {
@@ -1394,6 +1393,73 @@ const resetPassword = async(req, res, next) => {
   }
 };
 
+const otherRegister = (req,res,next) => {
+  //res.send(userProfile)
+  
+  const email = req.user._json.email ;
+  const name = req.user._json.name ; 
+
+  User.findOne({ Email: email }).then((user) => {
+    if (user) {
+      let token = jwt.sign(
+        { Id: user.id, Name: user.Name},
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "30h",
+        }
+      );
+
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
+      res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
+
+      var csrfToken = uuidv4()
+      res.status(200).json({
+        message: "login successfully !",
+        token: token,
+        csrfToken: csrfToken
+      })
+
+    } else {
+      
+        let user = new User({
+          Name: name,
+          Email: email,
+        });
+        user
+          .save()
+          .then((user) => {
+
+            let token = jwt.sign(
+              { Id: user.id, Name: user.Name},
+              process.env.SECRET_KEY,
+              {
+                expiresIn: "30h",
+              }
+            );
+            const expirationDate = new Date();
+            expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
+            res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
+            var csrfToken = uuidv4()
+            res.status(200).json({
+              message: "login successfully !",
+              token: token,
+              csrfToken: csrfToken
+            })
+
+          })
+          .catch((error) => {
+            res.json({
+              message: "An error occured ! ",
+            });
+          });
+      
+    }
+  });
+  
+}
+
+
 module.exports = {
   register,
   verify,
@@ -1401,4 +1467,5 @@ module.exports = {
   forgetPasswordRequest,
   resetPassword,
   forgetPasswordResponse,
+  otherRegister,
 };

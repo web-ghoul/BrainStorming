@@ -15,6 +15,10 @@ var fs = require('fs')
 const morgan = require('morgan');
 const xss = require('xss-clean');
 const multer = require('multer');
+const passport = require("passport");
+const rateLimit = require('express-rate-limit')
+var hpp = require('hpp');
+
 
 const uploadImage = require("./utils/uploadImage");
 const { notFound, errorHandler } = require('./middleware/errorMiddleware')
@@ -22,8 +26,8 @@ const privateRoutes = require('./routes/privateRoutes')
 const publicRoutes = require('./routes/publicRoutes')
 const logger = require("./logger/index")
 const Routes = require('./routes/authRoutes')
-
-
+const GoogleStrategy = require("./utils/google-auth");
+const FacebookStrategy = require("./utils/facebook-auth")
 
 // logger.error("hello error")
 // logger.debug("heelo debug")
@@ -68,9 +72,27 @@ const openapiSpecification = swaggerJsDoc(options);
 var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
  
 // setup the logger
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message : {message: "Too much request"},
+  keyGenerator: (req) => {
+    // Use the first IP address from X-Forwarded-For header
+    return req.headers['x-forwarded-for']?.split(',')[0] || req.ip;
+  },
+  
+	// store: ... , // Use an external store for more precise rate limiting
+})
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter)
+//app.use(morgan('combined', { stream: accessLogStream }))
 app.use(morgan('combined'))
 app.use(express.json());
-app.use(express.urlencoded({extended: true }));
+app.use(express.urlencoded({extended: true , limit: '10mb' }));
 app.use("/api-docs" , swaggerUI.serve , swaggerUI.setup(openapiSpecification));
 
 app.use(helmet({
@@ -84,11 +106,18 @@ app.use(helmet({
 app.use(xss());
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
+app.use(hpp()); 
 app.use(session({
   secret: process.env.SESSION_SECRET,
+  name : "session",
   resave: false,
   saveUninitialized: false,
+  maxAge: 24 * 60 * 60 * 100,
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
       callback(null, __dirname + '/uploads');
