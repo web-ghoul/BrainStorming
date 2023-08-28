@@ -988,7 +988,7 @@ function options(type, currentUrl, uniqueString, Email, _id) {
 }
 
 const sendVerificationEmail = async ({ _id, Email }, type, res) => {
-  const currentUrl = "http://localhost:3000";
+  const currentUrl = "http://localhost:3000" ;
   const uniqueString = uuidv4() + _id;
   
   
@@ -1148,9 +1148,7 @@ const verify = (req, res, next) => {
                   .then((result) => {
                     Userverification.deleteOne({ userId: userId })
                       .then((result) => {
-                        res
-                          .status(200)
-                          .json({ message: "the email is verified" });
+                        res.redirect("")
                       })
                       .catch((err) => {
                         
