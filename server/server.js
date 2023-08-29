@@ -160,6 +160,7 @@ app.post("/uploadImage", (req, res) => {
 
 app.post("/uploadMultipleImages", upload.array("files"), (req, res) => {
   console.log("hello")
+  console.log(req.files)
   uploadImage
     .uploadMultipleImages(req.files)
     .then((urls) => {

@@ -13,7 +13,9 @@ export const authSlice = createSlice({
     getAuthData:(state,action)=>{
         state.user_id = action.payload.user_id
         state.token = action.payload.token
-        state.signed = true
+        if(state.user_id && state.token){
+          state.signed = true
+        }
     }
   },
 });

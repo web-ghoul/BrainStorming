@@ -20,8 +20,9 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAuthData } from "@/store/authSlice";
+import { getUserData } from "@/store/userSlice";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
@@ -29,7 +30,7 @@ const Form = ({ type }) => {
   const router = useRouter();
   const [file, setFile] = useState([]);
   const dispatch = useDispatch();
-
+  const { token, user_id } = useSelector((state) => state.auth);
   const handleResetPassword = async () => {
     await axios
       .get(
@@ -148,8 +149,9 @@ const Form = ({ type }) => {
           handleAlertToastify(res.data.message, "success");
           router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
           Cookies.set("token", res.data.token);
-          const authData = {token : res.data.token}
-          dispatch(getAuthData(authData))
+          Cookies.set("user_id", res.data.userId);
+          const authData = { token: res.data.token, user_id: res.data.userId };
+          dispatch(getAuthData(authData));
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -226,7 +228,7 @@ const Form = ({ type }) => {
         .post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/Teams`,
           { ...values },
-          { withCredentials: true }
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
@@ -264,12 +266,16 @@ const Form = ({ type }) => {
     e.preventDefault();
     setButtonLoading(true);
     const formData = new FormData();
-    console.log(file, formData);
     formData.append("files", file);
     await axios
-      .post(`http://localhost:3000/uploadMultipleImages`, formData)
+      .patch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       .then((res) => {
         handleAlertToastify(res.data.message, "success");
+        dispatch(getUserData(user_id));
       })
       .catch((err) => {
         handleAlertToastify(err.response.data.message, "error");

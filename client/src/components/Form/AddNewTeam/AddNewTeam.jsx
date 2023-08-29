@@ -48,7 +48,7 @@ const AddNewTeam = ({ handleChangeFile, formik }) => {
           helperText={formik.touched.password && formik.errors.password}
         />
       </Box>
-      <Box className={`grid jcs aic g10`}>
+      {/* <Box className={`grid jcs aic g10`}>
         <Typography variant="h6" className={`fw500`}>
           Upload Team Image
         </Typography>
@@ -58,7 +58,7 @@ const AddNewTeam = ({ handleChangeFile, formik }) => {
           types={fileTypes}
           multiple={true}
         />
-      </Box>
+      </Box> */}
       <Box className={`flex jcfe aic g20`}>
         <MainButton type="submit">Add</MainButton>
         <RedButton onClick={handleToggleAddNewTeamModal}>Cancel</RedButton>

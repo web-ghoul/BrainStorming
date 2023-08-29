@@ -17,7 +17,6 @@ import { DrawerContext } from "@/context/DrawerContext";
 import ModeToggle from "../ModeToggle/ModeToggle";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import { useSelector } from "react-redux";
-import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 import { useRouter } from "next/navigation";
 
@@ -26,6 +25,7 @@ const Header = () => {
   const { toggleDrawer } = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
   const router = useRouter();
+  
   return (
     <AppBar color="primary" className={`${styles.header}`}>
       <Container
@@ -73,7 +73,9 @@ const Header = () => {
               {signed ? (
                 <SpecialIconButton
                   onClick={() =>
-                    router(`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`)
+                    router.push(
+                      `${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`
+                    )
                   }
                   sx={{ color: (theme) => theme.palette.primary.main }}
                 >

@@ -5,7 +5,7 @@ export const getUserData = createAsyncThunk("user/getUserData", async (user_id) 
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/Profile/${user_id}`
   );
-  return res.data;
+  return res.data.data[0];
 });
 
 const initialState = {

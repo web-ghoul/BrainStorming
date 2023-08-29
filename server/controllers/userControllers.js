@@ -4,7 +4,7 @@ const User = require('../models/UserSchema')
 const bcrypt = require('bcryptjs');
 const asyncHandler = require("express-async-handler");
 const uploadImage = require("../utils/uploadImage");
-
+const logger = require("../logger/index")
 const getProfile = asyncHandler( async(req,res,next) => {
 
   const data = await User.find({_id : req.params.id}).select("-password")
@@ -32,7 +32,7 @@ const setProfilePic = asyncHandler(async(req,res,next) => {
   if(req.files != undefined){
   try{
   urlOfImage  = await uploadImage(req.files[0])
-  logger.info(arrayOfUrls)
+  logger.info(urlOfImage)
   } catch(err){
     return res.status(500).json({
       message : "Error while uploading files and images !"

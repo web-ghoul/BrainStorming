@@ -7,13 +7,11 @@ const protect = require("../middleware/authMiddleware");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, __dirname + "../uploads");
+    callback(null, __dirname + '/../uploads'); // Corrected path
   },
-  // Sets file(s) to be saved in uploads folder in same directory
   filename: function (req, file, callback) {
     callback(null, file.originalname);
-  },
-  // Sets saved filename(s) to be original filename(s)
+  }
 });
 
 // Set saved storage options:

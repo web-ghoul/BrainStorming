@@ -12,14 +12,16 @@ import { BackLoadingContext } from "@/context/BackLoadingContext";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ProfileModal from "@/components/ProfileModal/ProfileModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAuthData } from "@/store/authSlice";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import Cookies from "js-cookie";
 const Main = ({ children }) => {
   const pathname = usePathname();
   const { openBackLoading } = useContext(BackLoadingContext);
   const {id, unique} = useParams()
   const dispatch = useDispatch()
+  const {userData} = useSelector((state)=>state.user)
   try{
     const token = Cookies.get("token")
     const user_id = Cookies.get("user_id")
@@ -53,6 +55,7 @@ const Main = ({ children }) => {
       <TeamModal type="join_team" />
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
+      <ProfileModal type="view_avatar" img={userData && userData.Image} />
       <FloatActionButtons bottom={"120px"} right={"40px"} left={"auto"} />
       <ToastContainer />
       <Footer />

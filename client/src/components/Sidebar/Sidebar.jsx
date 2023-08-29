@@ -56,7 +56,7 @@ const Sidebar = () => {
             sx={{ color: (theme) => theme.palette.primary.main }}
           >
             <AccountCircle />
-            <Typography variant="h6">webGhoul</Typography>
+            <Typography variant="h6">{userData && userData.Name}</Typography>
           </SpecialIconButtonWithText>
         ) : (
           <Logo title={true} color={"#333"} />
@@ -98,7 +98,7 @@ const Sidebar = () => {
             <ListItemText primary={"About"} />
           </ListItemButton>
         </ListItem>
-        {!signed && (
+        {signed && (
           <>
             <ListItem key={"Login"} disablePadding>
               <ListItemButton
