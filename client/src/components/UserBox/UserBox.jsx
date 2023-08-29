@@ -1,17 +1,12 @@
-import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import avatar from "../../../public/images/avatar4.jpg";
-import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import {
-  AddToPhotosRounded,
   CameraAltRounded,
-  MessageRounded,
 } from "@mui/icons-material";
 import styles from "./UserBox.module.css";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
-import { BorderedButton } from "@/MUIComponents/BorderedButton/BorderedButton";
 import { useContext } from "react";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 
@@ -36,7 +31,7 @@ const UserBox = () => {
         </Box>
       </Box>
       {/* <Box className={`flex jcfe aic g10`}>
-        <BorderedButton>Like</BorderedButton>
+        <MainButton>Like</MainButton>
         <MainIconButton>
           <AddToPhotosRounded />
           <Typography variant="h6">Follow</Typography>

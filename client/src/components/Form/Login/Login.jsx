@@ -6,10 +6,10 @@ import loginImg from "../../../../public/images/login.jpeg";
 import Logo from "@/components/Logo/Logo";
 import Head from "@/components/Head/Head";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
-import AuthButton from "@/components/AuthButton/AuthButton";
 import Link from "next/link";
 import { FacebookRounded, Google } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
+import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 
 const Login = ({ formik }) => {
   return (
@@ -55,16 +55,12 @@ const Login = ({ formik }) => {
         </Box>
         <Divider />
         <Box className={`flex jcc aic g10`}>
-          <AuthButton
-            icon={<Google />}
-            iconColor={(theme) => theme.palette.gmail}
-            text={"Log in with Google"}
-          />
-          <AuthButton
-            icon={<FacebookRounded />}
-            iconColor={(theme) => theme.palette.facebook}
-            text={"Log in with Facebook"}
-          />
+          <SpecialIconButton sx={{ color: (theme) => theme.palette.gmail }}>
+            <Google />
+          </SpecialIconButton>
+          <SpecialIconButton sx={{ color: (theme) => theme.palette.facebook }}>
+            <FacebookRounded />
+          </SpecialIconButton>
         </Box>
       </Box>
       <Box

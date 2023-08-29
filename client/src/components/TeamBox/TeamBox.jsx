@@ -4,13 +4,13 @@ import styles from "./TeamBox.module.css";
 import roomImg from "../../../public/images/team4.jpg";
 import Image from "next/image";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
-import { ModalContext } from "@/context/TeamModalContext";
+import { TeamModalContext } from "@/context/TeamModalContext";
 import axios from "axios";
 import { handleAlertToastify } from "@/app/reactToastify";
 import { LoadingButtonContext } from "@/context/LoadingButtonContext";
 
 const TeamBox = ({ data }) => {
-  const { handleToggleJoinTeamModal } = useContext(ModalContext);
+  const { handleToggleJoinTeamModal } = useContext(TeamModalContext);
   const { setButtonLoading } = useContext(LoadingButtonContext);
   const handleEnterTeam = async () => {
     setButtonLoading(true);

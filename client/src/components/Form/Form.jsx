@@ -20,32 +20,15 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { getAuthData } from "@/store/authSlice";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
   const { id, unique } = useParams();
   const router = useRouter();
   const [file, setFile] = useState([]);
-
-  // const handleVerifyAccount = async () => {
-  //   await axios
-  //     .get(process.env.NEXT_PUBLIC_SERVER_URL + `/verify/${id}/${unique}`)
-  //     .then((res) => {
-  //       try {
-  //         handleAlertToastify(res.data.message, "success");
-  //       } catch (error) {
-  //         handleAlertToastify("Email Verified Successfully", "success");
-  //       }
-  //       redirect(process.env.NEXT_PUBLIC_LOGIN_PAGE);
-  //     })
-  //     .catch((err) => {
-  //       try {
-  //         handleAlertToastify(err.response.data.message, "error");
-  //       } catch (error) {
-  //         handleAlertToastify("Error", "e");
-  //       }
-  //     });
-  // };
+  const dispatch = useDispatch();
 
   const handleResetPassword = async () => {
     await axios
@@ -150,9 +133,8 @@ const Form = ({ type }) => {
       .required("Password is required"),
   });
 
-
-  const handleChangeFile = (e) => {
-    setFile(e.target.value);
+  const handleChangeFile = (files) => {
+    setFile(files);
   };
 
   const loginFormik = useFormik({
@@ -166,6 +148,8 @@ const Form = ({ type }) => {
           handleAlertToastify(res.data.message, "success");
           router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
           Cookies.set("token", res.data.token);
+          const authData = {token : res.data.token}
+          dispatch(getAuthData(authData))
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -223,6 +207,7 @@ const Form = ({ type }) => {
         })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          Cookies.remove("hashedUniqueString");
           router(process.env.NEXT_PUBLIC_LOGIN_PAGE);
         })
         .catch((err) => {
@@ -276,25 +261,18 @@ const Form = ({ type }) => {
   });
 
   const handleChangeAvatar = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setButtonLoading(true);
-    const formData = new FormData()
-    formData.append("files",file)
-    console.log(file,formData)
-    return ;
+    const formData = new FormData();
+    console.log(file, formData);
+    formData.append("files", file);
     await axios
-      .patch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
-        file,
-        {headers:{
-          Authorization: `Bearer ${Cookies.get("token")}`
-        }}
-      )
+      .post(`http://localhost:3000/uploadMultipleImages`, formData)
       .then((res) => {
-        handleAlertToastify(res.data.message,"success")
+        handleAlertToastify(res.data.message, "success");
       })
       .catch((err) => {
-        handleAlertToastify(err.response.data.message,"error")
+        handleAlertToastify(err.response.data.message, "error");
       });
     setButtonLoading(false);
   };

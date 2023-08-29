@@ -9,17 +9,23 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { Menu } from "@mui/icons-material";
+import { AccountCircle, Menu } from "@mui/icons-material";
 import styles from "./Header.module.css";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
 import { DrawerContext } from "@/context/DrawerContext";
 import ModeToggle from "../ModeToggle/ModeToggle";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
+import { useSelector } from "react-redux";
+import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
+import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
   const { toggleDrawer } = useContext(DrawerContext);
+  const { signed, user_id } = useSelector((state) => state.auth);
+  const router = useRouter();
   return (
     <AppBar color="primary" className={`${styles.header}`}>
       <Container
@@ -28,13 +34,12 @@ const Header = () => {
       >
         <Logo title={true} color={"#fff"} />
         {smallSize ? (
-          <List sx={{ padding: 0 }} className={`flex jcfe aic g10`}>
-            <ListItem sx={{ padding: 0 }}>
-              <ListItemButton sx={{ padding: 0 }} onClick={toggleDrawer}>
-                <Menu />
-              </ListItemButton>
-            </ListItem>
-          </List>
+          <SpecialIconButton
+            onClick={toggleDrawer}
+            sx={{ color: (theme) => theme.palette.primary.main }}
+          >
+            <Menu />
+          </SpecialIconButton>
         ) : (
           <>
             <List
@@ -65,15 +70,28 @@ const Header = () => {
                 </Link>
               </ListItem>
 
-              <SecondaryButton>
-                <Link href={process.env.NEXT_PUBLIC_LOGIN_PAGE}>Login</Link>
-              </SecondaryButton>
+              {signed ? (
+                <SpecialIconButton
+                  onClick={() =>
+                    router(`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`)
+                  }
+                  sx={{ color: (theme) => theme.palette.primary.main }}
+                >
+                  <AccountCircle />
+                </SpecialIconButton>
+              ) : (
+                <>
+                  <SecondaryButton>
+                    <Link href={process.env.NEXT_PUBLIC_LOGIN_PAGE}>Login</Link>
+                  </SecondaryButton>
 
-              <SecondaryButton>
-                <Link href={process.env.NEXT_PUBLIC_REGISTER_PAGE}>
-                  Register
-                </Link>
-              </SecondaryButton>
+                  <SecondaryButton>
+                    <Link href={process.env.NEXT_PUBLIC_REGISTER_PAGE}>
+                      Register
+                    </Link>
+                  </SecondaryButton>
+                </>
+              )}
 
               <ModeToggle />
             </List>

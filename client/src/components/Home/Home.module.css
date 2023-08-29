@@ -44,7 +44,7 @@
     }
 }
 
-@media (992px > width >=768px) {
+@media (992px > width >= 0) {
     .home {
         position: relative;
         background-image: url("../../../public//images/team8.svg");
@@ -92,11 +92,5 @@
         left: 50%;
         transform: translateX(-50%);
         position: relative;
-    }
-}
-
-@media (768px > width >=0px) {
-    .shape_box {
-        width: 60px;
     }
 }

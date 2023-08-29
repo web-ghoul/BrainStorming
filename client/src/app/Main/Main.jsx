@@ -1,7 +1,7 @@
+"use client"
 import React, { useContext } from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import TeamModal from "@/components/TeamModal/TeamModal";
 import FloatActionButtons from "@/components/FloatActionButtons/FloatActionButtons";
 import { useParams, usePathname } from "next/navigation";
@@ -12,10 +12,21 @@ import { BackLoadingContext } from "@/context/BackLoadingContext";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ProfileModal from "@/components/ProfileModal/ProfileModal";
+import { useDispatch } from "react-redux";
+import { getAuthData } from "@/store/authSlice";
+import Sidebar from "@/components/Sidebar/Sidebar";
 const Main = ({ children }) => {
   const pathname = usePathname();
   const { openBackLoading } = useContext(BackLoadingContext);
   const {id, unique} = useParams()
+  const dispatch = useDispatch()
+  try{
+    const token = Cookies.get("token")
+    const user_id = Cookies.get("user_id")
+    dispatch(getAuthData({token,user_id}))
+  }catch(err){
+    console.log(err)
+  }
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||
     pathname === process.env.NEXT_PUBLIC_LOGIN_PAGE ||

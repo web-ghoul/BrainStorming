@@ -24,8 +24,8 @@ export const MainIconButton = styled(IconButton)(({theme})=>(
             color:theme.palette.primary.main,
             backgroundColor:"transparent",
             "& svg":{
-                color:theme.palette.primary.main,
-            }
+                color:theme.palette.primary.main
+            },
         },
         "& svg":{
             fontSize:"20px",
