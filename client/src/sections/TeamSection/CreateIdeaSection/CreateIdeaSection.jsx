@@ -1,12 +1,11 @@
-import CreateIdeaBox from "@/components/CreateIdeaBox/CreateIdeaBox";
-import MembersBox from "@/components/MembersBox/MembersBox";
 import React from "react";
-import { Box, Container } from "@mui/material";
+import { Box } from "@mui/material";
+import Form from "@/components/Form/Form";
 
 const CreateIdeaSection = () => {
   return (
     <Box className={`grid flex-wrap jcs aifs g30`}>
-      <CreateIdeaBox />
+      <Form type="create_spark" />
     </Box>
   );
 };

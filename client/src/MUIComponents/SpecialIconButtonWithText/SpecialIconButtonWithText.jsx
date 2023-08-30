@@ -22,5 +22,5 @@ export const SpecialIconButtonWithText = styled(SpecialIconButton)(
     [theme.breakpoints.down("xs")]: {
       width: "fit-content",
     },
-  })
+  }),
 );

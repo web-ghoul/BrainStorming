@@ -5,18 +5,20 @@ import { Fade } from "react-awesome-reveal";
 import { useSelector } from "react-redux";
 
 const UserAbout = () => {
-  const {userData} = useSelector((state)=>state.user)
-  return userData &&  (
-    <Box className={`grid jcs aic g10`}>
-      <Typography variant="h5">About</Typography>
-      <Typography
-        component={"p"}
-        variant="h6"
-        className={`fw500 flex jcfs aic ${styles.user_about_box}`}
-      >
-        {userData.About ? userData.About : "Write a Brief..."}
-      </Typography>
-    </Box>
+  const { userData } = useSelector((state) => state.user);
+  return (
+    userData && (
+      <Box className={`grid jcs aic g10`}>
+        <Typography variant="h5">About</Typography>
+        <Typography
+          component={"p"}
+          variant="h6"
+          className={`fw500 flex jcfs aic ${styles.user_about_box}`}
+        >
+          {userData.About ? userData.About : "Write a Brief..."}
+        </Typography>
+      </Box>
+    )
   );
 };
 

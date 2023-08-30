@@ -34,7 +34,6 @@
   right: 0%;
 }
 
-
 @media (1200px >=width >=992px) {
   .user_box {
     transform: translateY(-50px);

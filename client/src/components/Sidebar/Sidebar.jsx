@@ -105,14 +105,18 @@ const Sidebar = () => {
                 onClick={() => router.push(process.env.NEXT_PUBLIC_LOGIN_PAGE)}
               >
                 <ListItemIcon>
-                  <Login sx={{ color: (theme) => theme.palette.primary.main }} />
+                  <Login
+                    sx={{ color: (theme) => theme.palette.primary.main }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary={"Login"} />
               </ListItemButton>
             </ListItem>
             <ListItem key={"Register"} disablePadding>
               <ListItemButton
-                onClick={() => router.push(process.env.NEXT_PUBLIC_REGISTER_PAGE)}
+                onClick={() =>
+                  router.push(process.env.NEXT_PUBLIC_REGISTER_PAGE)
+                }
               >
                 <ListItemIcon>
                   <Info sx={{ color: (theme) => theme.palette.primary.main }} />

@@ -9,7 +9,6 @@ export const ModeProvider = ({ children }) => {
 
   const toggle = () => {
     setMode(mode === "dark" ? "light" : "dark");
-    console.log(1)
   };
 
   return (

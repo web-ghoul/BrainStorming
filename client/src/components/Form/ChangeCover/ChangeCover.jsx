@@ -9,9 +9,8 @@ import { CameraAltRounded } from "@mui/icons-material";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 
 const ChangeCover = ({ handleChangeFile, formik }) => {
-  const { handleToggleChangeProfileCoverModal } = useContext(
-    ProfileModalContext
-  );
+  const { handleToggleChangeProfileCoverModal } =
+    useContext(ProfileModalContext);
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
   return (
     <Box className={`grid aic jcs g20 add_new_team_form_contain`}>

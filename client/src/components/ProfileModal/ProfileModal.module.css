@@ -1,34 +1,33 @@
 .avatar_box {
-    background-color: var(--white);
-    padding: 20px;
-    border-radius: 8px;
-    height: fit-content;
-    width: max-content;
-    max-width: 90vw;
-    max-height: 90vh;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
-    overflow:auto;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 8px;
+  height: fit-content;
+  width: max-content;
+  max-width: 90vw;
+  max-height: 90vh;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: auto;
 }
 
-.avatar_box img{
-    width: 100%;
-    height: auto;
+.avatar_box img {
+  width: 100%;
+  height: auto;
 }
 
 @media (1200px >= width >= 992px) {
-    .avatar_box {
-        padding: 18px;
-        border-radius: 7px;
-      
-    }
+  .avatar_box {
+    padding: 18px;
+    border-radius: 7px;
+  }
 }
 
 @media (992px >= width >= 768px) {
-    .avatar_box {
-        padding: 15px;
-        border-radius: 6px;
-    }
+  .avatar_box {
+    padding: 15px;
+    border-radius: 6px;
+  }
 }

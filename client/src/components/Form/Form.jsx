@@ -23,14 +23,19 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthData } from "@/store/authSlice";
 import { getUserData } from "@/store/userSlice";
+import { getTeams } from "@/store/teamsSlice";
+import { TeamModalContext } from "@/context/TeamModalContext";
+import CreateSpark from "./CreateSpark/CreateSpark";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
+  const { teamId } = useContext(TeamModalContext);
   const { id, unique } = useParams();
   const router = useRouter();
   const [file, setFile] = useState([]);
   const dispatch = useDispatch();
   const { token, user_id } = useSelector((state) => state.auth);
+
   const handleResetPassword = async () => {
     await axios
       .get(
@@ -134,6 +139,16 @@ const Form = ({ type }) => {
       .required("Password is required"),
   });
 
+  const createSparkInitialValues = {
+    idea: "",
+    description: "",
+  };
+
+  const createSparkValidationSchema = yup.object({
+    idea: yup.string("Enter your Idea").required("Idea is required"),
+    description: yup.string("Enter your Description"),
+  });
+
   const handleChangeFile = (files) => {
     setFile(files);
   };
@@ -232,6 +247,7 @@ const Form = ({ type }) => {
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          dispatch(getTeams());
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -245,18 +261,41 @@ const Form = ({ type }) => {
     validationSchema: joinTeamValidationSchema,
     onSubmit: async (values) => {
       setButtonLoading(true);
-      values["TeamId"] = 1;
+      values["TeamId"] = teamId;
       await axios
-        .post(
+        .patch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/JoinTeam`,
           { ...values },
-          { withCredentials: true }
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
-          console.log(res);
+          handleAlertToastify(res.data.message, "success");
+          dispatch(getTeams());
         })
         .catch((err) => {
-          console.log(err);
+          handleAlertToastify(err.response.data.message, "error");
+        });
+      setButtonLoading(false);
+    },
+  });
+
+  const createSparkFormik = useFormik({
+    initialValues: createSparkInitialValues,
+    validationSchema: createSparkValidationSchema,
+    onSubmit: async (values) => {
+      setButtonLoading(true);
+      values["Team"] = teamId;
+      await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/Idea`,
+          { ...values },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          handleAlertToastify(res.data.message, "success");
+        })
+        .catch((err) => {
+          handleAlertToastify(err.response.data.message, "error");
         });
       setButtonLoading(false);
     },
@@ -305,14 +344,18 @@ const Form = ({ type }) => {
             ? addNewTeamFormik.handleSubmit
             : type === "join_team"
             ? joinTeamFormik.handleSubmit
-            : type === "change_avatar" && handleChangeAvatar
+            : type === "change_avatar"
+            ? handleChangeAvatar
+            : type === "change_cover"
+            ? handleChangeCover
+            : type === "create_spark" && createSparkFormik.handleSubmit
         }
         className={`grid jcs aifs ${
           (type === "add_new_team" || type === "join_team") && "team_form"
         } ${
           (type === "change_cover" || type === "change_avatar") &&
           "profile_form"
-        }`}
+        } ${type === "create_spark" && "g30 spark_form"}`}
       >
         {type === "login" ? (
           <Login formik={loginFormik} />
@@ -331,10 +374,10 @@ const Form = ({ type }) => {
           <ForgotPassword formik={forgotPasswordFormik} />
         ) : type === "change_cover" ? (
           <ChangeCover formik={forgotPasswordFormik} />
+        ) : type === "change_avatar" ? (
+          <ChangeAvatar handleChangeFile={handleChangeFile} />
         ) : (
-          type === "change_avatar" && (
-            <ChangeAvatar handleChangeFile={handleChangeFile} />
-          )
+          type === "create_spark" && <CreateSpark formik={createSparkFormik} />
         )}
       </form>
     </Container>

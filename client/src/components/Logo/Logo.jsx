@@ -20,6 +20,7 @@ const Logo = ({ title, color, align }) => {
           color: (theme) =>
             color === "#333" ? theme.palette.primary.main : theme.palette.white,
         }}
+        className={`${styles.logo_icon}`}
       />
       {title && (
         <Typography variant="h6" sx={{ color: color }} className={`fw700`}>

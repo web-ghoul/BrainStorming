@@ -8,9 +8,8 @@ import { useContext } from "react";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 
 const UserBack = () => {
-  const { handleToggleChangeProfileCoverModal } = useContext(
-    ProfileModalContext
-  );
+  const { handleToggleChangeProfileCoverModal } =
+    useContext(ProfileModalContext);
   return (
     <Box
       className={`${styles.user_back}`}

@@ -10,10 +10,8 @@ import { ProfileModalContext } from "@/context/ProfileModalContext";
 import { useSelector } from "react-redux";
 
 const UserBox = () => {
-  const {
-    handleToggleChangeAvatarModal,
-    handleToggleViewAvatarModal,
-  } = useContext(ProfileModalContext);
+  const { handleToggleChangeAvatarModal, handleToggleViewAvatarModal } =
+    useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   return (
     userData && (

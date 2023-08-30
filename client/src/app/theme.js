@@ -7,7 +7,7 @@ export const theme = createTheme({
       dark: "#007fdb",
     },
     black: "#000",
-    white: "#fff",
+    white: "#ffffff",
     gray: "#999",
     white_alt: "rgb(231, 233, 234)",
     red: "#ff0000",

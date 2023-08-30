@@ -1,4 +1,3 @@
-"use client";
 import React, { useContext } from "react";
 import {
   AppBar,
@@ -8,6 +7,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Box,
 } from "@mui/material";
 import { AccountCircle, Menu } from "@mui/icons-material";
 import styles from "./Header.module.css";
@@ -18,14 +18,11 @@ import ModeToggle from "../ModeToggle/ModeToggle";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import { useSelector } from "react-redux";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
-import { useRouter } from "next/navigation";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
   const { toggleDrawer } = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
-  const router = useRouter();
-  
   return (
     <AppBar color="primary" className={`${styles.header}`}>
       <Container
@@ -41,7 +38,7 @@ const Header = () => {
             <Menu />
           </SpecialIconButton>
         ) : (
-          <>
+          <Box className={`flex jcfe aic g30`}>
             <List
               sx={{ padding: 0 }}
               className={`flex jcfe aic g30 ${styles.list}`}
@@ -69,35 +66,33 @@ const Header = () => {
                   </ListItemButton>
                 </Link>
               </ListItem>
-
-              {signed ? (
-                <SpecialIconButton
-                  onClick={() =>
-                    router.push(
-                      `${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`
-                    )
-                  }
-                  sx={{ color: (theme) => theme.palette.primary.main }}
-                >
-                  <AccountCircle />
-                </SpecialIconButton>
-              ) : (
-                <>
-                  <SecondaryButton>
-                    <Link href={process.env.NEXT_PUBLIC_LOGIN_PAGE}>Login</Link>
-                  </SecondaryButton>
-
-                  <SecondaryButton>
-                    <Link href={process.env.NEXT_PUBLIC_REGISTER_PAGE}>
-                      Register
-                    </Link>
-                  </SecondaryButton>
-                </>
-              )}
-
-              <ModeToggle />
             </List>
-          </>
+            {signed ? (
+              <SpecialIconButton
+                sx={{ color: (theme) => theme.palette.primary.main }}
+              >
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`}
+                 className={`flex aic jcc`}>
+                  <AccountCircle />
+                </Link>
+              </SpecialIconButton>
+            ) : (
+              <>
+                <SecondaryButton>
+                  <Link href={process.env.NEXT_PUBLIC_LOGIN_PAGE}>Login</Link>
+                </SecondaryButton>
+
+                <SecondaryButton>
+                  <Link href={process.env.NEXT_PUBLIC_REGISTER_PAGE}>
+                    Register
+                  </Link>
+                </SecondaryButton>
+              </>
+            )}
+
+            <ModeToggle />
+          </Box>
         )}
       </Container>
     </AppBar>

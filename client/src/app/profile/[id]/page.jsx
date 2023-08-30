@@ -8,11 +8,11 @@ import { getUserData } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
 
 const User = () => {
-  const {id} = useParams()
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(getUserData(id))
-  },[id])
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserData(id));
+  }, [id]);
   return (
     <SpecialBox>
       <ProfileSection />

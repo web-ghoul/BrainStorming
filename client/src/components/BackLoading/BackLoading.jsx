@@ -3,7 +3,7 @@ import { Backdrop, CircularProgress } from "@mui/material";
 import { BackLoadingContext } from "@/context/BackLoadingContext";
 
 const BackLoading = () => {
-  const { handleCloseBackLoading, openBackLoading } =
+  const {  openBackLoading } =
     useContext(BackLoadingContext);
 
   return (
