@@ -15,14 +15,18 @@ const TeamSchema = Schema({
   }
   ,
   Members: {
-    type: [String],
-    default: []
+    type : [Schema.Types.ObjectId],
+    ref : "User",
+    default: [],
   },
   Image:{
     type: String ,
 
   },
-
+  TeamLeader:{
+    type : Schema.Types.ObjectId ,
+    ref : "User"
+  }
 
 
 },{timestamps: true,})

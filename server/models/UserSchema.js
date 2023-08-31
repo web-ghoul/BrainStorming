@@ -34,7 +34,11 @@ const UserSchema = Schema({
   },
   Image : {
     type: String ,
-
+    default: "https://cdn-icons-png.flaticon.com/512/1738/1738691.png"
+  },
+  BackgroundImage: {
+    type: String ,
+    default:"https://i.pinimg.com/564x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg"
   },
   About:{
     type : String ,

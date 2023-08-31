@@ -15,27 +15,28 @@ const IdeaSchema = Schema({
   }
   ,
   Images: {
-    type : [String]
-
+    type : [String],
+    default: [],
   }
   ,
   Files : {
     type: [String],
-    
+    default : [],
   }
   ,
   Team : {
     type : Schema.Types.ObjectId,
     ref : 'Team',
-    required: true
+    required: true,
   }
   ,
   Record : {
     type: String,
-    
+    default: ""
   },
   WrittenBy:{
-    type: String ,
+    type: Schema.Types.ObjectId ,
+    ref: 'User'
   }
   
 
