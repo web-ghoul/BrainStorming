@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -11,25 +12,31 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfileModal from "@/components/ProfileModal/ProfileModal";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthData } from "@/store/authSlice";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { getUserData } from "@/store/userSlice";
+import Cookies from "js-cookie";
+import { getAuthData } from "@/store/authSlice";
+import SparkModal from "@/components/SparkModal/SparkModal";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { id, unique } = useParams();
   const dispatch = useDispatch();
+  const { id, unique } = useParams();
   const { userData } = useSelector((state) => state.user);
-  try {
-    const token = Cookies.get("token");
-    const user_id = Cookies.get("user_id");
-    dispatch(getAuthData({ token, user_id }));
-    // dispatch(getUserData(user_id));
-  } catch (err) {
-    router.push(process.env.NEXT_PUBLIC_LOGIN_PAGE);
-  }
+  useEffect(() => {
+    try {
+      const token = Cookies.get("token");
+      const user_id = Cookies.get("user_id");
+      dispatch(getAuthData({ token, user_id }));
+      if (user_id) {
+        dispatch(getUserData(user_id));
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }, []);
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||
     pathname === process.env.NEXT_PUBLIC_LOGIN_PAGE ||
@@ -45,6 +52,7 @@ const Main = ({ children }) => {
       </PageBox>
     );
   }
+
   return (
     <PageBox component={"main"}>
       <Header />
@@ -54,6 +62,7 @@ const Main = ({ children }) => {
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />
+      <SparkModal/>
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
       <ProfileModal type="view_avatar" img={userData && userData.Image} />

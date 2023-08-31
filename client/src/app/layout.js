@@ -1,5 +1,6 @@
 "use client";
 import "./globals.css";
+import "./app.css";
 import { ModeProvider } from "@/context/ModeContext";
 import { TeamModalProvider } from "@/context/TeamModalContext";
 import { DrawerProvider } from "@/context/DrawerContext";
@@ -12,6 +13,7 @@ import { store } from "../store/store";
 import { LoadingButtonProvider } from "@/context/LoadingButtonContext";
 import { ThemeProvider } from "@mui/material/styles";
 import { ProfileModalProvider } from "@/context/ProfileModalContext";
+import { SparkModalProvider } from "@/context/SparkModalContext";
 
 export default function RootLayout({ children }) {
   return (
@@ -35,23 +37,25 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Provider store={store}>
-          <LoadingButtonProvider>
-            <ModeProvider>
-              <CarouselProvider>
-                <BackLoadingProvider>
-                  <TeamModalProvider>
-                    <ProfileModalProvider>
-                      <DrawerProvider>
-                        <ThemeProvider theme={theme}>
-                          <Main>{children}</Main>
-                        </ThemeProvider>
-                      </DrawerProvider>
-                    </ProfileModalProvider>
-                  </TeamModalProvider>
-                </BackLoadingProvider>
-              </CarouselProvider>
-            </ModeProvider>
-          </LoadingButtonProvider>
+          <SparkModalProvider>
+            <LoadingButtonProvider>
+              <ModeProvider>
+                <CarouselProvider>
+                  <BackLoadingProvider>
+                    <TeamModalProvider>
+                      <ProfileModalProvider>
+                        <DrawerProvider>
+                          <ThemeProvider theme={theme}>
+                            <Main>{children}</Main>
+                          </ThemeProvider>
+                        </DrawerProvider>
+                      </ProfileModalProvider>
+                    </TeamModalProvider>
+                  </BackLoadingProvider>
+                </CarouselProvider>
+              </ModeProvider>
+            </LoadingButtonProvider>
+          </SparkModalProvider>
         </Provider>
       </body>
     </html>

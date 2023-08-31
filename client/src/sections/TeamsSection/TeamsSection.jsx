@@ -82,7 +82,7 @@ const TeamsSection = () => {
             <TeamsGridBox data={data} />
           </AccordionDetails>
         </Accordion>
-        <Box>
+        <Box className={`grid jcs aic g30`}>
           <Head special={true} title={"Explore Teams"} align="left" h={"h4"} />
           <TeamsGridBox data={teams} />
         </Box>

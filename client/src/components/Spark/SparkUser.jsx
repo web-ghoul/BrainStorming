@@ -37,13 +37,18 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
         handleAlertToastify(err.response.data.message, "error");
       });
   };
-  document.addEventListener("click", (event) => {
-    if (event.target.id === `list_button_${spark_id}` || event.target.id === `list_icon_${spark_id}`) {
-      setOpenList(!openList);
-    } else {
-      setOpenList(false);
-    }
-  });
+  if (typeof document !== "undefined") {
+    document.addEventListener("click", (event) => {
+      if (
+        event.target.id === `list_button_${spark_id}` ||
+        event.target.id === `list_icon_${spark_id}`
+      ) {
+        setOpenList(!openList);
+      } else {
+        setOpenList(false);
+      }
+    });
+  }
   return (
     <Box className={`flex jcsb aic g30 ${styles.user}`}>
       <Box className={`flex jcfs aic g10 `}>
@@ -60,7 +65,10 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
           </Box>
         </Box>
       </Box>
-      <IconButton id={`list_button_${spark_id}`} onClick={() => setOpenList(!openList)}>
+      <IconButton
+        id={`list_button_${spark_id}`}
+        onClick={() => setOpenList(!openList)}
+      >
         <MoreVertRounded
           id={`list_icon_${spark_id}`}
           sx={{ color: (theme) => theme.palette.white }}

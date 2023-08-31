@@ -18,10 +18,15 @@ import ImagesGridBox from "@/components/ImagesGridBox/ImagesGridBox";
 import { Box, IconButton, TextField } from "@mui/material";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
+import { useContext } from "react";
+import { SparkModalContext } from "@/context/SparkModalContext";
 
 const CreateSpark = () => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
   const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
+  const {
+    handleToggleChooseFiles,
+  } = useContext(SparkModalContext);
   const [drop, setDrop] = useState("");
   const [brainWave, setBrainWave] = useState("");
   const [recordExist, setRecordExist] = useState(false);
@@ -56,9 +61,9 @@ const CreateSpark = () => {
               value={drop}
               onChange={(e) => setDrop(e.target.value)}
             />
-            <MainIconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
+            <IconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
               <SentimentSatisfiedRounded />
-            </MainIconButton>
+            </IconButton>
           </Box>
 
           {dropEmojiShow && (
@@ -104,10 +109,7 @@ const CreateSpark = () => {
       </Box>
 
       <Box className={`flex jcfs aic g10`}>
-        <IconButton>
-          <Collections />
-        </IconButton>
-        <IconButton>
+        <IconButton onClick={handleToggleChooseFiles}>
           <AttachFileRounded />
         </IconButton>
         {!recordExist && (
@@ -135,7 +137,7 @@ const CreateSpark = () => {
         {images.length > 0 && <ImagesGridBox data={images} />}
       </Box>
 
-      <LoadingButton text={"Spark"}/>
+      <LoadingButton text={"Spark"} />
     </>
   );
 };
