@@ -4,7 +4,6 @@ const logger = require("../logger/index")
 const asyncHandler = require("express-async-handler");
 
 
-/*
 const express = require('express');
 const router = express.Router();
 const fs = require('fs').promises;
@@ -17,35 +16,34 @@ router.delete('/delete-file/:filename', async (req, res) => {
   const filePath = path.join(__dirname, '../uploads', filename);
 
   try {
-    // Check if the file exists
-    await fs.access(filePath);
+  // Read the contents of the folder
+  const files = await fs.readdir(folderPath);
 
-    // Delete the file
+  // Loop through each file and delete it
+  for (const file of files) {
+    const filePath = path.join(folderPath, file);
     await fs.unlink(filePath);
-
-    res.status(200).json({ message: 'File deleted successfully' });
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      res.status(404).json({ message: 'File not found' });
-    } else {
-      res.status(500).json({ message: 'An error occurred while deleting the file' });
-    }
   }
+
+  res.status(200).json({ message: 'All files deleted successfully' });
+} catch (error) {
+  res.status(500).json({ message: 'An error occurred while deleting the files' });
+}
 });
 
-*/
+
 
 
 const postIdeas = asyncHandler (async(req,res,next) => {
 
-  const {Idea  , Description , Team } = req.body
+  const {idea  , description , team } = req.body
 
-  if(!Idea )
+  if(!idea )
   {
     return res.status(400).json({
       message: "Please fill Brainwave"})
   }
-
+  //use mac to secure data form idor
   console.log(req.files)
   logger.info(req.body)
   var arrayOfUrls ;
@@ -78,21 +76,36 @@ const postIdeas = asyncHandler (async(req,res,next) => {
   }
   }
   const newIdea = new Ideas({
-    Idea,
-    Description,
+    Idea : idea,
+    Description: description,
     Images : imagesArray,
     Files : filesArray,
-    Team,
-    WrittenBy:req.userName,
+    Team: team,
+    WrittenBy:req.userId,
   })
   newIdea.save().then((result) => {
-    return res.status(200).json({
+    res.status(200).json({
       message: "Idea Added Successfully",
     })
   }).catch((err) => {
     return res.status(500).json({message : err})
   });
 
+  try {
+    // Read the contents of the folder
+    const folderPath = path.join(__dirname,"../uploads")
+    const files = await fs.readdir(folderPath);
+  
+    // Loop through each file and delete it
+    for (const file of files) {
+      const filePath = path.join(folderPath, file);
+      await fs.unlink(filePath);
+    }
+  
+    res.status(200).json({ message: 'All files deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while deleting the files' });
+  }
 
 }
 )
@@ -119,7 +132,7 @@ const deleteIdea = asyncHandler(async(req, res, next) => {
 
   const data = await Ideas.findOne({_id : req.params.id})
 
-  if(data && data.WrittenBy == req.userName)
+  if(data && data.WrittenBy == req.userId)
   {
     await Ideas.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: 'Data deleted successfully.' });
@@ -133,14 +146,14 @@ const deleteIdea = asyncHandler(async(req, res, next) => {
 
 const updateIdea = asyncHandler(async(req,res,next) => {
   
-  const {Idea  , Description} = req.body
+  const {idea  , description} = req.body
 
   const data = await Ideas.findOne({_id : req.params.id})
 
-  if(data && data.WrittenBy == req.userName)
+  if(data && data.WrittenBy == req.userId)
   {
-    data.Idea = Idea 
-    data.Description = Description
+    data.Idea = idea 
+    data.Description = description
     await data.save()
     return res.status(200).json({ message: 'Data updated successfully.' });
   }

@@ -7,7 +7,7 @@ const protect = require('../middleware/authMiddleware')
 const multer = require('multer');
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-      callback(null, __dirname + '../uploads');
+      callback(null, __dirname + '/../uploads');
   },
   // Sets file(s) to be saved in uploads folder in same directory
   filename: function (req, file, callback) {
@@ -39,6 +39,10 @@ router.put("/updateIdea/:id" , protect, ideaController.updateIdea)
 
 router.patch("/uploadProfileImage" , protect , upload.array("files") , userControler.setProfilePic)
 
+router.patch("/uploadBackgroundPic" , protect , upload.array("files") , userControler.setBackgroundPic)
 
+router.patch("/uploadTeamImage/:id" , protect , upload.array("files") , teamController.setTeamImage)
+
+router.patch("/updateProfile/:id" , protect , userControler.updateProfile)
 
 module.exports = router;

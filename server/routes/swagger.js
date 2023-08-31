@@ -1134,3 +1134,144 @@
  *               description: URL to the Facebook OAuth consent page.
  *               example: https://www.facebook.com/v12.0/dialog/oauth?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=email
  */
+
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: User profile management
+ */
+
+/**
+ * @swagger
+ * /uploadBackgroundPic:
+ *   patch:
+ *     summary: Upload a background picture for the user's profile
+ *     tags: [User]
+ *     security:
+ *       - BearerAuth: []
+ *     consumes:
+ *       - multipart/form-data
+ *     parameters:
+ *       - in: formData
+ *         name: files
+ *         type: file
+ *         required: true
+ *         description: The background image to upload.
+ *     responses:
+ *       200:
+ *         description: Background image updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: Image updated successfully!
+ *                 data:
+ *                   type: object
+ *                   description: Updated user profile data.
+ *                   $ref: '#/components/schemas/UserProfile'
+ *       404:
+ *         description: Image not uploaded or user not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: You have to set an image.
+ *       500:
+ *         description: Error while uploading files and images.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Error while uploading files and images!
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               files:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: The background image to upload.
+ *             required:
+ *               - files
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: User profile management
+ */
+
+/**
+ * @swagger
+ * /updateProfile/{id}:
+ *   patch:
+ *     summary: Update user profile information
+ *     tags: [User]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: User ID.
+ *         description: ID of the user profile to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bio:
+ *                 type: string
+ *                 description: User's bio.
+ *               about:
+ *                 type: string
+ *                 description: User's about information.
+ *             required:
+ *               - bio
+ *               - about
+ *     responses:
+ *       200:
+ *         description: User profile updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: Data updated successfully.
+ *       403:
+ *         description: Access denied or data not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Access denied or data not found.
+ */

@@ -1221,7 +1221,8 @@ const login = (req, res, next) => {
                 res.status(200).json({
                   message: "login successfully !",
                   token: token,
-                  csrfToken: csrfToken
+                  csrfToken: csrfToken,
+                  userId : user._id
                 });
               } else {
                 res.status(403).json({
