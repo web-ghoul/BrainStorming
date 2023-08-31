@@ -4,4 +4,39 @@
   justify-content: center;
   position: relative;
   z-index: 2;
+
+}
+
+.head_special {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.head_special::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  width: 25%;
+  height: 4px;
+  left: 0;
+  border-radius: 2px;
+  background-color: var(--main);
+}
+
+.head_special::before {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  width: 70%;
+  height: 4px;
+  left: 30%;
+  border-radius: 2px;
+  background-color: var(--main);
+}
+
+@media (992px > width >=0) {
+  .head_special::after, .head_special::before {
+    height: 2px;
+    border-radius: 1px;
+  }
 }

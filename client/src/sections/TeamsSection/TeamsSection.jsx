@@ -76,14 +76,14 @@ const TeamsSection = () => {
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <Head title={"My Teams"} align="left" h={"h4"} />
+            <Head special={true} title={"My Teams"} align="left" h={"h4"} />
           </AccordionSummary>
           <AccordionDetails>
             <TeamsGridBox data={data} />
           </AccordionDetails>
         </Accordion>
         <Box>
-          <Head title={"Explore Teams"} align="left" h={"h4"} />
+          <Head special={true} title={"Explore Teams"} align="left" h={"h4"} />
           <TeamsGridBox data={teams} />
         </Box>
       </Container>

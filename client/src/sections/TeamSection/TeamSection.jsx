@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { Tabs, Tab, Box, Container } from "@mui/material";
 import Head from "@/components/Head/Head";
 import CreateIdeaSection from "./CreateIdeaSection/CreateIdeaSection";
-import { useTheme } from "@mui/material/styles";
 import SparksSection from "./SparksSection/SparksSection";
 import styles from "./TeamSection.module.css";
 import roomImg from "../../../public/images/team3.jpg";
@@ -48,11 +47,9 @@ function a11yProps(index) {
 }
 
 const TeamSection = () => {
-  const theme = useTheme();
+  const [value, setValue] = React.useState(1);
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
+  const handleChange = (event,newValue) => {
     setValue(newValue);
   };
 
