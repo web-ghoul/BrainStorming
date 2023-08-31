@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 export const metadata = {
   title: "BrainStorming - Verify Account",
@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 const VerifyLayout = ({ children }) => {
-  return children 
+  return children;
 };
 
 export default VerifyLayout;

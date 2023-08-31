@@ -31,7 +31,7 @@
   }
 }
 
-@media (768px > width >= 640px) {
+@media (768px > width >= 0) {
   .members_box {
     top: auto;
     position: relative;
@@ -39,12 +39,9 @@
   }
 
   .members {
-    padding: 16px;
+    padding: 15px;
+    justify-content: center !important;
   }
 }
 
-@media (640px > width >= 0) {
-  .members {
-    padding: 10px;
-  }
-}
+

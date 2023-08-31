@@ -6,9 +6,10 @@ import Image from "next/image";
 import backImg from "../../../public/images/team8.svg";
 import shapeImg from "../../../public/images/shape.png";
 import styles from "./Home.module.css";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
+  const router = useRouter()
   return (
     <Container className={`grid jcs aic tac ${styles.home}`}>
       <Box className={`grid jcfs aic g10 ${styles.text}`}>
@@ -22,7 +23,7 @@ const Home = () => {
           Think Then... <br /> Code It.
         </Typography>
         <MainButton
-          onClick={() => redirect(process.env.NEXT_PUBLIC_TEAMS_PAGE)}
+          onClick={() => router.push(process.env.NEXT_PUBLIC_TEAMS_PAGE)}
           sx={{ width: "fit-content" }}
         >
           Start

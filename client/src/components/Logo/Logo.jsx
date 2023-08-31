@@ -3,27 +3,31 @@ import { Typography, IconButton } from "@mui/material";
 import styles from "./Logo.module.css";
 import logoImg from "../../../public/images/logo.jpg";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { EmojiObjects } from "@mui/icons-material";
 
 const Logo = ({ title, color, align }) => {
+  const router = useRouter();
   return (
-    <Link
-      href={process.env.NEXT_PUBLIC_HOME_PAGE}
-      className={`flex aic ${align && align === "center" ? "jcc" : "jcfs"}`}
+    <IconButton
+      onClick={() => router.push(process.env.NEXT_PUBLIC_HOME_PAGE)}
+      className={`flex ${
+        align && align === "center" ? "jcc" : "jcfs"
+      } aic g10 ${styles.logo}`}
     >
-      <IconButton
-        className={`flex ${
-          align && align === "center" ? "jcc" : "jcfs"
-        } aic g10 ${styles.logo}`}
-      >
-        <Image alt="logo" src={logoImg} />
-        {title && (
-          <Typography variant="h6" sx={{ color: color }} className={`fw700`}>
-            BrainStorming
-          </Typography>
-        )}
-      </IconButton>
-    </Link>
+      <EmojiObjects
+        sx={{
+          color: (theme) =>
+            color === "#333" ? theme.palette.primary.main : theme.palette.white,
+        }}
+        className={`${styles.logo_icon}`}
+      />
+      {title && (
+        <Typography variant="h6" sx={{ color: color }} className={`fw700`}>
+          BrainStorming
+        </Typography>
+      )}
+    </IconButton>
   );
 };
 

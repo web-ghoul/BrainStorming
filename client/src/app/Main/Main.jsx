@@ -1,21 +1,35 @@
-import React, { useContext } from "react";
+import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import TeamModal from "@/components/TeamModal/TeamModal";
 import FloatActionButtons from "@/components/FloatActionButtons/FloatActionButtons";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { PageBox } from "@/MUIComponents/PageBox/PageBox";
 import BackLoading from "@/components/BackLoading/BackLoading";
 import CarouselSlider from "@/components/CarouselSlider/CarouselSlider";
-import { BackLoadingContext } from "@/context/BackLoadingContext";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import ProfileModal from "@/components/ProfileModal/ProfileModal";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthData } from "@/store/authSlice";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import Cookies from "js-cookie";
+import { getUserData } from "@/store/userSlice";
+
 const Main = ({ children }) => {
   const pathname = usePathname();
-  const { openBackLoading } = useContext(BackLoadingContext);
-  const {id, unique} = useParams()
+  const router = useRouter();
+  const { id, unique } = useParams();
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state) => state.user);
+  try {
+    const token = Cookies.get("token");
+    const user_id = Cookies.get("user_id");
+    dispatch(getAuthData({ token, user_id }));
+    // dispatch(getUserData(user_id));
+  } catch (err) {
+    router.push(process.env.NEXT_PUBLIC_LOGIN_PAGE);
+  }
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||
     pathname === process.env.NEXT_PUBLIC_LOGIN_PAGE ||
@@ -26,7 +40,7 @@ const Main = ({ children }) => {
     return (
       <PageBox component={"main"}>
         <ToastContainer />
-        {openBackLoading && <BackLoading />}
+        <BackLoading />
         {children}
       </PageBox>
     );
@@ -34,7 +48,7 @@ const Main = ({ children }) => {
   return (
     <PageBox component={"main"}>
       <Header />
-      {openBackLoading && <BackLoading />}
+      <BackLoading />
       <Sidebar />
       <CarouselSlider />
       {children}
@@ -42,7 +56,8 @@ const Main = ({ children }) => {
       <TeamModal type="join_team" />
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
-      <FloatActionButtons bottom={"120px"} right={"40px"} left={"auto"} />
+      <ProfileModal type="view_avatar" img={userData && userData.Image} />
+      <FloatActionButtons />
       <ToastContainer />
       <Footer />
     </PageBox>

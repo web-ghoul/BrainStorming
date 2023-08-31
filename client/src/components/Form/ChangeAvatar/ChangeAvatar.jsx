@@ -7,11 +7,10 @@ import { FileUploader } from "react-drag-drop-files";
 import Head from "@/components/Head/Head";
 import { CameraAltRounded } from "@mui/icons-material";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
+import LoadingButton from "@/components/LoadingButton/LoadingButton";
 
-const ChangeAvatar = ({ handleChangeFile, formik }) => {
-  const { handleToggleChangeAvatarModal } = useContext(
-    ProfileModalContext
-  );
+const ChangeAvatar = ({ handleChangeFile }) => {
+  const { handleToggleChangeAvatarModal } = useContext(ProfileModalContext);
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
   return (
     <Box className={`grid aic jcs g20 add_new_team_form_contain`}>
@@ -32,10 +31,8 @@ const ChangeAvatar = ({ handleChangeFile, formik }) => {
         multiple={false}
       />
       <Box className={`flex jcfe aic g20`}>
-        <MainButton type="submit">Change</MainButton>
-        <RedButton onClick={handleToggleChangeAvatarModal}>
-          Cancel
-        </RedButton>
+        <LoadingButton text={"Change"} />
+        <RedButton onClick={handleToggleChangeAvatarModal}>Cancel</RedButton>
       </Box>
     </Box>
   );

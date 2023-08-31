@@ -1,14 +1,11 @@
-import { MainButton } from "@/MUIComponents/MainButton/MainButton";
-import { Box, Divider, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import React from "react";
 import "../Form.css";
 import forgotPasswordImg from "../../../../public/images/forgotPassword.jpg";
 import Logo from "@/components/Logo/Logo";
 import Head from "@/components/Head/Head";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
-import AuthButton from "@/components/AuthButton/AuthButton";
 import Link from "next/link";
-import { FacebookRounded, Google } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 
 const ForgotPassword = ({ formik }) => {

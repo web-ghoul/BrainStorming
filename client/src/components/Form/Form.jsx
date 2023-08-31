@@ -18,30 +18,23 @@ import ChangeAvatar from "./ChangeAvatar/ChangeAvatar";
 import ChangeCover from "./ChangeCover/ChangeCover";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
+import { MainButton } from "@/MUIComponents/MainButton/MainButton";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthData } from "@/store/authSlice";
+import { getUserData } from "@/store/userSlice";
+import { getTeams } from "@/store/teamsSlice";
+import { TeamModalContext } from "@/context/TeamModalContext";
+import CreateSpark from "./CreateSpark/CreateSpark";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
+  const { teamId } = useContext(TeamModalContext);
   const { id, unique } = useParams();
-
-  const handleVerifyAccount = async () => {
-    await axios
-      .get(process.env.NEXT_PUBLIC_SERVER_URL + `/verify/${id}/${unique}`)
-      .then((res) => {
-        try {
-          handleAlertToastify(res.data.message, "success");
-        } catch (error) {
-          handleAlertToastify("Email Verified Successfully", "success");
-        }
-        redirect(process.env.NEXT_PUBLIC_LOGIN_PAGE);
-      })
-      .catch((err) => {
-        try {
-          handleAlertToastify(err.response.data.message, "error");
-        } catch (error) {
-          handleAlertToastify("Error", "e");
-        }
-      });
-  };
+  const router = useRouter();
+  const [file, setFile] = useState([]);
+  const dispatch = useDispatch();
+  const { token, user_id } = useSelector((state) => state.auth);
 
   const handleResetPassword = async () => {
     await axios
@@ -146,10 +139,18 @@ const Form = ({ type }) => {
       .required("Password is required"),
   });
 
-  const [file, setFile] = useState(null);
+  const createSparkInitialValues = {
+    idea: "",
+    description: "",
+  };
 
-  const handleChangeFile = (file) => {
-    setFile(file);
+  const createSparkValidationSchema = yup.object({
+    idea: yup.string("Enter your Idea").required("Idea is required"),
+    description: yup.string("Enter your Description"),
+  });
+
+  const handleChangeFile = (files) => {
+    setFile(files);
   };
 
   const loginFormik = useFormik({
@@ -161,6 +162,11 @@ const Form = ({ type }) => {
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
+          Cookies.set("token", res.data.token);
+          Cookies.set("user_id", res.data.userId);
+          const authData = { token: res.data.token, user_id: res.data.userId };
+          dispatch(getAuthData(authData));
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -218,6 +224,8 @@ const Form = ({ type }) => {
         })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          Cookies.remove("hashedUniqueString");
+          router(process.env.NEXT_PUBLIC_LOGIN_PAGE);
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -235,13 +243,14 @@ const Form = ({ type }) => {
         .post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/Teams`,
           { ...values },
-          { withCredentials: true }
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
-          console.log(res);
+          handleAlertToastify(res.data.message, "success");
+          dispatch(getTeams());
         })
         .catch((err) => {
-          console.log(err);
+          handleAlertToastify(err.response.data.message, "error");
         });
       setButtonLoading(false);
     },
@@ -252,31 +261,70 @@ const Form = ({ type }) => {
     validationSchema: joinTeamValidationSchema,
     onSubmit: async (values) => {
       setButtonLoading(true);
-      values["TeamId"] = 1;
+      values["TeamId"] = teamId;
       await axios
-        .post(
+        .patch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/JoinTeam`,
           { ...values },
-          { withCredentials: true }
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
-          console.log(res);
+          handleAlertToastify(res.data.message, "success");
+          dispatch(getTeams());
         })
         .catch((err) => {
-          console.log(err);
+          handleAlertToastify(err.response.data.message, "error");
         });
       setButtonLoading(false);
     },
   });
 
+  const createSparkFormik = useFormik({
+    initialValues: createSparkInitialValues,
+    validationSchema: createSparkValidationSchema,
+    onSubmit: async (values) => {
+      setButtonLoading(true);
+      values["Team"] = teamId;
+      await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/Idea`,
+          { ...values },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          handleAlertToastify(res.data.message, "success");
+        })
+        .catch((err) => {
+          handleAlertToastify(err.response.data.message, "error");
+        });
+      setButtonLoading(false);
+    },
+  });
+
+  const handleChangeAvatar = async (e) => {
+    e.preventDefault();
+    setButtonLoading(true);
+    const formData = new FormData();
+    formData.append("files", file);
+    await axios
+      .patch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        handleAlertToastify(res.data.message, "success");
+        dispatch(getUserData(user_id));
+      })
+      .catch((err) => {
+        handleAlertToastify(err.response.data.message, "error");
+      });
+    setButtonLoading(false);
+  };
+
   useEffect(() => {
     if (type === "reset_password") {
       handleResetPassword();
-    }
-
-    if (type === "verify") {
-      handleVerifyAccount();
-      return;
     }
   }, [type]);
 
@@ -296,16 +344,18 @@ const Form = ({ type }) => {
             ? addNewTeamFormik.handleSubmit
             : type === "join_team"
             ? joinTeamFormik.handleSubmit
-            : () => {
-                "";
-              }
+            : type === "change_avatar"
+            ? handleChangeAvatar
+            : type === "change_cover"
+            ? handleChangeCover
+            : type === "create_spark" && createSparkFormik.handleSubmit
         }
         className={`grid jcs aifs ${
           (type === "add_new_team" || type === "join_team") && "team_form"
         } ${
           (type === "change_cover" || type === "change_avatar") &&
           "profile_form"
-        }`}
+        } ${type === "create_spark" && "g30 spark_form"}`}
       >
         {type === "login" ? (
           <Login formik={loginFormik} />
@@ -324,10 +374,10 @@ const Form = ({ type }) => {
           <ForgotPassword formik={forgotPasswordFormik} />
         ) : type === "change_cover" ? (
           <ChangeCover formik={forgotPasswordFormik} />
+        ) : type === "change_avatar" ? (
+          <ChangeAvatar handleChangeFile={handleChangeFile} />
         ) : (
-          type === "change_avatar" && (
-            <ChangeAvatar formik={forgotPasswordFormik} />
-          )
+          type === "create_spark" && <CreateSpark formik={createSparkFormik} />
         )}
       </form>
     </Container>

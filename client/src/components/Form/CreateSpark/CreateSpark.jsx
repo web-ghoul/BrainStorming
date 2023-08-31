@@ -1,7 +1,7 @@
 "use client";
-import React, { useRef, useState } from "react";
-import { Box, TextField, IconButton } from "@mui/material";
-import styles from "./CreateIdeaBox.module.css";
+import React from "react";
+import { useState } from "react";
+import { useRef } from "react";
 import {
   SentimentSatisfiedRounded,
   AttachFileRounded,
@@ -13,17 +13,20 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
-import ImagesGridBox from "../ImagesGridBox/ImagesGridBox";
 import { FileUploader } from "react-drag-drop-files";
+import ImagesGridBox from "@/components/ImagesGridBox/ImagesGridBox";
+import { Box, IconButton, TextField } from "@mui/material";
+import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
+import LoadingButton from "@/components/LoadingButton/LoadingButton";
 
-const CreateIdeaBox = () => {
+const CreateSpark = () => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
   const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
   const [drop, setDrop] = useState("");
   const [brainWave, setBrainWave] = useState("");
-  const recordRef = useRef();
   const [recordExist, setRecordExist] = useState(false);
   const [images, setImages] = useState([]);
+  const recordRef = useRef();
 
   const addAudioElement = (blob) => {
     const url = URL.createObjectURL(blob);
@@ -38,12 +41,8 @@ const CreateIdeaBox = () => {
     recordRef.current.removeChild(recordRef.current.firstChild);
     setRecordExist(false);
   };
-
   return (
-    <Box
-      width={"100%"}
-      className={`grid jcs aic g20 ${styles.create_idea_box}`}
-    >
+    <>
       <Box className={`grid jcs aic g20`}>
         <Box className={`grid jcs aic g5`}>
           <Box className={`flex jcs aic g5`}>
@@ -57,9 +56,9 @@ const CreateIdeaBox = () => {
               value={drop}
               onChange={(e) => setDrop(e.target.value)}
             />
-            <IconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
+            <MainIconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
               <SentimentSatisfiedRounded />
-            </IconButton>
+            </MainIconButton>
           </Box>
 
           {dropEmojiShow && (
@@ -104,7 +103,7 @@ const CreateIdeaBox = () => {
         </Box>
       </Box>
 
-      <Box className={`flex jcfs aic g10 ${styles.icon_buttons}`}>
+      <Box className={`flex jcfs aic g10`}>
         <IconButton>
           <Collections />
         </IconButton>
@@ -136,11 +135,9 @@ const CreateIdeaBox = () => {
         {images.length > 0 && <ImagesGridBox data={images} />}
       </Box>
 
-      <Box>
-        <MainButton sx={{ width: "100%" }}>Spark</MainButton>
-      </Box>
-    </Box>
+      <LoadingButton text={"Spark"}/>
+    </>
   );
 };
 
-export default CreateIdeaBox;
+export default CreateSpark;

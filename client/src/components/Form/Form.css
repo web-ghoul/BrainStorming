@@ -14,10 +14,24 @@ form {
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
-.team_form ,.profile_form{
+.team_form,
+.profile_form {
   grid-template-columns: repeat(1, 1fr);
   width: 60vw;
   padding: 20px;
+}
+
+.spark_form{
+  grid-template-columns: repeat(1, 1fr);
+  position: relative;
+  left: auto;
+  right: auto;
+  transform: none;
+  height: auto;
+  width: auto;
+  box-shadow: none;
+  border-radius: 0px;
+  overflow: auto;
 }
 
 .team_form div div label {

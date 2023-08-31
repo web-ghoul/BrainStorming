@@ -4,11 +4,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require("uuid");
-const validation = require('../utils/validation_schema')
-var Tokens = require('csrf')
+const validation = require("../utils/validation_schema");
+var Tokens = require("csrf");
 
 require("dotenv").config();
-
 
 let transporter = nodemailer.createTransport({
   service: "gmail",
@@ -31,7 +30,7 @@ function options(type, currentUrl, uniqueString, Email, _id) {
   let obj;
   var longUrl;
   if (type == "forgotPassword") {
-    longUrl = currentUrl + "/api/reset_password/"+ _id + "/" + uniqueString;
+    longUrl = currentUrl + "/api/reset_password/" + _id + "/" + uniqueString;
   } else {
     longUrl = currentUrl + "/api/verify/" + _id + "/" + uniqueString;
   }
@@ -988,34 +987,28 @@ function options(type, currentUrl, uniqueString, Email, _id) {
 }
 
 const sendVerificationEmail = async ({ _id, Email }, type, res) => {
-  const currentUrl = "http://localhost:3000" ;
+  const currentUrl = "http://localhost:3000";
   const uniqueString = uuidv4() + _id;
-  
-  
-  
 
-  if(type=="forgotPassword")
-  {  
+  if (type == "forgotPassword") {
     const alreadySendCheck = await Userverification.findOne({ userId: _id });
     if (alreadySendCheck) {
       return res.status(402).json({
         message: "You have already sent a password reset email.",
       });
-    }else
-    {
+    } else {
       res.json({
         status: "pending",
         message: "Password reset email sent. Check your inbox",
       });
     }
-  }else
-  {
+  } else {
     res.json({
       status: "pending",
       message: "verification email sent",
     });
   }
-  
+
   const mailOptions = options(type, currentUrl, uniqueString, Email, _id);
   bcrypt.hash(uniqueString, 10, (err, hashedUniqueString) => {
     if (err) {
@@ -1035,9 +1028,7 @@ const sendVerificationEmail = async ({ _id, Email }, type, res) => {
         .then(() => {
           transporter
             .sendMail(mailOptions)
-            .then(() => {
-            
-            })
+            .then(() => {})
             .catch((err) => {
               res.status(404).json({
                 message: err,
@@ -1045,7 +1036,6 @@ const sendVerificationEmail = async ({ _id, Email }, type, res) => {
             });
         })
         .catch((err) => {
-        
           res.json({
             status: "failed",
             message:
@@ -1056,19 +1046,15 @@ const sendVerificationEmail = async ({ _id, Email }, type, res) => {
   });
 };
 
-const register = async(req, res, next) => {
-  console.log(req.body)
-  try{
-    const validate = await validation.registerSchema.validateAsync(req.body)
-  
-  }catch(err)
-  {
-
+const register = async (req, res, next) => {
+  console.log(req.body);
+  try {
+    const validate = await validation.registerSchema.validateAsync(req.body);
+  } catch (err) {
     return res.status(404).json({
-      message: err.details[0].message.replace(/"/g, '')
-    })
+      message: err.details[0].message.replace(/"/g, ""),
+    });
   }
-  
 
   User.findOne({ Email: req.body.email }).then((result) => {
     if (result) {
@@ -1110,7 +1096,7 @@ const verify = (req, res, next) => {
       if (result) {
         const { expireAt } = result;
         const hashedUniqueString = result.uniqueString;
-      
+
         if (expireAt < Date.now()) {
           Userverification.deleteOne({ _id: userId })
             .then((result) => {
@@ -1148,41 +1134,32 @@ const verify = (req, res, next) => {
                   .then((result) => {
                     Userverification.deleteOne({ userId: userId })
                       .then((result) => {
-                        res.redirect("")
+                        res.redirect("");
                       })
                       .catch((err) => {
-                        
-                        res
-                          .status(403)
-                          .json({
-                            message: "error while deleting verification",
-                          });
+                        res.status(403).json({
+                          message: "error while deleting verification",
+                        });
                       });
                   })
                   .catch((err) => {
-                    
                     res
                       .status(403)
                       .json({ message: "couldn't update verified" });
                   });
               } else {
-                
                 res.status(403).json({ message: "incorrect verification" });
               }
             }
           });
         }
       } else {
-        
-        res
-          .status(404)
-          .json({
-            message: "couldn't find Userverification or already verified",
-          });
+        res.status(404).json({
+          message: "couldn't find Userverification or already verified",
+        });
       }
     })
     .catch((err) => {
-      
       res.status(404).json({ message: err });
     });
 };
@@ -1197,6 +1174,7 @@ const login = (req, res, next) => {
             message: "Email is not verified",
           });
         } else {
+<<<<<<< HEAD
           bcrypt.compare(
             req.body.password,
             user.Password,
@@ -1229,8 +1207,48 @@ const login = (req, res, next) => {
                   message: "Username or Password is incorrect",
                 });
               }
+=======
+          bcrypt.compare(req.body.password, user.Password, function (
+            err,
+            result
+          ) {
+            if (err) {
+              res.status(403).json({
+                error: err,
+              });
+>>>>>>> 9161560f3eb3defc8cb44aa993b2f0e20f7d3593
             }
-          );
+            if (result) {
+              let token = jwt.sign(
+                { Id: user.id, Name: user.Name },
+                process.env.SECRET_KEY,
+                {
+                  expiresIn: "30h",
+                }
+              );
+              const expirationDate = new Date();
+              expirationDate.setTime(
+                expirationDate.getTime() + 30 * 60 * 60 * 1000
+              );
+              res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict",
+                expires: expirationDate,
+              });
+              var csrfToken = uuidv4();
+              res.status(200).json({
+                message: "login successfully !",
+                token: token,
+                csrfToken: csrfToken,
+                userId :user._id
+              });
+            } else {
+              res.status(403).json({
+                message: "Username or Password is incorrect",
+              });
+            }
+          });
         }
       } else {
         res.status(404).json({
@@ -1260,16 +1278,12 @@ const forgetPasswordRequest = (req, res, next) => {
 };
 
 const forgetPasswordResponse = (req, res, next) => {
-
-  try{
-
-    const check = validation.resetPasswordSchema.validate(req.body)
-
-  }catch(err)
-  {
+  try {
+    const check = validation.resetPasswordSchema.validate(req.body);
+  } catch (err) {
     return res.status(404).json({
-      message: err.details[0].message.replace(/"/g, '')
-    })
+      message: err.details[0].message.replace(/"/g, ""),
+    });
   }
 
   var { userId, uniqueString } = req.params;
@@ -1279,11 +1293,8 @@ const forgetPasswordResponse = (req, res, next) => {
       if (result) {
         const { expireAt } = result;
         const hashedUniqueString = result.uniqueString;
-        
-        
 
         if (expireAt < Date.now()) {
-          
           Userverification.deleteOne({ userId: userId })
             .then((result) => {
               User.deleteOne({ _id: userId })
@@ -1298,7 +1309,6 @@ const forgetPasswordResponse = (req, res, next) => {
                     message: "server error",
                   });
                 });
-              
             })
             .catch((err) => {
               res.status(404).json({
@@ -1307,7 +1317,6 @@ const forgetPasswordResponse = (req, res, next) => {
               });
             });
         } else {
-          
           bcrypt.compare(uniqueString, hashedUniqueString, (err, result) => {
             if (err) {
               res.status(404).json({
@@ -1316,13 +1325,10 @@ const forgetPasswordResponse = (req, res, next) => {
               });
             } else {
               if (result) {
-                
-                  res.status(200).json({hashedUniqueString :hashedUniqueString
-                  })
-              
-                
+                res
+                  .status(200)
+                  .json({ hashedUniqueString: hashedUniqueString });
               } else {
-                
                 res.status(404).json({
                   message: "incorrect verification",
                 });
@@ -1331,7 +1337,6 @@ const forgetPasswordResponse = (req, res, next) => {
           });
         }
       } else {
-        
         res.status(404).json({
           message: "couldnt find Userverification or already verified",
         });
@@ -1344,15 +1349,16 @@ const forgetPasswordResponse = (req, res, next) => {
     });
 };
 
-const resetPassword = async(req, res, next) => {
+const resetPassword = async (req, res, next) => {
   const hashedUniqueString = req.body.hashedUniqueString;
-  
-  
-  const data = await Userverification.findOne({ uniqueString: hashedUniqueString });
+
+  const data = await Userverification.findOne({
+    uniqueString: hashedUniqueString,
+  });
   if (data) {
-    await Userverification.deleteOne({ uniqueString: hashedUniqueString })
+    await Userverification.deleteOne({ uniqueString: hashedUniqueString });
     const newPassword = req.body.password;
-    
+
     bcrypt.hash(newPassword, 10, (err, hashedPass) => {
       if (err) {
         res.json({
@@ -1366,7 +1372,6 @@ const resetPassword = async(req, res, next) => {
           { new: true }
         )
           .then((result) => {
-            
             if (result)
               res.json({
                 status: "success",
@@ -1380,7 +1385,7 @@ const resetPassword = async(req, res, next) => {
           })
           .catch((err) => {
             res.status(404).json({
-                  message: err,
+              message: err,
             });
           });
       }
@@ -1392,16 +1397,16 @@ const resetPassword = async(req, res, next) => {
   }
 };
 
-const otherRegister = (req,res,next) => {
+const otherRegister = (req, res, next) => {
   //res.send(userProfile)
-  
-  const email = req.user._json.email ;
-  const name = req.user._json.name ; 
+
+  const email = req.user._json.email;
+  const name = req.user._json.name;
 
   User.findOne({ Email: email }).then((user) => {
     if (user) {
       let token = jwt.sign(
-        { Id: user.id, Name: user.Name},
+        { Id: user.id, Name: user.Name },
         process.env.SECRET_KEY,
         {
           expiresIn: "30h",
@@ -1409,55 +1414,60 @@ const otherRegister = (req,res,next) => {
       );
 
       const expirationDate = new Date();
-      expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
-      res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
+      expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 60 * 1000);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: expirationDate,
+      });
 
-      var csrfToken = uuidv4()
+      var csrfToken = uuidv4();
       res.status(200).json({
         message: "login successfully !",
         token: token,
-        csrfToken: csrfToken
-      })
-
+        csrfToken: csrfToken,
+      });
     } else {
-      
-        let user = new User({
-          Name: name,
-          Email: email,
-        });
-        user
-          .save()
-          .then((user) => {
-
-            let token = jwt.sign(
-              { Id: user.id, Name: user.Name},
-              process.env.SECRET_KEY,
-              {
-                expiresIn: "30h",
-              }
-            );
-            const expirationDate = new Date();
-            expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
-            res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
-            var csrfToken = uuidv4()
-            res.status(200).json({
-              message: "login successfully !",
-              token: token,
-              csrfToken: csrfToken
-            })
-
-          })
-          .catch((error) => {
-            res.json({
-              message: "An error occured ! ",
-            });
+      let user = new User({
+        Name: name,
+        Email: email,
+      });
+      user
+        .save()
+        .then((user) => {
+          let token = jwt.sign(
+            { Id: user.id, Name: user.Name },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "30h",
+            }
+          );
+          const expirationDate = new Date();
+          expirationDate.setTime(
+            expirationDate.getTime() + 30 * 60 * 60 * 1000
+          );
+          res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            expires: expirationDate,
           });
-      
+          var csrfToken = uuidv4();
+          res.status(200).json({
+            message: "login successfully !",
+            token: token,
+            csrfToken: csrfToken,
+          });
+        })
+        .catch((error) => {
+          res.json({
+            message: "An error occured ! ",
+          });
+        });
     }
   });
-  
-}
-
+};
 
 module.exports = {
   register,

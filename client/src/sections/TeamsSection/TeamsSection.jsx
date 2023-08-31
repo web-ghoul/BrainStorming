@@ -12,45 +12,45 @@ import Head from "../../components/Head/Head";
 import TeamBox from "../../components/TeamBox/TeamBox";
 import styles from "./TeamsSection.module.css";
 import Image from "next/image";
-import roomsSectionImg1 from "../../../public/images/brain1.jpg";
+import roomsSectionImg1 from "../../../public/images/brain1.png";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
 import TeamsGridBox from "@/components/TeamsGridBox/TeamsGridBox";
 import { ExpandMore } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getTeams } from "@/store/teamsSlice";
 
 const TeamsSection = () => {
+  const dispatch = useDispatch();
   const data = [
     {
-      name: "webGhoul",
-      description: "Room ssss sssssss ffffffff aaaaaaaaa for Our Team",
+      Name: "webGhoul",
     },
     {
-      name: "webGhoul1",
-      description:
-        "Roomsss ssssss sssss ssssssss sssss sssssss ssssss sssss sssssfor Our Team",
+      Name: "webGhoul1",
     },
     {
-      name: "webGhoul2",
-      description: "Room for Our Team",
+      Name: "webGhoul2",
     },
     {
-      name: "webGhoul3",
-      description: "Roomd ffffffff wwwwwwwwww rrrrrr for Our Team",
+      Name: "webGhoul3",
     },
     {
-      name: "webGhoul4",
-      description:
-        "Room ssssssss sssssssss sssssss sssssssss ssssssssfor Our Team",
+      Name: "webGhoul4",
     },
     {
-      name: "webGhoul5",
-      description: "ssssssssssssssssssssssRoom for Our Team",
+      Name: "webGhoul5",
     },
   ];
+  const { teams } = useSelector((state) => state.teams);
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = () => {
     setExpanded(!expanded);
   };
+  useEffect(() => {
+    dispatch(getTeams());
+  }, []);
   return (
     <MyBox className={`${styles.rooms_section}`}>
       <Image
@@ -68,6 +68,7 @@ const TeamsSection = () => {
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
             "&:before": { opacity: 0 },
             borderRadius: "4px",
+            backgroundColor:(theme)=>theme.palette.white
           }}
         >
           <AccordionSummary
@@ -75,16 +76,15 @@ const TeamsSection = () => {
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <Head title={"My Teams"} align="left" h={"h4"} />
+            <Head special={true} title={"My Teams"} align="left" h={"h4"} />
           </AccordionSummary>
           <AccordionDetails>
             <TeamsGridBox data={data} />
           </AccordionDetails>
         </Accordion>
-        <Box></Box>
         <Box>
-          <Head title={"Explore Teams"} align="left" h={"h4"} />
-          <TeamsGridBox data={data} />
+          <Head special={true} title={"Explore Teams"} align="left" h={"h4"} />
+          <TeamsGridBox data={teams} />
         </Box>
       </Container>
     </MyBox>

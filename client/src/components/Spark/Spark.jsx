@@ -1,32 +1,22 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Image from "next/image";
 import styles from "./Spark.module.css";
 import Head from "../Head/Head";
-import { AdminPanelSettings } from "@mui/icons-material";
 import { Divider } from "@mui/material";
 import FileBox from "../FileBox/FileBox";
-import BottomNavigate from "../BottomNavigate/BottomNavigate";
 import ImagesGridBox from "../ImagesGridBox/ImagesGridBox";
+import SparkUser from "./SparkUser";
 
 const Spark = ({ data }) => {
   return (
     <Box className={`grid jcs aic g10 ${styles.spark}`}>
-      <Box className={`flex jcfs aic g10 ${styles.user}`}>
-        <Box className={`flex jcc aic ${styles.avatar}`}>
-          <Image alt="avatar" src={data.avatar} />
-        </Box>
-        <Box className={`grid jcfs aic`}>
-          <Typography variant="h6" sx={{ lineHeight: "20px" }}>
-            {data.username}
-          </Typography>
-          <Box className={`flex jcfs aic g5 ${styles.spark_date}`}>
-            <Typography variant="subtitle1">05 Apr 2023</Typography>
-            <AdminPanelSettings />
-          </Box>
-        </Box>
-      </Box>
+      <SparkUser
+        username={"webGhoul"}
+        avatar={data.avatar}
+        spark_date={data.spark_date}
+        leader={false}
+      />
       <Box className={`grid jcs aic g10 ${styles.spark_data}`}>
         <Box className={`grid jcfs aic g10`}>
           <Head h={"h5"} align="left" title={data.drop} color={"#333"} />
@@ -45,8 +35,6 @@ const Spark = ({ data }) => {
             data.files.map((file, i) => <FileBox key={i} title={file} />)}
         </Box>
       </Box>
-      <Divider />
-      <BottomNavigate />
     </Box>
   );
 };

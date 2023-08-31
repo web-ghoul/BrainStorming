@@ -44,7 +44,7 @@ const ResetPassword = ({ formik }) => {
               formik.touched.confirm_password && formik.errors.confirm_password
             }
           />
-          <LoadingButton text={"Reset Password"}/>
+          <LoadingButton text={"Reset Password"} />
           <SecondaryButton fullWidth>
             <Link href={process.env.NEXT_PUBLIC_LOGIN_PAGE}>
               Back to Log in

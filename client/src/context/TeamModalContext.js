@@ -7,6 +7,7 @@ export const TeamModalContext = createContext();
 export const TeamModalProvider = ({ children }) => {
   const [showAddNewTeamModal, setShowAddNewTeamModal] = useState(false);
   const [showJoinTeamModal, setShowJoinTeamModal] = useState(false);
+  const [teamId, setTeamId] = useState(null);
   const handleToggleAddNewTeamModal = () => {
     setShowAddNewTeamModal(!showAddNewTeamModal);
   };
@@ -16,10 +17,12 @@ export const TeamModalProvider = ({ children }) => {
   return (
     <TeamModalContext.Provider
       value={{
-        showJoinTeamModal,
         handleToggleJoinTeamModal,
         handleToggleAddNewTeamModal,
         showAddNewTeamModal,
+        showJoinTeamModal,
+        teamId,
+        setTeamId
       }}
     >
       {children}

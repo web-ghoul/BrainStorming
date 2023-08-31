@@ -20,32 +20,68 @@
   grid-template-columns: auto 1fr;
 }
 
-@media (1200px >= width >= 992px) {
+@media (1200px >=width >=992px) {
   .room_head {
     height: 180px;
   }
+
+  .tabs, .tabs button span, .tabs button {
+    min-height: 42px !important;
+  }
+
+  .tabs button {
+    padding: 10px;
+  }
+
+
 }
 
-@media (992px > width >= 768px) {
+@media (992px > width >=768px) {
   .room_head {
     height: 160px;
   }
+
+  .tabs, .tabs button span, .tabs button {
+    min-height: 40px !important;
+  }
+
+  .tabs button {
+    padding: 8px;
+  }
 }
 
-@media (768px > width >= 640px) {
+@media (768px > width >=640px) {
   .room_head {
     height: 140px;
   }
+
   .grid_layout {
     grid-template-columns: 1fr;
+  }
+
+  .tabs, .tabs button span, .tabs button {
+    min-height: 35px !important;
+  }
+
+  .tabs button {
+    padding: 5px;
   }
 }
 
-@media (640px > width >= 0px) {
+@media (640px > width >=0px) {
   .room_head {
     height: 140px;
   }
+
   .grid_layout {
     grid-template-columns: 1fr;
+  }
+
+  .tabs, .tabs button span, .tabs button {
+    min-height: 30px !important;
+  }
+
+  .tabs button {
+    padding: 5px;
   }
 }

@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
-import { Box, Container } from "@mui/material";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
-import UploadImage from "@/components/UploadFile/UploadFile";
+import AboutSection from "@/sections/AboutSection/AboutSection";
 
 const About = () => {
   return (
-    <Box>
-      <UploadImage />
-    </Box>
+    <MyBox>
+      <AboutSection />
+    </MyBox>
   );
 };
 

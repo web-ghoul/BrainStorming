@@ -9,8 +9,9 @@ import { Close } from "@mui/icons-material";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 
 const CarouselSlider = () => {
-  const { data, openCarousel, selectedItem, handleToggleCarousel } =
-    useContext(CarouselContext);
+  const { data, openCarousel, selectedItem, handleToggleCarousel } = useContext(
+    CarouselContext
+  );
   return (
     <Modal
       onClose={handleToggleCarousel}

@@ -1,32 +1,25 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const getTeams = createAsyncThunk("teams/getTeams",async()=>{
-    const res = await axios.get("Teams")
-    return res.data
-})
+export const getTeams = createAsyncThunk("teams/getTeams", async () => {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/Teams`);
+  return res.data.data;
+});
 
-const initialState= {
-  teams: [],
-  isLoading:true
-}
+const initialState = {
+  teams: null,
+  isLoading: true,
+};
 
 export const teamsSlice = createSlice({
-  name: 'teams',
+  name: "teams",
   initialState,
-  reducers: {
-    [getTeams.pending]:(state,action)=>{
-        state.isLoading = true
-    },
-    [getTeams.fulfilled]:(state,action)=>{
-        console.log(actions)
-        teams = action.payload
-        state.isLoading = false
-    },
-    [getTeams.rejected]:(state,action)=>{
-        state.isLoading = true
-    },
+  extraReducers: (builder) => {
+    builder.addCase(getTeams.fulfilled, (state, action) => {
+      state.teams = action.payload
+      state.isLoading = false
+    })
   },
-})
+});
 
-export default teamsSlice.reducer
+export default teamsSlice.reducer;
