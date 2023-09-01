@@ -29,7 +29,6 @@ const getProfile = asyncHandler( async(req,res,next) => {
 )
 
 const setProfilePic = asyncHandler(async(req,res,next) => {
-  
   console.log(req.files)     
   var urlOfImage ;
   if(req.files != undefined){

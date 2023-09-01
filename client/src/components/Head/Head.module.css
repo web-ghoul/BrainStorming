@@ -4,7 +4,6 @@
   justify-content: center;
   position: relative;
   z-index: 2;
-
 }
 
 .head_special {
@@ -35,7 +34,8 @@
 }
 
 @media (992px > width >=0) {
-  .head_special::after, .head_special::before {
+  .head_special::after,
+  .head_special::before {
     height: 2px;
     border-radius: 1px;
   }

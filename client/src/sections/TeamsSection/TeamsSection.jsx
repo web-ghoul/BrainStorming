@@ -68,7 +68,7 @@ const TeamsSection = () => {
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
             "&:before": { opacity: 0 },
             borderRadius: "4px",
-            backgroundColor:(theme)=>theme.palette.white
+            backgroundColor: (theme) => theme.palette.white,
           }}
         >
           <AccordionSummary

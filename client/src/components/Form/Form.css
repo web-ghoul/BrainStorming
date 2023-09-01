@@ -21,7 +21,7 @@ form {
   padding: 20px;
 }
 
-.spark_form{
+.spark_form {
   grid-template-columns: repeat(1, 1fr);
   position: relative;
   left: auto;

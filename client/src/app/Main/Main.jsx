@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -34,7 +34,7 @@ const Main = ({ children }) => {
         dispatch(getUserData(user_id));
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }, []);
   if (
@@ -62,7 +62,7 @@ const Main = ({ children }) => {
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />
-      <SparkModal/>
+      <SparkModal />
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
       <ProfileModal type="view_avatar" img={userData && userData.Image} />

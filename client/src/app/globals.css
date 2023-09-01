@@ -22,7 +22,7 @@
   padding: 0;
   margin: 0;
   font-family: var(--cairo-font) !important;
-  outline: none
+  outline: none;
 }
 
 html,
@@ -30,8 +30,6 @@ body {
   min-height: 100vh;
   background-color: var(--white);
 }
-
-
 
 .overlay {
   content: "";

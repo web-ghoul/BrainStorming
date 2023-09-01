@@ -26,10 +26,12 @@ import { getUserData } from "@/store/userSlice";
 import { getTeams } from "@/store/teamsSlice";
 import { TeamModalContext } from "@/context/TeamModalContext";
 import CreateSpark from "./CreateSpark/CreateSpark";
+import { SparkModalContext } from "@/context/SparkModalContext";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
-  const { teamId } = useContext(TeamModalContext);
+  const { teamId, handleToggleJoinTeamModal } = useContext(TeamModalContext);
+  const { files } = useContext(SparkModalContext);
   const { id, unique } = useParams();
   const router = useRouter();
   const [file, setFile] = useState([]);
@@ -39,7 +41,7 @@ const Form = ({ type }) => {
   const handleResetPassword = async () => {
     await axios
       .get(
-        process.env.NEXT_PUBLIC_SERVER_URL + `/reset_password/${id}/${unique}`
+        process.env.NEXT_PUBLIC_SERVER_URL + `/reset_password/${id}/${unique}`,
       )
       .then((res) => {
         Cookies.set("hashedUniqueString", res.data.hashedUniqueString);
@@ -112,7 +114,7 @@ const Form = ({ type }) => {
           ? field
               .required("Password isn't Matched")
               .oneOf([yup.ref("password")])
-          : field
+          : field,
       ),
   });
 
@@ -150,7 +152,8 @@ const Form = ({ type }) => {
   });
 
   const handleChangeFile = (files) => {
-    setFile(files);
+    file.push(files);
+    setFile(file);
   };
 
   const loginFormik = useFormik({
@@ -161,12 +164,12 @@ const Form = ({ type }) => {
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
         .then((res) => {
-          handleAlertToastify(res.data.message, "success");
           router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
           Cookies.set("token", res.data.token);
           Cookies.set("user_id", res.data.userId);
           const authData = { token: res.data.token, user_id: res.data.userId };
           dispatch(getAuthData(authData));
+          handleAlertToastify(res.data.message, "success");
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -243,7 +246,7 @@ const Form = ({ type }) => {
         .post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/Teams`,
           { ...values },
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
@@ -266,11 +269,12 @@ const Form = ({ type }) => {
         .patch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/JoinTeam`,
           { ...values },
-          { headers: { Authorization: `Bearer ${token}` } }
+          { headers: { Authorization: `Bearer ${token}` } },
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
           dispatch(getTeams());
+          handleToggleJoinTeamModal();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -284,13 +288,24 @@ const Form = ({ type }) => {
     validationSchema: createSparkValidationSchema,
     onSubmit: async (values) => {
       setButtonLoading(true);
-      values["Team"] = teamId;
+      values["team"] = "64ee034900aa748a733d38c8";
+      console.log(files["0"]);
+      const data = new FormData();
+      data.append("files", files["0"]);
+      data.append("idea", values.idea);
+      data.append("description", values.description);
+      data.append("team", "64ee034900aa748a733d38c8");
+      data.forEach((value, key) => {
+        console.log(key, value);
+      });
+      // values["files"] = data;
+      console.log(token);
       await axios
-        .post(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/Idea`,
-          { ...values },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/Ideas`, data, {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjY0ZWM4YzNhODM1ZTJkM2Y5N2ExMWQwMSIsIk5hbWUiOiJ3ZWJHaG91bCIsImlhdCI6MTY5MzUxNzQwOCwiZXhwIjoxNjkzNjI1NDA4fQ.kemwQ2PQHTxJotBMDK-f0P90Ycg__o4cn0V2eLze8kA`,
+          },
+        })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
         })
@@ -305,12 +320,12 @@ const Form = ({ type }) => {
     e.preventDefault();
     setButtonLoading(true);
     const formData = new FormData();
-    formData.append("files", file);
+    formData.append("files", file[0]);
     await axios
       .patch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
         formData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       )
       .then((res) => {
         handleAlertToastify(res.data.message, "success");
@@ -344,11 +359,11 @@ const Form = ({ type }) => {
             ? addNewTeamFormik.handleSubmit
             : type === "join_team"
             ? joinTeamFormik.handleSubmit
+            : type === "create_spark"
+            ? createSparkFormik.handleSubmit
             : type === "change_avatar"
             ? handleChangeAvatar
-            : type === "change_cover"
-            ? handleChangeCover
-            : type === "create_spark" && createSparkFormik.handleSubmit
+            : type === "change_cover" && handleChangeCover
         }
         className={`grid jcs aifs ${
           (type === "add_new_team" || type === "join_team") && "team_form"
@@ -377,7 +392,12 @@ const Form = ({ type }) => {
         ) : type === "change_avatar" ? (
           <ChangeAvatar handleChangeFile={handleChangeFile} />
         ) : (
-          type === "create_spark" && <CreateSpark formik={createSparkFormik} />
+          type === "create_spark" && (
+            <CreateSpark
+              handleChangeFile={handleChangeFile}
+              formik={createSparkFormik}
+            />
+          )
         )}
       </form>
     </Container>

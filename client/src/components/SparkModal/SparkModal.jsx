@@ -4,12 +4,11 @@ import React from "react";
 import { useContext } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Head from "../Head/Head";
-import styles from "./SparkModal.module.css"
+import styles from "./SparkModal.module.css";
 
 const SparkModal = () => {
-  const { chooseFiles, handleToggleChooseFiles } = useContext(
-    SparkModalContext
-  );
+  const { chooseFiles, handleToggleChooseFiles, handleFiles } =
+    useContext(SparkModalContext);
   return (
     <Modal
       open={chooseFiles}
@@ -24,7 +23,7 @@ const SparkModal = () => {
           types={["png", "jpeg", "gif", "jpg", "pdf", "txt"]}
           hoverTitle={"Drop here"}
           onSelect={""}
-          handleChange={""}
+          handleChange={handleFiles}
         />
       </Box>
     </Modal>

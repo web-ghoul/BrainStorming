@@ -17,12 +17,17 @@ import { DrawerContext } from "@/context/DrawerContext";
 import ModeToggle from "../ModeToggle/ModeToggle";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "@/store/authSlice";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
   const drawerContext = useContext(DrawerContext);
-  const {signed, user_id} = useSelector((state)=>state.auth)
+  const { signed, user_id } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
     <AppBar color="primary" className={`${styles.header}`}>
       <Container
@@ -68,14 +73,24 @@ const Header = () => {
               </ListItem>
             </List>
             {signed ? (
-              <Link href={`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`}>
-                <SpecialIconButton
-                  data-testid={"user_button"}
-                  sx={{ color: (theme) => theme.palette.primary.main }}
+              <>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`}
                 >
-                  <AccountCircle />
-                </SpecialIconButton>
-              </Link>
+                  <SpecialIconButton
+                    data-testid={"user_button"}
+                    sx={{ color: (theme) => theme.palette.primary.main }}
+                  >
+                    <AccountCircle />
+                  </SpecialIconButton>
+                </Link>
+                <SecondaryButton
+                  onClick={handleLogOut}
+                  data-testid={"auth_button"}
+                >
+                  Log Out
+                </SecondaryButton>
+              </>
             ) : (
               <>
                 <SecondaryButton data-testid={"auth_button"}>

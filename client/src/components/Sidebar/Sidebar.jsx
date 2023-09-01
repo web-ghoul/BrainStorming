@@ -19,18 +19,24 @@ import {
   Info,
   AccountCircle,
   Login,
+  Logout,
 } from "@mui/icons-material";
 import { DrawerContext } from "@/context/DrawerContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { SpecialIconButtonWithText } from "@/MUIComponents/SpecialIconButtonWithText/SpecialIconButtonWithText";
 import Logo from "../Logo/Logo";
+import { logOut } from "@/store/authSlice";
 
 const Sidebar = () => {
   const { toggleDrawer, openDrawer } = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
   const { userData } = useSelector((state) => state.user);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
     <Drawer
       sx={{
@@ -98,7 +104,17 @@ const Sidebar = () => {
             <ListItemText primary={"About"} />
           </ListItemButton>
         </ListItem>
-        {signed && (
+
+        {signed ? (
+          <ListItem key={"Log Out"} disablePadding>
+            <ListItemButton onClick={handleLogOut}>
+              <ListItemIcon>
+                <Logout sx={{ color: (theme) => theme.palette.primary.main }} />
+              </ListItemIcon>
+              <ListItemText primary={"Log Out"} />
+            </ListItemButton>
+          </ListItem>
+        ) : (
           <>
             <ListItem key={"Login"} disablePadding>
               <ListItemButton

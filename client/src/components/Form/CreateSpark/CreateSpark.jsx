@@ -5,30 +5,23 @@ import { useRef } from "react";
 import {
   SentimentSatisfiedRounded,
   AttachFileRounded,
-  Collections,
   DeleteRounded,
 } from "@mui/icons-material";
-import { MainButton } from "@/MUIComponents/MainButton/MainButton";
+
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
-import { FileUploader } from "react-drag-drop-files";
 import ImagesGridBox from "@/components/ImagesGridBox/ImagesGridBox";
 import { Box, IconButton, TextField } from "@mui/material";
-import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
-import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { useContext } from "react";
 import { SparkModalContext } from "@/context/SparkModalContext";
+import LoadingButton from "@/components/LoadingButton/LoadingButton";
 
-const CreateSpark = () => {
+const CreateSpark = ({ handleChangeFile, formik }) => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
   const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
-  const {
-    handleToggleChooseFiles,
-  } = useContext(SparkModalContext);
-  const [drop, setDrop] = useState("");
-  const [brainWave, setBrainWave] = useState("");
+  const { handleToggleChooseFiles } = useContext(SparkModalContext);
   const [recordExist, setRecordExist] = useState(false);
   const [images, setImages] = useState([]);
   const recordRef = useRef();
@@ -39,7 +32,9 @@ const CreateSpark = () => {
     audio.src = url;
     audio.controls = true;
     recordRef.current.appendChild(audio);
+    console.log(blob, url, audio);
     setRecordExist(true);
+    handleChangeFile(blob);
   };
 
   const deleteAudioElement = () => {
@@ -52,14 +47,18 @@ const CreateSpark = () => {
         <Box className={`grid jcs aic g5`}>
           <Box className={`flex jcs aic g5`}>
             <TextField
-              id="drop"
+              id="idea"
+              name="idea"
               label="Start a Spark"
               fullWidth
               multiline
               maxRows={4}
               variant="standard"
-              value={drop}
-              onChange={(e) => setDrop(e.target.value)}
+              value={formik.values.idea}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.idea && Boolean(formik.errors.idea)}
+              helperText={formik.touched.idea && formik.errors.idea}
             />
             <IconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
               <SentimentSatisfiedRounded />
@@ -72,7 +71,7 @@ const CreateSpark = () => {
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
-                setDrop(drop + e.native);
+                formik.values.idea += e.native;
               }}
             />
           )}
@@ -80,14 +79,22 @@ const CreateSpark = () => {
         <Box>
           <Box className={`flex jcs aifs g5`}>
             <TextField
-              id="brainwave"
+              id="description"
+              name="description"
               label="Brainwave"
               multiline
               fullWidth
               maxRows={10}
               variant="standard"
-              value={brainWave}
-              onChange={(e) => setBrainWave(e.target.value)}
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
             />
             <IconButton
               onClick={() => setBrainWaveEmojiShow(!brainWaveEmojiShow)}
@@ -101,7 +108,7 @@ const CreateSpark = () => {
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
-                setBrainWave(brainWave + e.native);
+                formik.values.description += e.native;
               }}
             />
           )}
@@ -136,7 +143,6 @@ const CreateSpark = () => {
         </Box>
         {images.length > 0 && <ImagesGridBox data={images} />}
       </Box>
-
       <LoadingButton text={"Spark"} />
     </>
   );

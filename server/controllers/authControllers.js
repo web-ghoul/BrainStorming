@@ -1174,40 +1174,6 @@ const login = (req, res, next) => {
             message: "Email is not verified",
           });
         } else {
-<<<<<<< HEAD
-          bcrypt.compare(
-            req.body.password,
-            user.Password,
-            function (err, result) {
-              if (err) {
-                res.status(403).json({
-                  error: err,
-                });
-              }
-              if (result) {
-                let token = jwt.sign(
-                  { Id: user.id, Name: user.Name},
-                  process.env.SECRET_KEY,
-                  {
-                    expiresIn: "30h",
-                  }
-                );
-                const expirationDate = new Date();
-                expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
-                res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
-                var csrfToken = uuidv4()
-                res.status(200).json({
-                  message: "login successfully !",
-                  token: token,
-                  csrfToken: csrfToken,
-                  userId : user._id
-                });
-              } else {
-                res.status(403).json({
-                  message: "Username or Password is incorrect",
-                });
-              }
-=======
           bcrypt.compare(req.body.password, user.Password, function (
             err,
             result
@@ -1216,7 +1182,6 @@ const login = (req, res, next) => {
               res.status(403).json({
                 error: err,
               });
->>>>>>> 9161560f3eb3defc8cb44aa993b2f0e20f7d3593
             }
             if (result) {
               let token = jwt.sign(

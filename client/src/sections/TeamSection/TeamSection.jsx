@@ -49,7 +49,7 @@ function a11yProps(index) {
 const TeamSection = () => {
   const [value, setValue] = React.useState(1);
 
-  const handleChange = (event,newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
