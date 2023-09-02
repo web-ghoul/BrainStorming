@@ -14,7 +14,7 @@ const User = () => {
     dispatch(getUserData(id));
   }, [id]);
   return (
-    <SpecialBox>
+    <SpecialBox data-testid={"profile_box"}>
       <ProfileSection />
     </SpecialBox>
   );

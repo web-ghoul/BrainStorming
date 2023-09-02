@@ -1,7 +1,7 @@
 import Developer from "@/components/Developer/Developer";
 import { Box } from "@mui/material";
-import amrImg from "../../../public/images/amr.png"
-import webGhoulImg from "../../../public/images/webGhoul.png"
+import amrImg from "../../../public/images/amr.png";
+import webGhoulImg from "../../../public/images/webGhoul.png";
 import React from "react";
 import Header from "@/components/Header/Header";
 
@@ -18,7 +18,7 @@ const AboutSection = () => {
         linkedin: "",
         facebook: "",
       },
-      img:webGhoulImg
+      img: webGhoulImg,
     },
     {
       name: "Amr Khaled",
@@ -31,7 +31,7 @@ const AboutSection = () => {
         linkedin: "",
         facebook: "",
       },
-      img:amrImg
+      img: amrImg,
     },
   ];
   return (

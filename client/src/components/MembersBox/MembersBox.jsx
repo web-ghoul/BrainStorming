@@ -44,7 +44,7 @@ const MembersBox = () => {
             <Box className={`flex flex_wrap jcc aic g10`}>
               {data.map(
                 (member, i) =>
-                  member.role === "Member" && <Member key={i} data={member} />
+                  member.role === "Member" && <Member key={i} data={member} />,
               )}
             </Box>
           </>

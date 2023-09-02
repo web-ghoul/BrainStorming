@@ -68,7 +68,7 @@ const TeamsSection = () => {
             boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px;",
             "&:before": { opacity: 0 },
             borderRadius: "4px",
-            backgroundColor:(theme)=>theme.palette.white
+            backgroundColor: (theme) => theme.palette.white,
           }}
         >
           <AccordionSummary
@@ -82,7 +82,7 @@ const TeamsSection = () => {
             <TeamsGridBox data={data} />
           </AccordionDetails>
         </Accordion>
-        <Box>
+        <Box className={`grid jcs aic g30`}>
           <Head special={true} title={"Explore Teams"} align="left" h={"h4"} />
           <TeamsGridBox data={teams} />
         </Box>

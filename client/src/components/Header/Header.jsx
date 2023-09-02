@@ -16,23 +16,28 @@ import Link from "next/link";
 import { DrawerContext } from "@/context/DrawerContext";
 import ModeToggle from "../ModeToggle/ModeToggle";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
-import { useSelector } from "react-redux";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "@/store/authSlice";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
-  const { toggleDrawer } = useContext(DrawerContext);
+  const drawerContext = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
   return (
     <AppBar color="primary" className={`${styles.header}`}>
       <Container
         sx={{ height: { lg: "70px", md: "60px", sm: "50px", xs: "40px" } }}
-        className={`flex jcsb aic g30 ${styles.header_contain}`}
+        className={`flex jcsb aic g30 ${styles.header_contain} header_wrapped`}
       >
         <Logo title={true} color={"#fff"} />
         {smallSize ? (
           <SpecialIconButton
-            onClick={toggleDrawer}
+            onClick={drawerContext.toggleDrawer}
             sx={{ color: (theme) => theme.palette.primary.main }}
           >
             <Menu />
@@ -44,7 +49,7 @@ const Header = () => {
               className={`flex jcfe aic g30 ${styles.list}`}
             >
               <ListItem sx={{ padding: 0 }}>
-                <Link href={process.env.NEXT_PUBLIC_HOME_PAGE}>
+                <Link href={`${process.env.NEXT_PUBLIC_HOME_PAGE}`}>
                   <ListItemButton>
                     <ListItemText primary={"Home"} />
                   </ListItemButton>
@@ -52,7 +57,7 @@ const Header = () => {
               </ListItem>
 
               <ListItem sx={{ padding: 0 }}>
-                <Link href={process.env.NEXT_PUBLIC_TEAMS_PAGE}>
+                <Link href={`${process.env.NEXT_PUBLIC_TEAMS_PAGE}`}>
                   <ListItemButton>
                     <ListItemText primary={"Teams"} />
                   </ListItemButton>
@@ -60,7 +65,7 @@ const Header = () => {
               </ListItem>
 
               <ListItem sx={{ padding: 0 }}>
-                <Link href={process.env.NEXT_PUBLIC_ABOUT_PAGE}>
+                <Link href={`${process.env.NEXT_PUBLIC_ABOUT_PAGE}`}>
                   <ListItemButton>
                     <ListItemText primary={"About"} />
                   </ListItemButton>
@@ -68,29 +73,39 @@ const Header = () => {
               </ListItem>
             </List>
             {signed ? (
-              <SpecialIconButton
-                sx={{ color: (theme) => theme.palette.primary.main }}
-              >
+              <>
                 <Link
                   href={`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`}
-                 className={`flex aic jcc`}>
-                  <AccountCircle />
+                >
+                  <SpecialIconButton
+                    data-testid={"user_button"}
+                    sx={{ color: (theme) => theme.palette.primary.main }}
+                  >
+                    <AccountCircle />
+                  </SpecialIconButton>
                 </Link>
-              </SpecialIconButton>
+                <SecondaryButton
+                  onClick={handleLogOut}
+                  data-testid={"auth_button"}
+                >
+                  Log Out
+                </SecondaryButton>
+              </>
             ) : (
               <>
-                <SecondaryButton>
-                  <Link href={process.env.NEXT_PUBLIC_LOGIN_PAGE}>Login</Link>
+                <SecondaryButton data-testid={"auth_button"}>
+                  <Link href={`${process.env.NEXT_PUBLIC_LOGIN_PAGE}`}>
+                    Login
+                  </Link>
                 </SecondaryButton>
 
-                <SecondaryButton>
-                  <Link href={process.env.NEXT_PUBLIC_REGISTER_PAGE}>
+                <SecondaryButton data-testid={"auth_button"}>
+                  <Link href={`${process.env.NEXT_PUBLIC_REGISTER_PAGE}`}>
                     Register
                   </Link>
                 </SecondaryButton>
               </>
             )}
-
             <ModeToggle />
           </Box>
         )}

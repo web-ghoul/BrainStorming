@@ -25,15 +25,15 @@
     height: 180px;
   }
 
-  .tabs, .tabs button span, .tabs button {
+  .tabs,
+  .tabs button span,
+  .tabs button {
     min-height: 42px !important;
   }
 
   .tabs button {
     padding: 10px;
   }
-
-
 }
 
 @media (992px > width >=768px) {
@@ -41,7 +41,9 @@
     height: 160px;
   }
 
-  .tabs, .tabs button span, .tabs button {
+  .tabs,
+  .tabs button span,
+  .tabs button {
     min-height: 40px !important;
   }
 
@@ -59,7 +61,9 @@
     grid-template-columns: 1fr;
   }
 
-  .tabs, .tabs button span, .tabs button {
+  .tabs,
+  .tabs button span,
+  .tabs button {
     min-height: 35px !important;
   }
 
@@ -77,7 +81,9 @@
     grid-template-columns: 1fr;
   }
 
-  .tabs, .tabs button span, .tabs button {
+  .tabs,
+  .tabs button span,
+  .tabs button {
     min-height: 30px !important;
   }
 

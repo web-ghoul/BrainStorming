@@ -1,6 +1,6 @@
 import { ModeContext } from "@/context/ModeContext";
 import styled from "@emotion/styled";
-import { Button, FormControl, FormControlLabel, Switch } from "@mui/material";
+import { FormControlLabel, Switch } from "@mui/material";
 import React, { useContext } from "react";
 
 const ModeToggle = () => {
@@ -51,7 +51,6 @@ const ModeToggle = () => {
     },
   }));
 
-  const { toggle } = useContext(ModeContext);
   return (
     <FormControlLabel
       control={<ModeSwitch defaultChecked />}
