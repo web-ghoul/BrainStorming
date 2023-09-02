@@ -1129,7 +1129,7 @@ const verify = (req, res, next) => {
                 User.updateOne(
                   { _id: userId },
                   { Verified: true },
-                  { new: true }
+                  { new: true },
                 )
                   .then((result) => {
                     Userverification.deleteOne({ userId: userId })
@@ -1174,7 +1174,6 @@ const login = (req, res, next) => {
             message: "Email is not verified",
           });
         } else {
-<<<<<<< HEAD
           bcrypt.compare(
             req.body.password,
             user.Password,
@@ -1186,69 +1185,36 @@ const login = (req, res, next) => {
               }
               if (result) {
                 let token = jwt.sign(
-                  { Id: user.id, Name: user.Name},
+                  { Id: user.id, Name: user.Name },
                   process.env.SECRET_KEY,
                   {
                     expiresIn: "30h",
-                  }
+                  },
                 );
                 const expirationDate = new Date();
-                expirationDate.setTime(expirationDate.getTime() + (30 * 60 * 60 * 1000));
-                res.cookie("token", token, { httpOnly: true, secure: true, sameSite: 'strict', expires: expirationDate });
-                var csrfToken = uuidv4()
+                expirationDate.setTime(
+                  expirationDate.getTime() + 30 * 60 * 60 * 1000,
+                );
+                res.cookie("token", token, {
+                  httpOnly: true,
+                  secure: true,
+                  sameSite: "strict",
+                  expires: expirationDate,
+                });
+                var csrfToken = uuidv4();
                 res.status(200).json({
                   message: "login successfully !",
                   token: token,
                   csrfToken: csrfToken,
-                  userId : user._id
+                  userId: user._id,
                 });
               } else {
                 res.status(403).json({
                   message: "Username or Password is incorrect",
                 });
               }
-=======
-          bcrypt.compare(req.body.password, user.Password, function (
-            err,
-            result
-          ) {
-            if (err) {
-              res.status(403).json({
-                error: err,
-              });
->>>>>>> 9161560f3eb3defc8cb44aa993b2f0e20f7d3593
-            }
-            if (result) {
-              let token = jwt.sign(
-                { Id: user.id, Name: user.Name },
-                process.env.SECRET_KEY,
-                {
-                  expiresIn: "30h",
-                }
-              );
-              const expirationDate = new Date();
-              expirationDate.setTime(
-                expirationDate.getTime() + 30 * 60 * 60 * 1000
-              );
-              res.cookie("token", token, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "strict",
-                expires: expirationDate,
-              });
-              var csrfToken = uuidv4();
-              res.status(200).json({
-                message: "login successfully !",
-                token: token,
-                csrfToken: csrfToken,
-                userId :user._id
-              });
-            } else {
-              res.status(403).json({
-                message: "Username or Password is incorrect",
-              });
-            }
-          });
+            },
+          );
         }
       } else {
         res.status(404).json({
@@ -1369,7 +1335,7 @@ const resetPassword = async (req, res, next) => {
         User.findOneAndUpdate(
           { _id: data.userId },
           { Password: hashedPass },
-          { new: true }
+          { new: true },
         )
           .then((result) => {
             if (result)
@@ -1410,7 +1376,7 @@ const otherRegister = (req, res, next) => {
         process.env.SECRET_KEY,
         {
           expiresIn: "30h",
-        }
+        },
       );
 
       const expirationDate = new Date();
@@ -1441,11 +1407,11 @@ const otherRegister = (req, res, next) => {
             process.env.SECRET_KEY,
             {
               expiresIn: "30h",
-            }
+            },
           );
           const expirationDate = new Date();
           expirationDate.setTime(
-            expirationDate.getTime() + 30 * 60 * 60 * 1000
+            expirationDate.getTime() + 30 * 60 * 60 * 1000,
           );
           res.cookie("token", token, {
             httpOnly: true,

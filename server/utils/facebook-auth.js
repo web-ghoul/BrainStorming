@@ -1,9 +1,9 @@
-const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
-const express = require('express');
+const passport = require("passport");
+const FacebookStrategy = require("passport-facebook").Strategy;
+const express = require("express");
 
 const router = express.Router();
-require('dotenv').config();
+require("dotenv").config();
 
 passport.use(
   new FacebookStrategy(
@@ -11,21 +11,20 @@ passport.use(
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: "/api/facebook/callback",
-      profileFields: ['id', 'displayName', 'photos', 'email']
+      profileFields: ["id", "displayName", "photos", "email"],
     },
     function (accessToken, refreshToken, profile, callback) {
-			return callback(null, profile);
-		}
-  )
+      return callback(null, profile);
+    },
+  ),
 );
 
-
 passport.serializeUser((user, done) => {
-	done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-	done(null, user);
+  done(null, user);
 });
 
 // router.get('/', passport.authenticate('facebook', { scope: 'email' }));

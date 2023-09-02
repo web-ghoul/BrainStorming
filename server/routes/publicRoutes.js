@@ -1,7 +1,7 @@
-const teamController = require("../controllers/teamControllers")
-const ideaController = require("../controllers/ideasControllers")
-const userControler = require('../controllers/userControllers')
-const express = require('express')
+const teamController = require("../controllers/teamControllers");
+const ideaController = require("../controllers/ideasControllers");
+const userControler = require("../controllers/userControllers");
+const express = require("express");
 const router = express.Router();
 
 /**
@@ -25,8 +25,8 @@ const router = express.Router();
  *       404:
  *         description: Teams not found
  */
-router.get("/Teams",teamController.displayTeams);
+router.get("/Teams", teamController.displayTeams);
 
-router.get("/Profile/:id" , userControler.getProfile )
+router.get("/Profile/:id", userControler.getProfile);
 
 module.exports = router;

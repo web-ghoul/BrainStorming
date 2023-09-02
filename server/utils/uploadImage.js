@@ -10,44 +10,54 @@ cloudinary.config({
   api_secret: api_secret,
 });
 
-
 const uploadImage = (file) => {
   //imgage = > base64
-  console.log("hello")
-  var folderName ;
-  if (file && file.mimetype.startsWith('image/')) {
-    folderName = "images"
-  } else {
-    folderName = "files"
+  console.log("hello");
+  var folderName;
+  if (file && file.mimetype.startsWith("image/")) {
+    folderName = "images";
+  } else if (file && file.mimetype.startsWith("audio/")){
+    folderName = "audio";
+  }else
+  {
+    folderName = "files";
   }
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(file.path ,{folder: folderName}, (error, result) => {
-      if (result ) {
-        console.log(result);
-        return resolve({url:result.secure_url , type : folderName});
-      }
-      console.log(error.message);
-      return reject({ message: error.message });
-    });
+    cloudinary.uploader.upload(
+      file.path,
+      { folder: folderName },
+      (error, result) => {
+        if (result) {
+          console.log(result);
+          return resolve({ url: result.secure_url, type: folderName });
+        }
+        console.log(error.message);
+        return reject({ message: error.message });
+      },
+    );
   });
 };
 module.exports = (file) => {
-  console.log("hello")
-  var folderName ;
-  if (file && file.mimetype.startsWith('image/')) {
-    folderName = "profileImages"
+  console.log("hello");
+  var folderName;
+  if (file && file.mimetype.startsWith("image/")) {
+    folderName = "profileImages";
   } else {
-    return false
+    return false;
   }
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(file.path ,{folder: folderName}, (error, result) => {
-      if (result ) {
-        console.log(result);
-        return resolve(result.secure_url);
-      }
-      console.log(error.message);
-      return reject({ message: error.message });
-    });
+    cloudinary.uploader.upload(
+      file.path,
+      { folder: folderName },
+      (error, result) => {
+        if (result) {
+          console.log(result);
+          return resolve(result.secure_url);
+        }
+        console.log(error.message);
+        return reject({ message: error.message });
+      },
+    );
   });
 };
 

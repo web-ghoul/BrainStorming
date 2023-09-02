@@ -5,17 +5,14 @@ const express = require("express");
 const router = express.Router();
 const protect = require("../middleware/authMiddleware");
 const multer = require("multer");
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-<<<<<<< HEAD
-      callback(null, __dirname + '/../uploads');
-=======
-    callback(null, __dirname + '/../uploads'); // Corrected path
->>>>>>> 9161560f3eb3defc8cb44aa993b2f0e20f7d3593
+    callback(null, __dirname + "/../uploads");
   },
   filename: function (req, file, callback) {
     callback(null, file.originalname);
-  }
+  },
 });
 
 // Set saved storage options:
@@ -25,7 +22,16 @@ router.post("/Teams", protect, teamController.createTeam);
 
 router.get("/Ideas/:id", protect, ideaController.displayIdeas);
 
-router.post("/Ideas", protect, upload.array("files"), ideaController.postIdeas);
+router.post(
+  "/Ideas",
+  upload.fields([
+    { name: "files" },
+    { name: "idea" },
+    { name: "description" },
+    { name: "team" },
+  ]),
+  ideaController.postIdeas,
+);
 
 router.patch("/JoinTeam", protect, teamController.joinTeam);
 
@@ -39,20 +45,34 @@ router.patch(
   "/uploadProfileImage",
   protect,
   upload.array("files"),
-  userControler.setProfilePic
+  userControler.setProfilePic,
 );
 
+router.delete("/DeleteIdea/:id", protect, ideaController.deleteIdea);
 
-router.delete("/DeleteIdea/:id" , protect , ideaController.deleteIdea)
+router.put("/updateIdea/:id", protect, ideaController.updateIdea);
 
-router.put("/updateIdea/:id" , protect, ideaController.updateIdea)
+router.patch(
+  "/uploadProfileImage",
+  protect,
+  upload.array("files"),
+  userControler.setProfilePic,
+);
 
-router.patch("/uploadProfileImage" , protect , upload.array("files") , userControler.setProfilePic)
+router.patch(
+  "/uploadBackgroundPic",
+  protect,
+  upload.array("files"),
+  userControler.setBackgroundPic,
+);
 
-router.patch("/uploadBackgroundPic" , protect , upload.array("files") , userControler.setBackgroundPic)
+router.patch(
+  "/uploadTeamImage/:id",
+  protect,
+  upload.array("files"),
+  teamController.setTeamImage,
+);
 
-router.patch("/uploadTeamImage/:id" , protect , upload.array("files") , teamController.setTeamImage)
-
-router.patch("/updateProfile/:id" , protect , userControler.updateProfile)
+router.patch("/updateProfile/:id", protect, userControler.updateProfile);
 
 module.exports = router;

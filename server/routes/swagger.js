@@ -58,7 +58,6 @@
  *         Bio: Exploring the world of code and music.
  */
 
-
 /**
  * @swagger
  * components:
@@ -91,7 +90,6 @@
  *         createdAt: "2023-08-22T12:00:00Z"
  *         expireAt: "2023-08-30T12:00:00Z"
  */
-
 
 /**
  * @swagger
@@ -208,7 +206,6 @@
  *               error: An internal server error occurred.
  */
 
-
 /**
  * @swagger
  * /login:
@@ -263,7 +260,6 @@
  *             example:
  *               error: An internal server error occurred.
  */
-
 
 /**
  * @swagger
@@ -366,9 +362,6 @@
  *             example:
  *               error: An internal server error occurred.
  */
-
-
-
 
 /**
  * @swagger
@@ -526,7 +519,6 @@
  *         Members: [JohnDoe, JaneSmith]
  *         Image: https://example.com/team-image.jpg
  */
-
 
 /**
  * @swagger
@@ -771,7 +763,6 @@
  *                   description: Error message.
  *                   example: User not found !
  */
-
 
 /**
  * @swagger

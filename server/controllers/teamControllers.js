@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const uploadImage = require("../utils/uploadImage");
 const logger = require("../logger/index");
+const { DeleteFiles } = require("../utils/deleteFiles");
 
 const createTeam = asyncHandler(async (req, res, next) => {
   const { name, password } = req.body;
@@ -73,7 +74,7 @@ const joinTeam = asyncHandler(async (req, res, next) => {
         await data.save();
         await User.findByIdAndUpdate(
           { _id: req.userId },
-          { $push: { Teams: TeamId } }
+          { $push: { Teams: TeamId } },
         );
         res.status(200).json({
           message: "Joined team successfully !",
@@ -125,15 +126,18 @@ const setTeamImage = asyncHandler(async (req, res, next) => {
       });
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "Image updated successfully !",
       data: data,
     });
+    DeleteFiles();
   } else {
     res.status(403).json({
       message: "you are not authorized",
     });
   }
+
+
 });
 
 module.exports = {

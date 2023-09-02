@@ -1,9 +1,9 @@
-const buildDevLogger = require('./dev-logger');
-const buildProdLogger = require('./prod-logger');
+const buildDevLogger = require("./dev-logger");
+const buildProdLogger = require("./prod-logger");
 
 let logger = null;
-console.log(process.env.NODE_ENV)
-if (process.env.NODE_ENV === 'development') {
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "development") {
   logger = buildDevLogger();
 } else {
   logger = buildProdLogger();

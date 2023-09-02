@@ -2,33 +2,32 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const ip = "localhost";
-const Port = process.env.PORT || 3000 ;
+const Port = process.env.PORT || 3000;
 const mongoose = require("mongoose");
-const session = require('express-session')
-const helmet = require('helmet')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const swaggerUI = require('swagger-ui-express')
-const swaggerJsDoc = require('swagger-jsdoc')
-const path = require('path');
-var fs = require('fs')
-const morgan = require('morgan');
-const xss = require('xss-clean')
-const multer = require('multer');
+const session = require("express-session");
+const helmet = require("helmet");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJsDoc = require("swagger-jsdoc");
+const path = require("path");
+var fs = require("fs");
+const morgan = require("morgan");
+const xss = require("xss-clean");
+const multer = require("multer");
 const passport = require("passport");
-const rateLimit = require('express-rate-limit')
-var hpp = require('hpp');
-const mongoSanitize = require('express-mongo-sanitize');
-
+const rateLimit = require("express-rate-limit");
+var hpp = require("hpp");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const uploadImage = require("./utils/uploadImage");
-const { notFound, errorHandler } = require('./middleware/errorMiddleware')
-const privateRoutes = require('./routes/privateRoutes')
-const publicRoutes = require('./routes/publicRoutes')
-const logger = require("./logger/index")
-const Routes = require('./routes/authRoutes')
+const { notFound, errorHandler } = require("./middleware/errorMiddleware");
+const privateRoutes = require("./routes/privateRoutes");
+const publicRoutes = require("./routes/publicRoutes");
+const logger = require("./logger/index");
+const Routes = require("./routes/authRoutes");
 const GoogleStrategy = require("./utils/google-auth");
-const FacebookStrategy = require("./utils/facebook-auth")
+const FacebookStrategy = require("./utils/facebook-auth");
 
 // logger.error("hello error")
 // logger.debug("heelo debug")
@@ -37,77 +36,82 @@ const FacebookStrategy = require("./utils/facebook-auth")
 //app.use(express.static("public"));
 const corsOptions = {
   origin: [
-    'http://localhost:3001',
-    'http://localhost:4000',
-    "http://127.0.0.1:5500"
+    "http://localhost:3001",
+    "http://localhost:4000",
+    "http://127.0.0.1:5500",
 
     // your origins here
   ],
   credentials: true,
-  exposedHeaders: ['set-cookie'],
+  exposedHeaders: ["set-cookie"],
 };
-
 
 const options = {
   definition: {
-    openapi: '3.0.0',
+    openapi: "3.0.0",
     info: {
-      title: 'Hello World',
-      version: '1.0.0',
-      description: " A simple Express library api"
+      title: "Hello World",
+      version: "1.0.0",
+      description: " A simple Express library api",
     },
     servers: [
       {
-        url: "http://localhost:3000/api"
-      }
+        url: "http://localhost:3000/api",
+      },
     ],
     //apis: ["./routes/*.js"]
-
   },
-  apis: ['./routes/*.js'], // files containing annotations as above
+  apis: ["./routes/*.js"], // files containing annotations as above
 };
 
 const openapiSpecification = swaggerJsDoc(options);
 
+var accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), {
+  flags: "a",
+});
 
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
- 
 // setup the logger
 
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-  message : {message: "Too much request"},
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: { message: "Too much request" },
   keyGenerator: (req) => {
     // Use the first IP address from X-Forwarded-For header
-    return req.headers['x-forwarded-for']?.split(',')[0] || req.ip;
+    return req.headers["x-forwarded-for"]?.split(",")[0] || req.ip;
   },
-  
-	// store: ... , // Use an external store for more precise rate limiting
-})
+
+  // store: ... , // Use an external store for more precise rate limiting
+});
 
 // Apply the rate limiting middleware to all requests
-app.use(limiter)
+app.use(limiter);
 //app.use(morgan('combined', { stream: accessLogStream }))
-app.use(morgan('combined'))
+app.use(morgan("combined"));
 app.use(express.json());
-app.use(express.urlencoded({extended: true , limit: '10mb' }));
-app.use("/api-docs" , swaggerUI.serve , swaggerUI.setup(openapiSpecification));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      connectSrc: ["'self'", 'http://localhost:4000' , "http://127.0.0.1:5500"]
-    }
-  }
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        connectSrc: [
+          "'self'",
+          "http://localhost:4000",
+          "http://127.0.0.1:5500",
+        ],
+      },
+    },
+  }),
+);
 app.use(xss());
-app.use(cors(corsOptions))
-app.use(bodyParser.json())
-// app.use(hpp()); 
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+// app.use(hpp());
 // app.use(
 //   mongoSanitize({
 //     allowDots: true,
@@ -115,40 +119,40 @@ app.use(bodyParser.json())
 //   }),
 // );
 // app.use(xss())
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  name : "session",
-  resave: false,
-  saveUninitialized: false,
-  maxAge: 24 * 60 * 60 * 100,
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    name: "session",
+    resave: false,
+    saveUninitialized: false,
+    maxAge: 24 * 60 * 60 * 100,
+  }),
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-      callback(null, __dirname + '/uploads');
+    callback(null, __dirname + "/uploads");
   },
   // Sets file(s) to be saved in uploads folder in same directory
   filename: function (req, file, callback) {
-      callback(null, file.originalname);
-  }
+    callback(null, file.originalname);
+  },
   // Sets saved filename(s) to be original filename(s)
-})
+});
 
 // Set saved storage options:
-const upload = multer({ storage: storage })
-
+const upload = multer({ storage: storage });
 
 app.post("/api", upload.array("files"), (req, res) => {
-// Sets multer to intercept files named "files" on uploaded form data
+  // Sets multer to intercept files named "files" on uploaded form data
 
-    console.log(req.body); // Logs form body values
-    console.log(req.files); // Logs any files
-    
-    uploadImage(req.files[0])
-    .then((url) =>  console.log(url))
+  console.log(req.body); // Logs form body values
+  console.log(req.files); // Logs any files
+
+  uploadImage(req.files[0])
+    .then((url) => console.log(url))
     .catch((err) => res.status(500).send(err));
 });
 
@@ -159,19 +163,18 @@ app.post("/uploadImage", (req, res) => {
 });
 
 app.post("/uploadMultipleImages", upload.array("files"), (req, res) => {
-  console.log("hello")
-  console.log(req.files)
+  console.log("hello");
+  console.log(req.files);
   uploadImage
     .uploadMultipleImages(req.files)
     .then((urls) => {
-      console.log(urls)
-      res.send(urls)
+      console.log(urls);
+      res.send(urls);
     })
     .catch((err) => res.status(500).send(err));
 });
 
-
-app.get('/', (req, res, next) => {
+app.get("/", (req, res, next) => {
   // Imagine you're serving a secret treasure map to your users!
   const treasureMap = {
     message: "🗺️ Welcome to the Treasure Hunt API! 🏴‍☠️",
@@ -181,26 +184,24 @@ app.get('/', (req, res, next) => {
       "⚓ More treasures await as you navigate the API seas!",
     ],
     disclaimer: "Remember, only true adventurers can unlock the secrets...",
-    documentation: "/api-docs"
+    documentation: "/api-docs",
   };
 
   res.status(200).json(treasureMap);
 });
 
-app.use("/api" , privateRoutes)
-app.use("/api" , publicRoutes)
-app.use("/api" , Routes)
+app.use("/api", privateRoutes);
+app.use("/api", publicRoutes);
+app.use("/api", Routes);
 // app.use(express.static(path.join(__dirname , '../client/build')))
 // app.get("*" , function (req,res) {
 //   res.sendFile(path.join(__dirname, '../client/build/index.html'))
-  
+
 // }
 // )
 
-
 app.use(notFound);
 app.use(errorHandler);
-
 
 mongoose
   .connect(process.env.DB_CONN, {
@@ -210,13 +211,16 @@ mongoose
   .then((result) => {
     app.listen(Port, () => {
       console.log(`App listening at http://${ip}:${Port}`);
-      console.log("Database Connected : " , result.connection.host,result.connection.name)
-        let val = "Amr006" ;
+      console.log(
+        "Database Connected : ",
+        result.connection.host,
+        result.connection.name,
+      );
+      let val = "Amr006";
     });
   })
   .catch((err) => {
     console.log(err);
   });
 
-
-//last to catch any wrong url ( needs cool 404 page :) ) 
+//last to catch any wrong url ( needs cool 404 page :) )

@@ -13,12 +13,11 @@ const protect = asyncHandler(async (req, res, next) => {
 
       //decodes token id
       const decode = jwt.verify(token, process.env.SECRET_KEY);
-      
-      req.userId = decode.Id
-      req.userName = decode.Name
-      
-      return next()
-    
+
+      req.userId = decode.Id;
+      req.userName = decode.Name;
+
+      return next();
     } catch (error) {
       res.status(401);
       throw new Error("Not authorized, token failed");
@@ -31,4 +30,4 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports =  protect ;
+module.exports = protect;
