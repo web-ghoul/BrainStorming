@@ -11,7 +11,7 @@ import SpecialImage from "../SpecialImage/SpecialImage";
 
 const ChosenDataView = () => {
   const { dataType, openDataViewer, toggleDataViewer } = useContext(
-    ChosenDataViewContext
+    ChosenDataViewContext,
   );
   const {
     imageFiles,

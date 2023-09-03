@@ -9,9 +9,8 @@ import { ExtensionsContext } from "@/context/ExtensionsContext";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 
 const SparkModal = () => {
-  const { chooseFiles, handleToggleChooseFiles, handleFiles } = useContext(
-    SparkModalContext
-  );
+  const { chooseFiles, handleToggleChooseFiles, handleFiles } =
+    useContext(SparkModalContext);
   const { audios, videos, images, docs } = useContext(ExtensionsContext);
   return (
     <Modal

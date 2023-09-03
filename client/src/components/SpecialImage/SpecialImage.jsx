@@ -10,8 +10,13 @@ const SpecialImage = ({
   img,
   posting,
   overlay,
+  slider,
 }) => {
-  return (
+  return slider ? (
+    <Box className={`center_x`}>
+      <Image src={img} height={200} width={200} alt={"post"} loading="lazy" />
+    </Box>
+  ) : (
     <Box
       sx={{
         "&:after": overlay && { content: str },

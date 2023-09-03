@@ -5,8 +5,6 @@
   border-radius: 6px;
 }
 
-
-
 .masonry_grid > div {
   display: grid;
   align-items: flex-start;

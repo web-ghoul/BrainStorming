@@ -10,7 +10,11 @@ import styles from "./TeamSection.module.css";
 import roomImg from "../../../public/images/team3.jpg";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
 import MembersBox from "@/components/MembersBox/MembersBox";
-
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getTeam } from "@/store/teamSlice";
+import { useParams, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -52,7 +56,18 @@ const TeamSection = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const router =  useRouter()
+  useEffect(() => {
+    try{
+      dispatch(getTeam({ team_id: id, token :Cookies.get("token")}));
 
+    }catch(err){
+      router.push("/")
+      handleAlertToastify("Can't Access This Page" , "error")
+    }
+  }, []);
   return (
     <Box className={`grid jcs aic`}>
       <Box
@@ -76,7 +91,7 @@ const TeamSection = () => {
         <CreateIdeaSection />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {/* <SparksSection /> */}
+        <SparksSection />
       </CustomTabPanel>
     </Box>
   );

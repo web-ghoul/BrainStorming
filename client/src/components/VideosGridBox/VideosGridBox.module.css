@@ -34,9 +34,7 @@
   z-index: 2;
 }
 
-
-
-.masonry_grid>div {
+.masonry_grid > div {
   display: grid;
   align-items: flex-start;
   justify-content: stretch;

@@ -7,10 +7,12 @@ import { FileUploader } from "react-drag-drop-files";
 import Head from "@/components/Head/Head";
 import { CameraAltRounded } from "@mui/icons-material";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
+import LoadingButton from "@/components/LoadingButton/LoadingButton";
 
-const ChangeCover = ({ handleChangeFile, formik }) => {
-  const { handleToggleChangeProfileCoverModal } =
-    useContext(ProfileModalContext);
+const ChangeCover = ({ handleChangeFile }) => {
+  const { handleToggleChangeProfileCoverModal } = useContext(
+    ProfileModalContext
+  );
   const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
   return (
     <Box className={`grid aic jcs g20 add_new_team_form_contain`}>
@@ -31,7 +33,7 @@ const ChangeCover = ({ handleChangeFile, formik }) => {
         multiple={false}
       />
       <Box className={`flex jcfe aic g20`}>
-        <MainButton type="submit">Change</MainButton>
+        <LoadingButton text={"Change"} />
         <RedButton onClick={handleToggleChangeProfileCoverModal}>
           Cancel
         </RedButton>

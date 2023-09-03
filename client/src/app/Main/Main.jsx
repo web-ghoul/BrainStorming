@@ -19,12 +19,9 @@ import Cookies from "js-cookie";
 import { getAuthData } from "@/store/authSlice";
 import SparkModal from "@/components/SparkModal/SparkModal";
 import ChosenDataView from "@/components/ChosenDataView/ChosenDataView";
-import { useContext } from "react";
-import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
-  const router = useRouter();
   const dispatch = useDispatch();
   const { id, unique } = useParams();
   const { userData } = useSelector((state) => state.user);

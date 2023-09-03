@@ -55,7 +55,7 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
             <DeleteRounded />
           </RedIconButton>
         </Box>
-      </Box>
+      </Box>,
     );
     setRecordExist(true);
     setRecord(blob);
@@ -158,33 +158,38 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
         )}
       </Box>
 
-      <Box className={`grid jcs aic g30`}>
-        {recordExist && recordBox}
-        <ImagesGridBox posting={true} data={imageFiles}>
-          <Box className={`flex jcfs aic g5`}>
-            <ImageRounded
-              sx={{ color: (theme) => theme.palette.primary.main }}
-            />
-            <Typography variant="h6">Images</Typography>
-          </Box>
-        </ImagesGridBox>
-        <VideosGridBox posting={true} data={videoFiles}>
-          <Box className={`flex jcfs aic g5`}>
-            <VideoLibraryRounded
-              sx={{ color: (theme) => theme.palette.primary.main }}
-            />
-            <Typography variant="h6">Videos</Typography>
-          </Box>
-        </VideosGridBox>
-        <AudioGridBox posting={true} data={audioFiles}>
-          <Box className={`flex jcfs aic g5`}>
-            <AudiotrackRounded
-              sx={{ color: (theme) => theme.palette.primary.main }}
-            />
-            <Typography variant="h6">Audio</Typography>
-          </Box>
-        </AudioGridBox>
-      </Box>
+      {(recordExist ||
+        imageFiles.length > 0 ||
+        videoFiles.length > 0 ||
+        audioFiles.length > 0) && (
+        <Box className={`grid jcs aic g30`}>
+          {recordExist && recordBox}
+          <ImagesGridBox posting={true} data={imageFiles}>
+            <Box className={`flex jcfs aic g5`}>
+              <ImageRounded
+                sx={{ color: (theme) => theme.palette.primary.main }}
+              />
+              <Typography variant="h6">Images</Typography>
+            </Box>
+          </ImagesGridBox>
+          <VideosGridBox posting={true} data={videoFiles}>
+            <Box className={`flex jcfs aic g5`}>
+              <VideoLibraryRounded
+                sx={{ color: (theme) => theme.palette.primary.main }}
+              />
+              <Typography variant="h6">Videos</Typography>
+            </Box>
+          </VideosGridBox>
+          <AudioGridBox posting={true} data={audioFiles}>
+            <Box className={`flex jcfs aic g5`}>
+              <AudiotrackRounded
+                sx={{ color: (theme) => theme.palette.primary.main }}
+              />
+              <Typography variant="h6">Audio</Typography>
+            </Box>
+          </AudioGridBox>
+        </Box>
+      )}
       <LoadingButton text={"Spark"} />
     </>
   );

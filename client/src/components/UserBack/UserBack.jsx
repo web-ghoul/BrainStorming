@@ -2,18 +2,20 @@ import { CameraAltRounded } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import styles from "./UserBack.module.css";
-import backImg from "../../../public/images/al_sami_a_surreal_minimalism_in_the_style_of_Jacek_Yerka_80533981-9b76-46a3-aa05-1aead00b7efe.png";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { useContext } from "react";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
+import { useSelector } from "react-redux";
 
 const UserBack = () => {
-  const { handleToggleChangeProfileCoverModal } =
-    useContext(ProfileModalContext);
-  return (
+  const { handleToggleChangeProfileCoverModal } = useContext(
+    ProfileModalContext
+  );
+  const { userData } = useSelector((state) => state.user);
+  return userData && (
     <Box
       className={`${styles.user_back}`}
-      sx={{ backgroundImage: `url(${backImg.src})` }}
+      sx={{ backgroundImage: `url(${userData.BackgroundImage})` }}
     >
       <MainIconButton
         onClick={handleToggleChangeProfileCoverModal}
