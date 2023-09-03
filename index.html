@@ -55,52 +55,43 @@
   cloudinary upload widget -->
     <!-- <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> -->
 
-    <!-- local upload instantiation -->
-  </body>
-  <script>
-    const form = document.querySelector("form");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      // Prevents HTML handling submission
-      const name = document.getElementById("name");
-      const files = document.getElementById("files");
-      const formData = new FormData();
-      // Creates empty formData object
-      formData.append("name", name.value);
-      // Appends value of text input
-      console.log(files)
-      formData.append("files", files.files[0]);
-      formData.forEach((value, key) => {
-        console.log(key, value);
-      });
-      // Appends value(s) of file input
-      // Post data to Node and Express server:
-      fetch("http://localhost:3000/api/uploadProfileImage", {
-        method: "PATCH",
-        body:formData,
-        headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjY0ZWM4YzNhODM1ZTJkM2Y5N2ExMWQwMSIsIk5hbWUiOiJ3ZWJHaG91bCIsImlhdCI6MTY5MzUxNzQwOCwiZXhwIjoxNjkzNjI1NDA4fQ.kemwQ2PQHTxJotBMDK-f0P90Ycg__o4cn0V2eLze8kA`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data));
-    });
-    //   document.addEventListener('DOMContentLoaded', async () => {
-    //   const response = await fetch('http://localhost:3000/api/signuploadwidget');
-    //   const data = await response.json();
+  <!-- local upload instantiation -->
 
-    //   const options = {
-    //     cloudName: data.cloudname,
-    //     apiKey: data.apikey,
-    //     uploadSignatureTimestamp: data.timestamp,
-    //     uploadSignature: data.signature,
-    //     cropping: false,
-    //     folder: 'signed_upload_demo_uw'
-    //   }
 
-    //   const processResults = (error, result) => {
-    //     if (!error && result && result.event === 'success') {
-    //       console.log(result)
+  
+</body>
+<script>
+ 
+
+const form = document.querySelector('form');
+form.addEventListener('submit', (e) => {
+    
+    e.preventDefault();
+    // Prevents HTML handling submission
+    const name = document.getElementById("name");
+    const files = document.getElementById("files");
+    const formData = new FormData();
+    // Creates empty formData object
+    formData.append("idea", "amr");
+    formData.append("description", "here is me ");
+    formData.append("team", "465634864");
+
+    // Appends value of text input
+    for(let i =0; i < files.files.length; i++) {
+        formData.append("files", files.files[i]);
+    }
+    // Appends value(s) of file input
+    // Post data to Node and Express server:
+    fetch('http://localhost:3000/uploadMultipleImages', {
+        method: 'POST',
+        body: formData, // Payload is formData object
+    })
+    .then(res => res.json())
+    .then(data => console.log(data));
+})
+//   document.addEventListener('DOMContentLoaded', async () => {
+//   const response = await fetch('http://localhost:3000/api/signuploadwidget');
+//   const data = await response.json();
 
     //       var str = JSON.stringify(result, null, 4);
     //       document.getElementById("uwdata").innerHTML += str;
