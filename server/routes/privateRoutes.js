@@ -75,6 +75,8 @@ router.patch(
 
 router.patch("/updateProfile", protect, userControler.updateProfile);
 
-router.get("/getTeamInfo/:id" , protect , teamController.getTeamInfo)
+router.get("/getTeamInfo/:id" , protect , teamController.getTeamInfo);
+
+router.delete("/deleteTeam/:id" , protect , teamController.deleteTeam);
 
 module.exports = router;

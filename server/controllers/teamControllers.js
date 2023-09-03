@@ -178,6 +178,25 @@ const getTeamInfo = asyncHandler(async(req,res,next) => {
 }
 )
 
+const deleteTeam = asyncHandler(async(req,res,next) => {
+
+  const data = await Teams.findById(req.params.id).populate({path:"TeamLeader",select:"-Password"})
+  if(req.userEmail === data.TeamLeader.Email)
+  {
+    await Teams.findByIdAndDelete(req.params.id)
+    return res.status(200).json({
+      message: "Team deleted successfully !",
+    });
+  }else
+  {
+    return res.status(403).json({
+      message: "you are not authorized",
+    });
+  }
+  
+}
+)
+
 
 module.exports = {
   createTeam,
@@ -186,4 +205,5 @@ module.exports = {
   EnterTeam,
   setTeamImage,
   getTeamInfo,
+  deleteTeam,
 };

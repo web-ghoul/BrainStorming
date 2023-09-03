@@ -1339,3 +1339,61 @@
  *                   description: Error message.
  *                   example: Access denied or team not found.
  */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Teams
+ *   description: Team management
+ */
+
+/**
+ * @swagger
+ * /deleteTeam/{id}:
+ *   delete:
+ *     summary: Delete a team by ID
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the team to delete.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Team deleted successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: Team deleted successfully!
+ *       403:
+ *         description: Access denied or not authorized to delete the team.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: You are not authorized to delete the team.
+ *       404:
+ *         description: Team not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Team not found.
+ */
