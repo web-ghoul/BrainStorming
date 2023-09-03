@@ -43,10 +43,13 @@ const UserSchema = Schema(
     },
     About: {
       type: String,
+      default: "",
     },
     Bio: {
       type: String,
+      default: "",
     },
+    
   },
   { timestamps: true },
 );

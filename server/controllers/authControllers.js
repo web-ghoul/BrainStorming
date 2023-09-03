@@ -1134,7 +1134,7 @@ const verify = (req, res, next) => {
                   .then((result) => {
                     Userverification.deleteOne({ userId: userId })
                       .then((result) => {
-                        res.redirect("");
+                        res.redirect(`${process.env.CLIENT_URL}/login`);
                       })
                       .catch((err) => {
                         res.status(403).json({
@@ -1185,7 +1185,7 @@ const login = (req, res, next) => {
             }
             if (result) {
               let token = jwt.sign(
-                { Id: user.id, Name: user.Name },
+                { Id: user.id, Name: user.Name , Email: user.Email },
                 process.env.SECRET_KEY,
                 {
                   expiresIn: "30h",
@@ -1290,9 +1290,10 @@ const forgetPasswordResponse = (req, res, next) => {
               });
             } else {
               if (result) {
-                res
-                  .status(200)
-                  .json({ hashedUniqueString: hashedUniqueString });
+                // res
+                //   .status(200)
+                //   .json({ hashedUniqueString: hashedUniqueString });
+                res.redirect(`${process.env.CLIENT_URL}/reset_password/${hashedUniqueString}`);
               } else {
                 res.status(404).json({
                   message: "incorrect verification",
@@ -1371,7 +1372,7 @@ const otherRegister = (req, res, next) => {
   User.findOne({ Email: email }).then((user) => {
     if (user) {
       let token = jwt.sign(
-        { Id: user.id, Name: user.Name },
+        { Id: user.id, Name: user.Name , Email: user.Email },
         process.env.SECRET_KEY,
         {
           expiresIn: "30h",
@@ -1402,7 +1403,7 @@ const otherRegister = (req, res, next) => {
         .save()
         .then((user) => {
           let token = jwt.sign(
-            { Id: user.id, Name: user.Name },
+            { Id: user.id, Name: user.Name , Email: user.Email },
             process.env.SECRET_KEY,
             {
               expiresIn: "30h",

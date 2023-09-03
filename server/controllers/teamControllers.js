@@ -5,6 +5,23 @@ const asyncHandler = require("express-async-handler");
 const uploadImage = require("../utils/uploadImage");
 const logger = require("../logger/index");
 const { DeleteFiles } = require("../utils/deleteFiles");
+const path = require('path');
+
+const teamList = [
+  'team1',
+  'team2',
+  'team3',
+  'team4',
+  'team5',
+  'team6',
+  'team7',
+  'team9',
+  'team10',
+  'team11',
+  'team12',
+  'team13',
+];
+
 
 const createTeam = asyncHandler(async (req, res, next) => {
   const { name, password } = req.body;
@@ -17,10 +34,14 @@ const createTeam = asyncHandler(async (req, res, next) => {
       message: "This Name Already Used",
     });
   }
+  
+  const randomNumber = Math.floor(Math.random()*12)
+  var filePath = path.join(__dirname , `../../defaultImgsteams/${teamList[randomNumber]}.jpg`)
   const newTeam = new Teams({
     Name: name,
     Password: hash,
     TeamLeader: req.userId,
+    Image: filePath,
   });
 
   newTeam
@@ -54,9 +75,9 @@ const displayTeams = asyncHandler((req, res, next) => {
 });
 
 const joinTeam = asyncHandler(async (req, res, next) => {
-  const { password, TeamId } = req.body;
+  const { password, teamId } = req.body;
 
-  const data = await Teams.findOne({ _id: TeamId });
+  const data = await Teams.findOne({ _id: teamId });
 
   if (data.Members.includes(req.userName)) {
     res.status(404).json({
@@ -74,7 +95,7 @@ const joinTeam = asyncHandler(async (req, res, next) => {
         await data.save();
         await User.findByIdAndUpdate(
           { _id: req.userId },
-          { $push: { Teams: TeamId } },
+          { $push: { Teams: teamId } },
         );
         res.status(200).json({
           message: "Joined team successfully !",
@@ -89,9 +110,9 @@ const joinTeam = asyncHandler(async (req, res, next) => {
 });
 
 const EnterTeam = asyncHandler(async (req, res, next) => {
-  const TeamId = req.params.id;
+  const teamId = req.params.id;
 
-  const data = await Teams.findOne({ _id: TeamId });
+  const data = await Teams.findOne({ _id: teamId });
 
   if (data.Members.includes(req.userId)) {
     res.status(200).json({
@@ -140,10 +161,49 @@ const setTeamImage = asyncHandler(async (req, res, next) => {
 
 });
 
+
+const getTeamInfo = asyncHandler(async(req,res,next) => {
+  try{  
+    const data =  await Teams.findOne({_id : req.params.id}).populate([{path:"Members" , select : "-Password"},{path:"TeamLeader" , select : "-Password"}]).select("-Password")
+    return res.status(200).json({
+      data : data
+    })
+  }
+  catch(err)
+  {
+    return res.status(404).json({
+      message : "Error while getting team information"
+    })
+  }
+}
+)
+
+const deleteTeam = asyncHandler(async(req,res,next) => {
+
+  const data = await Teams.findById(req.params.id).populate({path:"TeamLeader",select:"-Password"})
+  if(req.userEmail === data.TeamLeader.Email)
+  {
+    await Teams.findByIdAndDelete(req.params.id)
+    return res.status(200).json({
+      message: "Team deleted successfully !",
+    });
+  }else
+  {
+    return res.status(403).json({
+      message: "you are not authorized",
+    });
+  }
+  
+}
+)
+
+
 module.exports = {
   createTeam,
   displayTeams,
   joinTeam,
   EnterTeam,
   setTeamImage,
+  getTeamInfo,
+  deleteTeam,
 };
