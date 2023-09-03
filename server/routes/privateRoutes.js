@@ -23,7 +23,7 @@ router.post("/Teams", protect, teamController.createTeam);
 router.get("/Ideas/:id", protect, ideaController.displayIdeas);
 
 router.post(
-  "/Ideas",
+  "/Ideas", protect,
   upload.fields([
     { name: "files" },
     { name: "idea" },
@@ -73,6 +73,8 @@ router.patch(
   teamController.setTeamImage,
 );
 
-router.patch("/updateProfile/:id", protect, userControler.updateProfile);
+router.patch("/updateProfile", protect, userControler.updateProfile);
+
+router.get("/getTeamInfo/:id" , protect , teamController.getTeamInfo)
 
 module.exports = router;

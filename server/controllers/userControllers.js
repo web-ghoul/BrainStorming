@@ -9,7 +9,7 @@ const { sanitizeUser } = require("../utils/sanitizeData");
 const { DeleteFiles } = require("../utils/deleteFiles");
 
 const getProfile = asyncHandler(async (req, res, next) => {
-  const data = await User.find({ _id: req.params.id }).select("-password");
+  const data = await User.find({ _id: req.params.id }).select("-Password");
 
   if (data) {
     res.status(200).json({
@@ -74,7 +74,7 @@ const setBackgroundPic = asyncHandler(async (req, res, next) => {
     { _id: req.userId },
     { BackgroundImage: urlOfImage },
     { new: true },
-  ).select("-password");
+  ).select("-Password");
 
   res.status(200).json({
     message: "Image updated successfully !",
@@ -87,18 +87,11 @@ const setBackgroundPic = asyncHandler(async (req, res, next) => {
 const updateProfile = asyncHandler(async (req, res, next) => {
   const { bio, about } = req.body;
 
-  const data = await User.findOne({ _id: req.params.id });
-
-  if (data && data._id == req.userId) {
-    data.Bio = bio;
-    data.About = about;
-    await data.save();
-    res.status(200).json({ message: "Data updated successfully." });
-  } else {
-    return res.status(403).json({ error: "Access denied or data not found." });
-  }
-
-  DeleteFiles();
+  
+  
+    const data = await User.findByIdAndUpdate({_id : req.userId} , {Bio : bio , About : about} , {new : true}).select("-Password");
+    res.status(200).json({ message: "Data updated successfully." , data : data});
+  
 });
 
 module.exports = { getProfile, setProfilePic, setBackgroundPic, updateProfile };

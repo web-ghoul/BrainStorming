@@ -648,7 +648,7 @@
  *                 type: string
  *                 description: The password of the team.
  *                 example: mysecretpassword
- *               TeamId:
+ *               teamId:
  *                 type: string
  *                 description: The ID of the team.
  *                 example: 6155f7cfcf971234567890ab
@@ -786,15 +786,15 @@
  *           schema:
  *             type: object
  *             properties:
- *               Idea:
+ *               idea:
  *                 type: string
  *                 description: The idea description.
  *                 example: An innovative idea.
- *               Description:
+ *               description:
  *                 type: string
  *                 description: Additional description for the idea.
  *                 example: A detailed explanation of the idea.
- *               Team:
+ *               team:
  *                 type: string
  *                 description: The ID of the team associated with the idea.
  *                 example: 6155f7cfcf971234567890ab
@@ -966,11 +966,11 @@
  *         schema:
  *           type: object
  *           properties:
- *             Idea:
+ *             idea:
  *               type: string
  *               description: Updated idea content.
  *               example: New idea content.
- *             Description:
+ *             description:
  *               type: string
  *               description: Updated idea description.
  *               example: New idea description.
@@ -1212,20 +1212,12 @@
 
 /**
  * @swagger
- * /updateProfile/{id}:
+ * /updateProfile:
  *   patch:
  *     summary: Update user profile information
  *     tags: [User]
  *     security:
  *       - BearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           description: User ID.
- *         description: ID of the user profile to update.
  *     requestBody:
  *       required: true
  *       content:
@@ -1254,6 +1246,28 @@
  *                   type: string
  *                   description: Success message.
  *                   example: Data updated successfully.
+ *                 data:
+ *                   type: object
+ *                   description: Updated user profile data.
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: User's unique identifier.
+ *                     Email:
+ *                       type: string
+ *                       description: User's email address.
+ *                     Name:
+ *                       type: string
+ *                       description: User's name.
+ *                     Verified:
+ *                       type: boolean
+ *                       description: Indicates if the user is verified.
+ *                     Bio:
+ *                       type: string
+ *                       description: User's bio information.
+ *                     About:
+ *                       type: string
+ *                       description: User's about information.
  *       403:
  *         description: Access denied or data not found.
  *         content:
@@ -1265,4 +1279,63 @@
  *                   type: string
  *                   description: Error message.
  *                   example: Access denied or data not found.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Teams
+ *   description: Team information
+ */
+
+/**
+ * @swagger
+ * /getTeamInfo/{id}:
+ *   get:
+ *     summary: Get team information by ID
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the team to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Team information retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   description: Team information.
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       description: Team's unique identifier.
+ *                     Name:
+ *                       type: string
+ *                       description: Team's name.
+ *                     Members:
+ *                       type: array
+ *                       description: List of team members' usernames.
+ *                     Image:
+ *                       type: string
+ *                       description: URL of the team's image.
+ *       403:
+ *         description: Access denied or team not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Access denied or team not found.
  */

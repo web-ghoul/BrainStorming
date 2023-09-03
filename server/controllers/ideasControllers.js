@@ -68,7 +68,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     
     
   }
-
+  
   const newIdea = new Ideas({
     Idea: idea,
     Description: description,
@@ -77,7 +77,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     Team: team,
     WrittenBy: req.userId,
   });
-  
+  console.log(newIdea)
   await newIdea
     .save()
     .then((result) => {
@@ -140,9 +140,9 @@ const deleteIdea = asyncHandler(async (req, res, next) => {
 const updateIdea = asyncHandler(async (req, res, next) => {
   const { idea, description } = req.body;
 
-  const data = await Ideas.findOne({ _id: req.params.id });
-
-  if (data && data.WrittenBy == req.userId) {
+  const data = await Ideas.findOne({ _id: req.params.id }).populate("WrittenBy") ;
+  console.log(req.userEmail)
+  if (data && data.WrittenBy.Email == req.userEmail) {
     data.Idea = idea;
     data.Description = description;
     await data.save();

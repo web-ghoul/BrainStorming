@@ -1185,7 +1185,7 @@ const login = (req, res, next) => {
             }
             if (result) {
               let token = jwt.sign(
-                { Id: user.id, Name: user.Name },
+                { Id: user.id, Name: user.Name , Email: user.Email },
                 process.env.SECRET_KEY,
                 {
                   expiresIn: "30h",
@@ -1371,7 +1371,7 @@ const otherRegister = (req, res, next) => {
   User.findOne({ Email: email }).then((user) => {
     if (user) {
       let token = jwt.sign(
-        { Id: user.id, Name: user.Name },
+        { Id: user.id, Name: user.Name , Email: user.Email },
         process.env.SECRET_KEY,
         {
           expiresIn: "30h",
@@ -1402,7 +1402,7 @@ const otherRegister = (req, res, next) => {
         .save()
         .then((user) => {
           let token = jwt.sign(
-            { Id: user.id, Name: user.Name },
+            { Id: user.id, Name: user.Name , Email: user.Email },
             process.env.SECRET_KEY,
             {
               expiresIn: "30h",
