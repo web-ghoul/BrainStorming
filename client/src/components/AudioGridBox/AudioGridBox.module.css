@@ -1,0 +1,42 @@
+.spark_images audio {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+}
+
+.image_box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.image_box::after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--white);
+    z-index: 4;
+    font-size: 20px;
+}
+
+.image_box .overlay {
+    z-index: 3;
+}
+
+.image_box audio {
+    width: 100%;
+    z-index: 2;
+}
+
+
+
+.masonry_grid>div {
+    display: grid;
+    align-items: flex-start;
+    justify-content: stretch;
+    gap: 10px;
+}

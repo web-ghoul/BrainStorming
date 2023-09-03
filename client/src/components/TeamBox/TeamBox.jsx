@@ -9,17 +9,23 @@ import axios from "axios";
 import { handleAlertToastify } from "@/app/reactToastify";
 import { LoadingButtonContext } from "@/context/LoadingButtonContext";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 const TeamBox = ({ data }) => {
   const { handleToggleJoinTeamModal, setTeamId } = useContext(TeamModalContext);
   const { setButtonLoading } = useContext(LoadingButtonContext);
-
+  const { user_id,token } = useSelector((state) => state.auth);
+  const router = useRouter();
   const handleEnterTeam = async () => {
     setButtonLoading(true);
     await axios
-      .get(process.env.NEXT_PUBLIC_SERVER_URL + `/EnterTeam/${data._id}`)
+      .get(process.env.NEXT_PUBLIC_SERVER_URL + `/EnterTeam/${data._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
-        handleAlertToastify(res.data.messge, "success");
+        router.push(`/teams/${data._id}`);
       })
       .catch((err) => {
         handleAlertToastify(err.response.data.message, "error");
@@ -43,7 +49,7 @@ const TeamBox = ({ data }) => {
           </Typography>
         </Box>
         <Box className={`grid jcc aic ${styles.room_button}`}>
-          {false ? (
+          {data.Members.includes(user_id) ? (
             <MainButton onClick={handleEnterTeam}>Enter</MainButton>
           ) : (
             <MainButton onClick={handleJoinTeam}>Join</MainButton>

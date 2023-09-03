@@ -10,7 +10,6 @@ import Link from "next/link";
 import { FacebookRounded, Google } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
-
 const Login = ({ formik }) => {
   return (
     <>
@@ -55,7 +54,9 @@ const Login = ({ formik }) => {
         </Box>
         <Divider />
         <Box className={`flex jcc aic g10`}>
-          <SpecialIconButton sx={{ color: (theme) => theme.palette.gmail }}>
+          <SpecialIconButton
+            sx={{ color: (theme) => theme.palette.gmail }}
+          >
             <Google />
           </SpecialIconButton>
           <SpecialIconButton sx={{ color: (theme) => theme.palette.facebook }}>

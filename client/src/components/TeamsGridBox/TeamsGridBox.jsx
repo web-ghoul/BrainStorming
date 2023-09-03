@@ -1,4 +1,4 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import TeamBox from "../TeamBox/TeamBox";
 import styles from "./TeamsGridBox.module.css";
@@ -7,7 +7,7 @@ const TeamsGridBox = ({ data }) => {
   const smallSize = useMediaQuery("(max-width:768px)");
   const verySmallSize = useMediaQuery("(max-width:640px)");
   return (
-    data && (
+    data.length > 0 ? (
       <Box className={`grid jcs aifs g20 ${styles.rooms_box}`}>
         {verySmallSize ? (
           <Box className={`grid jcs aic g20 ${styles.rooms}`}>
@@ -69,6 +69,10 @@ const TeamsGridBox = ({ data }) => {
             </Box>
           </>
         )}
+      </Box>
+    ):(
+      <Box className={`flex jcc aic ${styles.not_teams}`}>
+        <Typography variant="h2">No Teams Yet...</Typography>
       </Box>
     )
   );

@@ -28,7 +28,7 @@ form {
   right: auto;
   transform: none;
   height: auto;
-  width: auto;
+  width: 100%;
   box-shadow: none;
   border-radius: 0px;
   overflow: auto;

@@ -76,7 +76,7 @@ const TeamSection = () => {
         <CreateIdeaSection />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <SparksSection />
+        {/* <SparksSection /> */}
       </CustomTabPanel>
     </Box>
   );

@@ -7,20 +7,30 @@ export const CarouselContext = createContext();
 export const CarouselProvider = ({ children }) => {
   const [openCarousel, setOpenCarousel] = useState(false);
   const [data, setData] = useState(null);
-  const [selectedItem,setSelectedItem] = useState(0);
+  const [isPosting, setIsPosting] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(0);
 
-  const handleToggleCarousel = (item=0) => {
+  const handleToggleCarousel = (item = 0) => {
     setOpenCarousel(!openCarousel);
-    setSelectedItem(item)
-  }
+    setSelectedItem(item);
+  };
 
-  const getCarouselData = (d)=>{
-    setData(d)
-  }
-  
+  const getCarouselData = (d) => {
+    setData(d);
+  };
+
   return (
     <CarouselContext.Provider
-      value={{ handleToggleCarousel,selectedItem,getCarouselData,data, openCarousel }}
+      value={{
+        isPosting,
+        setIsPosting,
+        handleToggleCarousel,
+        selectedItem,
+        getCarouselData,
+        data,
+        setData,
+        openCarousel,
+      }}
     >
       {children}
     </CarouselContext.Provider>

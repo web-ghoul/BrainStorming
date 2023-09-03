@@ -2,6 +2,10 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
+.not_teams{
+  color: rgb(3, 126, 243,0.5)
+}
+
 @media (max-width: 768px) {
   .rooms_box {
     grid-template-columns: repeat(2, 1fr);
