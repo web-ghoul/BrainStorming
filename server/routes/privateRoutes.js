@@ -5,7 +5,8 @@ const express = require("express");
 const router = express.Router();
 const protect = require("../middleware/authMiddleware");
 const multer = require("multer");
-
+const path = require("path");
+const maxSize = 10 * 1024 * 1024;
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, __dirname + "/../uploads");
@@ -16,21 +17,37 @@ const storage = multer.diskStorage({
 });
 
 // Set saved storage options:
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: maxSize },
+  fileFilter: (req, file, cb) => {
+    const allowedFileTypes = /\.(jpeg|jpg|png|pdf|ogg|avi|aac|flac|wav|webm|avi|mov|flv|mp4|mp3|doc|pdf|docx|xlsx|pptx|csv|png|jfif|jpeg|gif|jpg|tiff|tif|webp|bmp)$/i; // Add allowed file extensions
+
+    const extname = allowedFileTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+    if (extname) {
+      return cb(null, true);
+    } else {
+      return cb("Error: Invalid file type.");
+    }
+  },
+});
 
 router.post("/Teams", protect, teamController.createTeam);
 
 router.get("/Ideas/:id", protect, ideaController.displayIdeas);
 
 router.post(
-  "/Ideas", protect,
+  "/Ideas",
+  protect,
   upload.fields([
     { name: "files" },
     { name: "idea" },
     { name: "description" },
     { name: "team" },
   ]),
-  ideaController.postIdeas,
+  ideaController.postIdeas
 );
 
 router.patch("/JoinTeam", protect, teamController.joinTeam);
@@ -45,7 +62,7 @@ router.patch(
   "/uploadProfileImage",
   protect,
   upload.array("files"),
-  userControler.setProfilePic,
+  userControler.setProfilePic
 );
 
 router.delete("/DeleteIdea/:id", protect, ideaController.deleteIdea);
@@ -56,27 +73,27 @@ router.patch(
   "/uploadProfileImage",
   protect,
   upload.array("files"),
-  userControler.setProfilePic,
+  userControler.setProfilePic
 );
 
 router.patch(
   "/uploadBackgroundPic",
   protect,
   upload.array("files"),
-  userControler.setBackgroundPic,
+  userControler.setBackgroundPic
 );
 
 router.patch(
   "/uploadTeamImage/:id",
   protect,
   upload.array("files"),
-  teamController.setTeamImage,
+  teamController.setTeamImage
 );
 
 router.patch("/updateProfile", protect, userControler.updateProfile);
 
-router.get("/getTeamInfo/:id" , protect , teamController.getTeamInfo);
+router.get("/getTeamInfo/:id", protect, teamController.getTeamInfo);
 
-router.delete("/deleteTeam/:id" , protect , teamController.deleteTeam);
+router.delete("/deleteTeam/:id", protect, teamController.deleteTeam);
 
 module.exports = router;

@@ -43,7 +43,7 @@ const setProfilePic = asyncHandler(async (req, res, next) => {
     { _id: req.userId },
     { Image: urlOfImage },
     { new: true },
-  ).select("-password");
+  ).select("-Password");
 
   res.status(200).json({
     message: "Image updated successfully !",

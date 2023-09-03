@@ -8,29 +8,6 @@ const router = express.Router();
 const fs = require("fs").promises;
 const path = require("path");
 
-// // Define a route to delete files
-// router.delete("/delete-file/:filename", async (req, res) => {
-//   const filename = req.params.filename;
-
-//   const filePath = path.join(__dirname, "../uploads", filename);
-
-//   try {
-//     // Read the contents of the folder
-//     const files = await fs.readdir(folderPath);
-
-//     // Loop through each file and delete it
-//     for (const file of files) {
-//       const filePath = path.join(folderPath, file);
-//       await fs.unlink(filePath);
-//     }
-
-//     res.status(200).json({ message: "All files deleted successfully" });
-//   } catch (error) {
-//     res
-//       .status(500)
-//       .json({ message: "An error occurred while deleting the files" });
-//   }
-// });
 
 const postIdeas = asyncHandler(async (req, res, next) => {
   const { idea, description, team } = req.body;
@@ -42,6 +19,10 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     });
   }
   //use mac to secure data form idor
+  if(req.files && req.files['files'] && req.files['files'].length > 10)
+  {
+    return res.status(400).json({ error: 'Too many files uploaded.' });
+  }
 
   var arrayOfUrls;
   if (req.files.files.length > 0) {
@@ -57,12 +38,15 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     console.log(arrayOfUrls)
     var imagesArray = [];
     var filesArray = [];
-
+    var audio = "";
     for (let i = 0; i < arrayOfUrls.length; i++) {
       if (arrayOfUrls[i].type == "files") {
         filesArray.push(arrayOfUrls[i].url);
-      } else {
+      } else if(arrayOfUrls[i].type == "images"){
         imagesArray.push(arrayOfUrls[i].url);
+      }else if(arrayOfUrls[i].type == "audio")
+      {
+        audio = arrayOfUrls[i].url;
       }
     }
     
@@ -74,6 +58,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     Description: description,
     Images: imagesArray,
     Files: filesArray,
+    Record: audio,
     Team: team,
     WrittenBy: req.userId,
   });
@@ -113,7 +98,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
 const displayIdeas = asyncHandler((req, res, next) => {
   const teamId = req.params.id;
 
-  Ideas.find({ Team: teamId })
+  Ideas.find({ Team: teamId }).populate("WrittenBy")
     .then((result) => {
       return res.status(200).json({
         data: result,
