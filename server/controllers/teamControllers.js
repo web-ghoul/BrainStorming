@@ -5,23 +5,22 @@ const asyncHandler = require("express-async-handler");
 const uploadImage = require("../utils/uploadImage");
 const logger = require("../logger/index");
 const { DeleteFiles } = require("../utils/deleteFiles");
-const path = require('path');
 
-const teamList = [
-  'team1',
-  'team2',
-  'team3',
-  'team4',
-  'team5',
-  'team6',
-  'team7',
-  'team9',
-  'team10',
-  'team11',
-  'team12',
-  'team13',
+
+const imageUrlArray = [
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770866/teamImages/cfdhdw5258fvmcsevfvv.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770891/teamImages/xuydumywevndbjthcg7t.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770876/teamImages/tjpjidp9mkf5zq141lgg.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770883/teamImages/f1twplpi1pjv8ootu03t.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770861/teamImages/s3ceyg5l7vcxghyghnzh.png',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770886/teamImages/yrjvivcu00uhbge2prry.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770896/teamImages/dldkkbwzyldrs2ed7gem.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770863/teamImages/zjmedcrpsfstc2ury9fk.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770859/teamImages/qjmbnjp0ayfn0le3xc7e.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770860/teamImages/ymlgcgxqf3bjgwxra5ov.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770902/teamImages/gbemhxcid6zxum900mnk.jpg',
+  'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693770880/teamImages/gcikiqqcg8vweg6mgrl1.jpg'
 ];
-
 
 const createTeam = asyncHandler(async (req, res, next) => {
   const { name, password } = req.body;
@@ -36,7 +35,7 @@ const createTeam = asyncHandler(async (req, res, next) => {
   }
   
   const randomNumber = Math.floor(Math.random()*12)
-  var filePath = path.join(__dirname , `../../defaultImgsteams/${teamList[randomNumber]}.jpg`)
+  var filePath = imageUrlArray[randomNumber]
   const newTeam = new Teams({
     Name: name,
     Password: hash,
@@ -79,7 +78,7 @@ const joinTeam = asyncHandler(async (req, res, next) => {
 
   const data = await Teams.findOne({ _id: teamId });
 
-  if (data.Members.includes(req.userName)) {
+  if (data.Members.includes(req.userId)) {
     res.status(404).json({
       message: "Already joind the team",
     });
