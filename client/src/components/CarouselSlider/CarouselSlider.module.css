@@ -6,9 +6,11 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  background-color: var(--white);
+  border-radius: 10px;
 }
 
-.modal_carousel > button {
+.modal_carousel>button {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -17,20 +19,23 @@
   height: 50px;
 }
 
-.modal_carousel div,
-.modal_carousel ul,
-.modal_carousel li {
+.modal_carouse div div div,
+.modal_carousel div div ul {
   height: 100%;
-  width: 100%;
+  width: 100% !important;
 }
 
-.modal_carousel div:nth-child(2) div:first-child > ul {
+.modal_carousel  div div button {
+  background-color: var(--main) !important;
+}
+
+.modal_carousel div:nth-child(2) div:first-child>ul {
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
-.modal_carousel div:nth-child(2) div:first-child > ul li {
+.modal_carousel div:nth-child(2) div:first-child>ul li {
   background-color: var(--main);
   width: 10px;
   height: 10px;

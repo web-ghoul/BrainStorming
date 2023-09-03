@@ -5,10 +5,14 @@ import { useContext } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Head from "../Head/Head";
 import styles from "./SparkModal.module.css";
+import { ExtensionsContext } from "@/context/ExtensionsContext";
+import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 
 const SparkModal = () => {
-  const { chooseFiles, handleToggleChooseFiles, handleFiles } =
-    useContext(SparkModalContext);
+  const { chooseFiles, handleToggleChooseFiles, handleFiles } = useContext(
+    SparkModalContext
+  );
+  const { audios, videos, images, docs } = useContext(ExtensionsContext);
   return (
     <Modal
       open={chooseFiles}
@@ -20,11 +24,12 @@ const SparkModal = () => {
         <Head align={"center"} h={"h3"} title={"Choose Files And Images"} />
         <FileUploader
           multiple={true}
-          types={["png", "jpeg", "gif", "jpg", "pdf", "txt"]}
+          types={[...audios, ...images, ...videos, ...docs]}
           hoverTitle={"Drop here"}
-          onSelect={""}
+          onSelect={handleToggleChooseFiles}
           handleChange={handleFiles}
         />
+        <MainButton onClick={handleToggleChooseFiles}>Done</MainButton>
       </Box>
     </Modal>
   );

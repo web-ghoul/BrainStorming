@@ -12,83 +12,11 @@
 2023-08-25 11:26:35 info: [object Object]
 2023-08-25 16:05:43 info: [object Object]
 2023-08-25 16:11:57 info: [object Object]
-2023-08-29 15:12:25 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693314747/profileImages/aytizs5l8gz6f9hlvcuk.jpg
-2023-08-29 15:14:42 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693314883/profileImages/wy2degzbnqshwjbmwwg0.jpg
-2023-08-29 15:15:38 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693314940/profileImages/hvw6pg53c0zr3ammwsbm.jpg
-2023-08-29 15:17:46 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315068/profileImages/r92vcyi9uziik4oy3nqp.jpg
-2023-08-29 15:19:03 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315145/profileImages/ecamtl1krbskxhhznumo.jpg
-2023-08-29 16:46:13 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693320375/profileImages/biufq7famffyf7houvni.jpg
-2023-08-29 16:49:25 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693320566/profileImages/jprqepgeq1txyl33emie.jpg
-2023-08-29 16:50:22 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693320623/profileImages/sfm9ilqyt18xlny80uwz.jpg
-2023-08-29 16:51:10 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693320671/profileImages/c0btzan6owmrch0v4g2q.jpg
-2023-08-29 16:51:50 info: {
-  _id: new ObjectId("64ee034900aa748a733d38c8"),
-  Name: 'team009',
-  Password: '$2a$10$L02WA2dCbmV905/JxTUEwOKVqN5rI5tRIQ2o165Z53o0MW6k0B5vS',
-  Members: [],
-  TeamLeader: {
-    _id: new ObjectId("64ecd4ece6d92388e385aa73"),
-    Email: 'amrking006@gmail.com',
-    Password: '$2a$10$tvO9E7ZbZoC6CnnAMVbPT.xeypR0IIcgs6KJI6e/NOivGMwW0D84i',
-    Name: 'Amr006',
-    Verified: true,
-    Teams: [],
-    createdAt: 2023-08-28T17:10:04.574Z,
-    updatedAt: 2023-08-29T13:19:03.651Z,
-    __v: 0,
-    Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315068/profileImages/r92vcyi9uziik4oy3nqp.jpg',
-    BackgroundImage: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315145/profileImages/ecamtl1krbskxhhznumo.jpg'
-  },
-  createdAt: 2023-08-29T14:40:09.605Z,
-  updatedAt: 2023-08-29T14:40:09.605Z,
-  __v: 0
-}
-2023-08-29 17:29:36 info: {
-  _id: new ObjectId("64ee034900aa748a733d38c8"),
-  Name: 'team009',
-  Password: '$2a$10$L02WA2dCbmV905/JxTUEwOKVqN5rI5tRIQ2o165Z53o0MW6k0B5vS',
-  Members: [],
-  TeamLeader: {
-    _id: new ObjectId("64ecd4ece6d92388e385aa73"),
-    Email: 'amrking006@gmail.com',
-    Password: '$2a$10$tvO9E7ZbZoC6CnnAMVbPT.xeypR0IIcgs6KJI6e/NOivGMwW0D84i',
-    Name: 'Amr006',
-    Verified: true,
-    Teams: [],
-    createdAt: 2023-08-28T17:10:04.574Z,
-    updatedAt: 2023-08-29T13:19:03.651Z,
-    __v: 0,
-    Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315068/profileImages/r92vcyi9uziik4oy3nqp.jpg',
-    BackgroundImage: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315145/profileImages/ecamtl1krbskxhhznumo.jpg'
-  },
-  createdAt: 2023-08-29T14:40:09.605Z,
-  updatedAt: 2023-08-29T15:29:36.608Z,
-  __v: 0,
-  Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693322975/profileImages/wzsij7xaqsm3fgoi0fk8.jpg'
-}
-2023-08-29 17:30:37 info: {
-  _id: new ObjectId("64ee034900aa748a733d38c8"),
-  Name: 'team009',
-  Password: '$2a$10$L02WA2dCbmV905/JxTUEwOKVqN5rI5tRIQ2o165Z53o0MW6k0B5vS',
-  Members: [],
-  TeamLeader: {
-    _id: new ObjectId("64ecd4ece6d92388e385aa73"),
-    Email: 'amrking006@gmail.com',
-    Password: '$2a$10$tvO9E7ZbZoC6CnnAMVbPT.xeypR0IIcgs6KJI6e/NOivGMwW0D84i',
-    Name: 'Amr006',
-    Verified: true,
-    Teams: [],
-    createdAt: 2023-08-28T17:10:04.574Z,
-    updatedAt: 2023-08-29T13:19:03.651Z,
-    __v: 0,
-    Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315068/profileImages/r92vcyi9uziik4oy3nqp.jpg',
-    BackgroundImage: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693315145/profileImages/ecamtl1krbskxhhznumo.jpg'
-  },
-  createdAt: 2023-08-29T14:40:09.605Z,
-  updatedAt: 2023-08-29T15:29:36.608Z,
-  __v: 0,
-  Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693323036/profileImages/tkq7sdy9bwjdddq1oqaa.jpg'
-}
+2023-08-29 14:22:42 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693311761/profileImages/ucgxd8bzbakdspbgayg9.jpg
+2023-08-29 21:00:59 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693335658/profileImages/fg6at9jrspmsvgcsymlo.jpg
+2023-08-29 21:02:04 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693335724/profileImages/i2wwafnvlfgmrug2uhau.jpg
+2023-08-29 21:12:28 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693336348/profileImages/u2cwyzmutcigm5ftoh2b.jpg
+2023-08-29 21:43:10 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693338190/profileImages/hwcuh0j97umwi1q5btt2.jpg
 2023-09-03 01:06:23 info: [object Object]
 2023-09-03 01:16:52 info: [object Object]
 2023-09-03 01:21:46 info: [object Object]

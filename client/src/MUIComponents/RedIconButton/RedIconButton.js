@@ -13,6 +13,9 @@ export const RedIconButton = styled(MainIconButton)(({theme})=>(
         borderColor:theme.palette.red,
         '&:hover':{
             color:theme.palette.red
+        },
+        '&:hover svg':{
+            color:theme.palette.red
         }
     }
 ))

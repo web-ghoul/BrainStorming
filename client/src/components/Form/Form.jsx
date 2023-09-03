@@ -31,6 +31,7 @@ import { SparkModalContext } from "@/context/SparkModalContext";
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
   const { teamId, handleToggleJoinTeamModal } = useContext(TeamModalContext);
+  const { handleToggleAddNewTeamModal } = useContext(TeamModalContext);
   const { files } = useContext(SparkModalContext);
   const { id, unique } = useParams();
   const router = useRouter();
@@ -41,7 +42,7 @@ const Form = ({ type }) => {
   const handleResetPassword = async () => {
     await axios
       .get(
-        process.env.NEXT_PUBLIC_SERVER_URL + `/reset_password/${id}/${unique}`,
+        process.env.NEXT_PUBLIC_SERVER_URL + `/reset_password/${id}/${unique}`
       )
       .then((res) => {
         Cookies.set("hashedUniqueString", res.data.hashedUniqueString);
@@ -114,7 +115,7 @@ const Form = ({ type }) => {
           ? field
               .required("Password isn't Matched")
               .oneOf([yup.ref("password")])
-          : field,
+          : field
       ),
   });
 
@@ -246,11 +247,12 @@ const Form = ({ type }) => {
         .post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/Teams`,
           { ...values },
-          { headers: { Authorization: `Bearer ${token}` } },
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
           dispatch(getTeams());
+          handleToggleAddNewTeamModal();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -269,7 +271,7 @@ const Form = ({ type }) => {
         .patch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/JoinTeam`,
           { ...values },
-          { headers: { Authorization: `Bearer ${token}` } },
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
@@ -303,7 +305,7 @@ const Form = ({ type }) => {
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/Ideas`, data, {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjY0ZWM4YzNhODM1ZTJkM2Y5N2ExMWQwMSIsIk5hbWUiOiJ3ZWJHaG91bCIsImlhdCI6MTY5MzUxNzQwOCwiZXhwIjoxNjkzNjI1NDA4fQ.kemwQ2PQHTxJotBMDK-f0P90Ycg__o4cn0V2eLze8kA`,
+            Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
@@ -325,7 +327,7 @@ const Form = ({ type }) => {
       .patch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
         formData,
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         handleAlertToastify(res.data.message, "success");

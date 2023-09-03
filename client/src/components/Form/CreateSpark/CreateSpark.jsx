@@ -6,6 +6,10 @@ import {
   SentimentSatisfiedRounded,
   AttachFileRounded,
   DeleteRounded,
+  ImageRounded,
+  KeyboardVoiceRounded,
+  VideoLibraryRounded,
+  AudiotrackRounded,
 } from "@mui/icons-material";
 
 import data from "@emoji-mart/data";
@@ -13,32 +17,53 @@ import Picker from "@emoji-mart/react";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
 import ImagesGridBox from "@/components/ImagesGridBox/ImagesGridBox";
-import { Box, IconButton, TextField } from "@mui/material";
+import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { useContext } from "react";
 import { SparkModalContext } from "@/context/SparkModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
+import VideosGridBox from "@/components/VideosGridBox/VideosGridBox";
+import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
 
 const CreateSpark = ({ handleChangeFile, formik }) => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
   const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
-  const { handleToggleChooseFiles } = useContext(SparkModalContext);
+  const {
+    handleFiles,
+    handleToggleChooseFiles,
+    imageFiles,
+    videoFiles,
+    audioFiles,
+    setAudioFiles,
+    setRecord,
+  } = useContext(SparkModalContext);
   const [recordExist, setRecordExist] = useState(false);
-  const [images, setImages] = useState([]);
-  const recordRef = useRef();
+  const [recordBox, setRecordBox] = useState();
 
   const addAudioElement = (blob) => {
     const url = URL.createObjectURL(blob);
-    const audio = document.createElement("audio");
-    audio.src = url;
-    audio.controls = true;
-    recordRef.current.appendChild(audio);
-    console.log(blob, url, audio);
+    setRecordBox(
+      <Box className={`grid jcfs aic g10`}>
+        <Box className={`flex jcfs aic g5`}>
+          <KeyboardVoiceRounded
+            sx={{ color: (theme) => theme.palette.primary.main }}
+          />
+          <Typography variant="h6">Records</Typography>
+        </Box>
+        <Box className={`flex jcfs aic g10`}>
+          <audio src={url} controls={true} />
+          <RedIconButton onClick={deleteAudioElement}>
+            <DeleteRounded />
+          </RedIconButton>
+        </Box>
+      </Box>
+    );
     setRecordExist(true);
-    handleChangeFile(blob);
+    setRecord(blob);
   };
-
+  console.log(imageFiles);
   const deleteAudioElement = () => {
-    recordRef.current.removeChild(recordRef.current.firstChild);
+    setRecordBox();
+    setRecord();
     setRecordExist(false);
   };
   return (
@@ -133,15 +158,32 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
         )}
       </Box>
 
-      <Box className={`grid jcs aic g20`}>
-        <Box ref={recordRef} className={`flex jcfs aic g10`}>
-          {recordExist && (
-            <RedIconButton onClick={deleteAudioElement}>
-              <DeleteRounded />
-            </RedIconButton>
-          )}
-        </Box>
-        {images.length > 0 && <ImagesGridBox data={images} />}
+      <Box className={`grid jcs aic g30`}>
+        {recordExist && recordBox}
+        <ImagesGridBox posting={true} data={imageFiles}>
+          <Box className={`flex jcfs aic g5`}>
+            <ImageRounded
+              sx={{ color: (theme) => theme.palette.primary.main }}
+            />
+            <Typography variant="h6">Images</Typography>
+          </Box>
+        </ImagesGridBox>
+        <VideosGridBox posting={true} data={videoFiles}>
+          <Box className={`flex jcfs aic g5`}>
+            <VideoLibraryRounded
+              sx={{ color: (theme) => theme.palette.primary.main }}
+            />
+            <Typography variant="h6">Videos</Typography>
+          </Box>
+        </VideosGridBox>
+        <AudioGridBox posting={true} data={audioFiles}>
+          <Box className={`flex jcfs aic g5`}>
+            <AudiotrackRounded
+              sx={{ color: (theme) => theme.palette.primary.main }}
+            />
+            <Typography variant="h6">Audio</Typography>
+          </Box>
+        </AudioGridBox>
       </Box>
       <LoadingButton text={"Spark"} />
     </>

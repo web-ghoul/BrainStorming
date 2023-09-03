@@ -1,16 +1,22 @@
 "use client";
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
 import React, { useContext } from "react";
-import styles from "./ImagesGridBox.module.css";
+import styles from "./AudioGridBox.module.css";
 import Masonry from "react-masonry-css";
 import { CarouselContext } from "@/context/CarouselContext";
 import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
-import SpecialImage from "../SpecialImage/SpecialImage";
+import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
+import {
+  DeleteRounded,
+  EditRounded,
+  VisibilityRounded,
+} from "@mui/icons-material";
+import { SparkModalContext } from "@/context/SparkModalContext";
+import { MainButton } from "@/MUIComponents/MainButton/MainButton";
+import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
-import { EditRounded } from "@mui/icons-material";
 
-const ImagesGridBox = ({ posting, data, children }) => {
+const AudioGridBox = ({ posting, data, children }) => {
   const breakpointColumnsObj = {
     default: 4,
     992: 3,
@@ -19,10 +25,13 @@ const ImagesGridBox = ({ posting, data, children }) => {
   const { handleToggleCarousel, setIsPosting, getCarouselData } = useContext(
     CarouselContext
   );
-  const { setDataType, toggleDataViewer } = useContext(ChosenDataViewContext);
+  const { setDataType, toggleDataViewer, setOpenDataViewer } = useContext(
+    ChosenDataViewContext
+  );
+  const { handleRemoveAudioFile } = useContext(SparkModalContext);
   const handleDataPosting = () => {
     toggleDataViewer();
-    setDataType("images");
+    setDataType("audios");
   };
   const handleDataView = () => {
     handleToggleCarousel(i);
@@ -38,19 +47,30 @@ const ImagesGridBox = ({ posting, data, children }) => {
           className={`flex jcs aifs g10 ${styles.masonry_grid}`}
           columnClassName={"masonry_col_grid"}
         >
-          {data.slice(0, 4).map((img, i) => {
+          {data.slice(0, 4).map((audio, i) => {
             const str = '"' + ("+" + (data.length - i).toString()) + '"';
+            const overlay = i === 3 && data.length > i + 1;
             return posting ? (
-              <SpecialImage
-                handleDataPosting={handleDataPosting}
-                handleDataView={handleDataView}
-                str={str}
-                overlay={i === 3 && data.length > i + 1 ? true : false}
-                posting={posting}
-                img={URL.createObjectURL(img)}
-              />
+              <Box
+                sx={{
+                  "&:after": overlay && { content: str },
+                }}
+                className={`flex aic jcc ${styles.image_box}`}
+                onClick={posting ? handleDataPosting : handleDataView}
+              >
+                <Box
+                  className={`${overlay && "overlay"} ${
+                    overlay && styles.overlay
+                  }`}
+                />
+                <audio
+                  src={URL.createObjectURL(audio)}
+                  loading="lazy"
+                  controls
+                />
+              </Box>
             ) : (
-              <SpecialImage i={i} posting={posting} img={img} />
+              <></>
             );
           })}
         </Masonry>
@@ -67,4 +87,4 @@ const ImagesGridBox = ({ posting, data, children }) => {
   );
 };
 
-export default ImagesGridBox;
+export default AudioGridBox;

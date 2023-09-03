@@ -22,29 +22,8 @@ import { getTeams } from "@/store/teamsSlice";
 
 const TeamsSection = () => {
   const dispatch = useDispatch();
-  const data = [
-    {
-      Name: "webGhoul",
-    },
-    {
-      Name: "webGhoul1",
-    },
-    {
-      Name: "webGhoul2",
-    },
-    {
-      Name: "webGhoul3",
-    },
-    {
-      Name: "webGhoul4",
-    },
-    {
-      Name: "webGhoul5",
-    },
-  ];
-  const { teams } = useSelector((state) => state.teams);
+  const { user_teams,teams } = useSelector((state) => state.teams);
   const [expanded, setExpanded] = React.useState(false);
-
   const handleChange = () => {
     setExpanded(!expanded);
   };
@@ -79,7 +58,7 @@ const TeamsSection = () => {
             <Head special={true} title={"My Teams"} align="left" h={"h4"} />
           </AccordionSummary>
           <AccordionDetails>
-            <TeamsGridBox data={data} />
+            <TeamsGridBox data={user_teams} />
           </AccordionDetails>
         </Accordion>
         <Box className={`grid jcs aic g30`}>

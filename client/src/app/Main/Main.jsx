@@ -18,6 +18,9 @@ import { getUserData } from "@/store/userSlice";
 import Cookies from "js-cookie";
 import { getAuthData } from "@/store/authSlice";
 import SparkModal from "@/components/SparkModal/SparkModal";
+import ChosenDataView from "@/components/ChosenDataView/ChosenDataView";
+import { useContext } from "react";
+import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
@@ -59,6 +62,7 @@ const Main = ({ children }) => {
       <BackLoading />
       <Sidebar />
       <CarouselSlider />
+      <ChosenDataView />
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />
