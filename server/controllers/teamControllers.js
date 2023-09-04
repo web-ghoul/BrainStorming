@@ -42,11 +42,13 @@ const createTeam = asyncHandler(async (req, res, next) => {
     Password: hash,
     TeamLeader: req.userId,
     Image: filePath,
+    Members : [req.userId]
   });
-
+  
   newTeam
     .save()
-    .then((result) => {
+    .then(async(result) => {
+      await User.findByIdAndUpdate(req.userId , {$push : {Teams : result._id}})
       return res.status(200).json({
         message: "Team created successfully",
       });
@@ -179,40 +181,47 @@ const getTeamInfo = asyncHandler(async(req,res,next) => {
 )
 
 
-const deleteTeam = asyncHandler(async(req,res,next) => {
+// const deleteTeam = asyncHandler(async(req,res,next) => {
 
-  const data = await Teams.findById(req.params.id).populate({path:"TeamLeader",select:"-Password"})
-  if(req.userEmail === data.TeamLeader.Email)
-  {
-    await Teams.findByIdAndDelete(req.params.id)
-    await Ideas.deleteMany({Team : id})
-    return res.status(200).json({
-      message: "Team deleted successfully !",
-    });
-  }else
-  {
-    return res.status(403).json({
-      message: "you are not authorized",
-    });
-  }
+//   const data = await Teams.findById(req.params.id).populate({path:"TeamLeader",select:"-Password"})
+//   if(req.userEmail === data.TeamLeader.Email)
+//   {
+//     await Teams.findByIdAndDelete(req.params.id)
+//     await Ideas.deleteMany({Team : req.params.id})
+//     return res.status(200).json({
+//       message: "Team deleted successfully !",
+//     });
+//   }else
+//   {
+//     return res.status(403).json({
+//       message: "you are not authorized",
+//     });
+//   }
   
-}
-)
+// }
+// )
 
 const leaveTeam = asyncHandler(async (req,res,next) => {
-  const {teamId} = req.params.id
+  const teamId = req.params.id
   const teamData = await Teams.findById(teamId)
   const userData = await User.findById(req.userId)
 
-  if(req.userId == teamData.TeamLeader)
+
+  if(teamData.Members.includes(req.userId) )
   {
-    if(teamData.Members[1])
+    if(teamData.Members.length == 1)
+    {
+      await Teams.findByIdAndDelete(req.params.id)
+      await Ideas.deleteMany({Team : req.params.id})
+      return res.status(200).json({
+        message : "left successfully !"
+      })
+    }
+    if(req.userId == teamData.TeamLeader && teamData.Members[1])
     {
       teamData.TeamLeader = teamData.Members[1];
     }
     
-  }else
-  {
     teamData.Members = teamData.Members.filter((e) => e != req.userId)
     userData.Teams = userData.Teams.filter((e) => e != req.params.id)
     try{
@@ -229,6 +238,11 @@ const leaveTeam = asyncHandler(async (req,res,next) => {
     return res.status(200).json({
       message : "left successfully !"
     })
+  }else
+  {
+    return res.status(404).json({
+      message : "you are not in the team"
+    })
   }
   
 }
@@ -241,5 +255,5 @@ module.exports = {
   EnterTeam,
   setTeamImage,
   getTeamInfo,
-  deleteTeam,
+  leaveTeam,
 };

@@ -85,11 +85,11 @@ const setBackgroundPic = asyncHandler(async (req, res, next) => {
 });
 
 const updateProfile = asyncHandler(async (req, res, next) => {
-  const { bio, about } = req.body;
+  const { name , bio, about } = req.body;
 
   
   
-    const data = await User.findByIdAndUpdate({_id : req.userId} , {Bio : bio , About : about} , {new : true}).select("-Password");
+    const data = await User.findByIdAndUpdate({_id : req.userId} , {Name: name , Bio : bio , About : about} , {new : true}).select("-Password");
     res.status(200).json({ message: "Data updated successfully." , data : data});
   
 });

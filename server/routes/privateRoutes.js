@@ -46,6 +46,7 @@ router.post(
     { name: "idea" },
     { name: "description" },
     { name: "team" },
+    {name: "record"}
   ]),
   ideaController.postIdeas
 );
@@ -94,6 +95,9 @@ router.patch("/updateProfile", protect, userControler.updateProfile);
 
 router.get("/getTeamInfo/:id", protect, teamController.getTeamInfo);
 
-router.delete("/deleteTeam/:id", protect, teamController.deleteTeam);
+//router.delete("/deleteTeam/:id", protect, teamController.deleteTeam);
+
+router.delete("/leaveTeam/:id" , protect , teamController.leaveTeam)
+
 
 module.exports = router;

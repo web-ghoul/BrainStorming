@@ -1214,6 +1214,9 @@
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
+ *                 description: User's name.
  *               bio:
  *                 type: string
  *                 description: User's bio.
@@ -1221,6 +1224,7 @@
  *                 type: string
  *                 description: User's about information.
  *             required:
+ *               - name
  *               - bio
  *               - about
  *     responses:
@@ -1336,56 +1340,56 @@
  *   description: Team management
  */
 
-/**
- * @swagger
- * /deleteTeam/{id}:
- *   delete:
- *     summary: Delete a team by ID
- *     tags: [Teams]
- *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: ID of the team to delete.
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Team deleted successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Success message.
- *                   example: Team deleted successfully!
- *       403:
- *         description: Access denied or not authorized to delete the team.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message.
- *                   example: You are not authorized to delete the team.
- *       404:
- *         description: Team not found.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message.
- *                   example: Team not found.
- */
+// /**
+//  * @swagger
+//  * /deleteTeam/{id}:
+//  *   delete:
+//  *     summary: Delete a team by ID
+//  *     tags: [Teams]
+//  *     security:
+//  *       - BearerAuth: []
+//  *     parameters:
+//  *       - in: path
+//  *         name: id
+//  *         required: true
+//  *         description: ID of the team to delete.
+//  *         schema:
+//  *           type: string
+//  *     responses:
+//  *       200:
+//  *         description: Team deleted successfully.
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 message:
+//  *                   type: string
+//  *                   description: Success message.
+//  *                   example: Team deleted successfully!
+//  *       403:
+//  *         description: Access denied or not authorized to delete the team.
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 message:
+//  *                   type: string
+//  *                   description: Error message.
+//  *                   example: You are not authorized to delete the team.
+//  *       404:
+//  *         description: Team not found.
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: object
+//  *               properties:
+//  *                 message:
+//  *                   type: string
+//  *                   description: Error message.
+//  *                   example: Team not found.
+//  */
 
 
 /**
@@ -1453,4 +1457,73 @@
  *                   type: string
  *                   description: Error message.
  *                   example: Team not found.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Teams
+ *   description: Team management
+ */
+
+/**
+ * @swagger
+ * /leaveTeam/{id}:
+ *   delete:
+ *     summary: Leave a team by ID
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the team to leave.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Left the team successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: Left successfully!
+ *       '403':
+ *         description: Access denied or not authorized to leave the team.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: You are not authorized to leave the team.
+ *       '404':
+ *         description: Team not found or user is not in the team.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Team not found or you are not in the team.
+ *       '500':
+ *         description: Error while leaving the team.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Error while leaving the team.
  */
