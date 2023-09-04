@@ -1126,19 +1126,14 @@
  *               example: https://www.facebook.com/v12.0/dialog/oauth?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&scope=email
  */
 
-/**
- * @swagger
- * tags:
- *   name: User
- *   description: User profile management
- */
+
 
 /**
  * @swagger
  * /uploadBackgroundPic:
  *   patch:
  *     summary: Upload a background picture for the user's profile
- *     tags: [User]
+ *     tags: [Users]
  *     security:
  *       - BearerAuth: []
  *     consumes:
@@ -1203,19 +1198,13 @@
  *               - files
  */
 
-/**
- * @swagger
- * tags:
- *   name: User
- *   description: User profile management
- */
 
 /**
  * @swagger
  * /updateProfile:
  *   patch:
  *     summary: Update user profile information
- *     tags: [User]
+ *     tags: [Users]
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -1386,6 +1375,74 @@
  *                   description: Error message.
  *                   example: You are not authorized to delete the team.
  *       404:
+ *         description: Team not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: Team not found.
+ */
+
+
+/**
+ * @swagger
+ * /uploadTeamImage/{id}:
+ *   patch:
+ *     summary: Upload a team image by ID
+ *     tags: [Teams]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the team to upload an image for.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               files:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: The image file to upload.
+ *     responses:
+ *       '200':
+ *         description: Image updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                   example: Image updated successfully!
+ *                 data:
+ *                   type: object
+ *                   description: Updated team data.
+ *                   example: {} # Example team data
+ *       '403':
+ *         description: Access denied or not authorized to update the team image.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ *                   example: You are not authorized to update the team image.
+ *       '404':
  *         description: Team not found.
  *         content:
  *           application/json:

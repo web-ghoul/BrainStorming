@@ -25,7 +25,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
   }
 
   var arrayOfUrls;
-  if (req.files.files.length > 0) {
+  if (req.files && req.files['files'] && req.files.files.length > 0) {
     try {
       arrayOfUrls = await uploadImage.uploadMultipleImages(req.files.files);
       logger.info(arrayOfUrls);

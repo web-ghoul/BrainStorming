@@ -25,6 +25,10 @@ const router = express.Router();
  *       404:
  *         description: Teams not found
  */
+
+
+
+
 router.get("/Teams", teamController.displayTeams);
 
 router.get("/Profile/:id", userControler.getProfile);
