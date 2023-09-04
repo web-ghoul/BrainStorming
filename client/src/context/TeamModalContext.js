@@ -7,6 +7,11 @@ export const TeamModalContext = createContext();
 export const TeamModalProvider = ({ children }) => {
   const [showAddNewTeamModal, setShowAddNewTeamModal] = useState(false);
   const [showJoinTeamModal, setShowJoinTeamModal] = useState(false);
+  const [showChangeTeamImageModal, setShowChangeTeamImageModal] = useState(
+    false
+  );
+  const [viewTeamImageModal, setViewTeamImageModal] = useState(false);
+  const [teamImage, setTeamImage] = useState("");
   const [teamId, setTeamId] = useState(null);
   const handleToggleAddNewTeamModal = () => {
     setShowAddNewTeamModal(!showAddNewTeamModal);
@@ -14,15 +19,30 @@ export const TeamModalProvider = ({ children }) => {
   const handleToggleJoinTeamModal = () => {
     setShowJoinTeamModal(!showJoinTeamModal);
   };
+  const handleToggleViewTeamImageModal = () => {
+    setViewTeamImageModal(!viewTeamImageModal);
+  };
+  const handleSetTeamImage = (img) => {
+    setTeamImage(img);
+  };
+  const handleToggleChangeTeamImageModal = () => {
+    setShowChangeTeamImageModal(!showChangeTeamImageModal);
+  };
   return (
     <TeamModalContext.Provider
       value={{
         handleToggleJoinTeamModal,
         handleToggleAddNewTeamModal,
+        handleToggleViewTeamImageModal,
+        handleToggleChangeTeamImageModal,
+        handleSetTeamImage,
         showAddNewTeamModal,
         showJoinTeamModal,
+        viewTeamImageModal,
+        showChangeTeamImageModal,
         teamId,
-        setTeamId
+        teamImage,
+        setTeamId,
       }}
     >
       {children}

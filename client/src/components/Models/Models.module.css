@@ -2,7 +2,7 @@
   background-color: var(--white);
   padding: 20px;
   border-radius: 8px;
-  height: fit-content;
+  height: max-content;
   width: max-content;
   max-width: 90vw;
   max-height: 90vh;
@@ -13,19 +13,31 @@
   overflow: auto;
 }
 
+
 .avatar_box img {
   width: 100%;
   height: auto;
 }
 
-@media (1200px >= width >= 992px) {
+.choose_files_box {
+  background-color: var(--white);
+  width: 60vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  padding: 20px;
+}
+
+
+@media (1200px >=width >=992px) {
   .avatar_box {
     padding: 18px;
     border-radius: 7px;
   }
 }
 
-@media (992px >= width >= 768px) {
+@media (992px >=width >=768px) {
   .avatar_box {
     padding: 15px;
     border-radius: 6px;

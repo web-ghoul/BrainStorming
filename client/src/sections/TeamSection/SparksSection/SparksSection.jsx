@@ -95,7 +95,6 @@ const SparksSection = () => {
       handleAlertToastify("Can't Access This Page", "error");
     }
   }, []);
-  console.log(sparks);
   return (
     <Box className={`grid jcs aic g30`}>
       {sparks.length > 0 ? (

@@ -8,12 +8,13 @@ import Head from "@/components/Head/Head";
 import { CameraAltRounded } from "@mui/icons-material";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
+import { ExtensionsContext } from "@/context/ExtensionsContext";
 
 const ChangeCover = ({ handleChangeFile }) => {
   const { handleToggleChangeProfileCoverModal } = useContext(
     ProfileModalContext
   );
-  const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
+  const {images} = useContext(ExtensionsContext)
   return (
     <Box className={`grid aic jcs g20 add_new_team_form_contain`}>
       <Box className={`flex jcc aic g10 add_new_team_title`}>
@@ -29,7 +30,7 @@ const ChangeCover = ({ handleChangeFile }) => {
       <FileUploader
         handleChange={handleChangeFile}
         name="file"
-        types={fileTypes}
+        types={images}
         multiple={false}
       />
       <Box className={`flex jcfe aic g20`}>

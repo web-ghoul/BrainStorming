@@ -2,7 +2,7 @@
 import React from "react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import TeamModal from "@/components/TeamModal/TeamModal";
+import TeamModal from "@/components/Models/TeamModal";
 import FloatActionButtons from "@/components/FloatActionButtons/FloatActionButtons";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PageBox } from "@/MUIComponents/PageBox/PageBox";
@@ -10,14 +10,14 @@ import BackLoading from "@/components/BackLoading/BackLoading";
 import CarouselSlider from "@/components/CarouselSlider/CarouselSlider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProfileModal from "@/components/ProfileModal/ProfileModal";
+import ProfileModal from "@/components/Models/ProfileModal";
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useEffect } from "react";
 import { getUserData } from "@/store/userSlice";
 import Cookies from "js-cookie";
 import { getAuthData } from "@/store/authSlice";
-import SparkModal from "@/components/SparkModal/SparkModal";
+import SparkModal from "@/components/Models/SparkModal";
 import ChosenDataView from "@/components/ChosenDataView/ChosenDataView";
 
 const Main = ({ children }) => {
@@ -63,10 +63,14 @@ const Main = ({ children }) => {
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />
+      <TeamModal type="view_team_image"/>
+      <TeamModal type="change_team_image"/>
       <SparkModal />
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
+      <ProfileModal type="edit_profile" />
       <ProfileModal type="view_avatar" img={userData && userData.Image} />
+      <ProfileModal type="view_cover" img={userData && userData.BackgroundImage} />
       <FloatActionButtons />
       <ToastContainer />
       <Footer />

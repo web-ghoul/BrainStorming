@@ -14,6 +14,7 @@ const UserAbout = () => {
           component={"p"}
           variant="h6"
           className={`fw500 flex jcfs aic ${styles.user_about_box}`}
+          sx={{ color: (theme) => !userData.About && theme.palette.gray }}
         >
           {userData.About ? userData.About : "Write a Brief..."}
         </Typography>

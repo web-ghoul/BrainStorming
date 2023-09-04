@@ -4,7 +4,7 @@ import React from "react";
 import { useContext } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Head from "../Head/Head";
-import styles from "./SparkModal.module.css";
+import styles from "./Models.module.css";
 import { ExtensionsContext } from "@/context/ExtensionsContext";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 
