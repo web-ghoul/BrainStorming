@@ -85,13 +85,33 @@ const setBackgroundPic = asyncHandler(async (req, res, next) => {
 });
 
 const updateProfile = asyncHandler(async (req, res, next) => {
-  const { bio, about } = req.body;
+  const { name , bio, about } = req.body;
 
   
   
-    const data = await User.findByIdAndUpdate({_id : req.userId} , {Bio : bio , About : about} , {new : true}).select("-Password");
+    const data = await User.findByIdAndUpdate({_id : req.userId} , {Name: name , Bio : bio , About : about} , {new : true}).select("-Password");
     res.status(200).json({ message: "Data updated successfully." , data : data});
   
 });
 
-module.exports = { getProfile, setProfilePic, setBackgroundPic, updateProfile };
+const deleteUser = asyncHandler( async(req,res,next) => {
+  const data = await User.findById(req.userId)
+
+  if(data.Teams.length > 0)
+  {
+    return res.status(403).json({
+      message : "You must leave the teams you have joined before deleting your account."
+    })
+  }
+  else
+  {
+    await User.findByIdAndDelete(req.userId)
+    return res.status(200).json({
+      message : "Account deleted successfully !"
+    })
+  }
+  
+}
+)
+
+module.exports = { getProfile, setProfilePic, setBackgroundPic, updateProfile ,deleteUser};

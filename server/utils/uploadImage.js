@@ -37,18 +37,21 @@ const uploadImage = (file) => {
     );
   });
 };
-module.exports = (file) => {
+module.exports = (file , type = "profileImages" ) => {
   console.log("hello");
   var folderName;
-  if (file && file.mimetype.startsWith("image/")) {
+  if (file && file.mimetype.startsWith("image/") && type == "profileImages") {
     folderName = "profileImages";
-  } else {
-    return false;
+  } else if(type= "record"){
+    folderName = "records";
+  }else
+  {
+    return false ;
   }
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       file.path,
-      { folder: folderName },
+      { folder: folderName ,resource_type: 'auto' },
       (error, result) => {
         if (result) {
           console.log(result);

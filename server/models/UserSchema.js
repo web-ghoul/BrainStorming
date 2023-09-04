@@ -31,6 +31,7 @@ const UserSchema = Schema(
     Teams: {
       type: [Schema.Types.ObjectId],
       ref: "Team",
+      default : [],
     },
     Image: {
       type: String,

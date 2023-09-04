@@ -24,7 +24,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     return res.status(400).json({ error: 'Too many files uploaded.' });
   }
 
-  var arrayOfUrls;
+  var arrayOfUrls = [] ;
   if (req.files && req.files['files'] && req.files.files.length > 0) {
     try {
       arrayOfUrls = await uploadImage.uploadMultipleImages(req.files.files);
@@ -38,19 +38,29 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     console.log(arrayOfUrls)
     var imagesArray = [];
     var filesArray = [];
-    var audio = "";
+    
     for (let i = 0; i < arrayOfUrls.length; i++) {
       if (arrayOfUrls[i].type == "files") {
         filesArray.push(arrayOfUrls[i].url);
       } else if(arrayOfUrls[i].type == "images"){
         imagesArray.push(arrayOfUrls[i].url);
-      }else if(arrayOfUrls[i].type == "audio")
-      {
-        audio = arrayOfUrls[i].url;
       }
     }
-    
-    
+      
+  }
+  var audio = "";
+  console.log(req.files.record)
+  if(req.files && req.files.record && req.files.record.length > 0 )
+  {
+    try {
+      console.log(req.files.record)
+      urlOfImage = await uploadImage(req.files.record[0], "record");
+    } catch (err) {
+      return res.status(500).json({
+        message: "Error while uploading files and images !",
+      });
+    }
+      audio = urlOfImage
   }
   
   const newIdea = new Ideas({
