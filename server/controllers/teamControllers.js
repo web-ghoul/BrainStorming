@@ -1,5 +1,6 @@
 const Teams = require("../models/TeamsSchema");
 const User = require("../models/UserSchema");
+const Ideas = require('../models/IdeasSchema')
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const uploadImage = require("../utils/uploadImage");
@@ -177,12 +178,14 @@ const getTeamInfo = asyncHandler(async(req,res,next) => {
 }
 )
 
+
 const deleteTeam = asyncHandler(async(req,res,next) => {
 
   const data = await Teams.findById(req.params.id).populate({path:"TeamLeader",select:"-Password"})
   if(req.userEmail === data.TeamLeader.Email)
   {
     await Teams.findByIdAndDelete(req.params.id)
+    await Ideas.deleteMany({Team : id})
     return res.status(200).json({
       message: "Team deleted successfully !",
     });
@@ -196,6 +199,40 @@ const deleteTeam = asyncHandler(async(req,res,next) => {
 }
 )
 
+const leaveTeam = asyncHandler(async (req,res,next) => {
+  const {teamId} = req.params.id
+  const teamData = await Teams.findById(teamId)
+  const userData = await User.findById(req.userId)
+
+  if(req.userId == teamData.TeamLeader)
+  {
+    if(teamData.Members[1])
+    {
+      teamData.TeamLeader = teamData.Members[1];
+    }
+    
+  }else
+  {
+    teamData.Members = teamData.Members.filter((e) => e != req.userId)
+    userData.Teams = userData.Teams.filter((e) => e != req.params.id)
+    try{
+      await userData.save()
+      await teamData.save()
+  
+    }catch(err)
+    {
+      res.status(404).json({
+        message : "error while leaving the team !"
+      })
+    }
+    
+    return res.status(200).json({
+      message : "left successfully !"
+    })
+  }
+  
+}
+)
 
 module.exports = {
   createTeam,

@@ -1,4 +1,0 @@
-::1 - - [27/Aug/2023:18:28:35 +0000] "POST /api/login HTTP/1.1" 200 288 "-" "PostmanRuntime/7.32.3"
-::1 - - [27/Aug/2023:21:31:47 +0000] "POST /api/register HTTP/1.1" 200 56 "-" "PostmanRuntime/7.32.3"
-::1 - - [27/Aug/2023:21:31:58 +0000] "GET /api/verify/64ebc0c2a1ed08b88b88757f/6a2ed349-bab0-4fd1-ba77-c5f5b0a423b864ebc0c2a1ed08b88b88757f HTTP/1.1" 200 35 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 Edg/116.0.1938.54"
-::1 - - [27/Aug/2023:21:32:48 +0000] "POST /api/login HTTP/1.1" 200 288 "-" "PostmanRuntime/7.32.3"
