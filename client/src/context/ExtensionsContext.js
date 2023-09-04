@@ -7,7 +7,7 @@ export const ExtensionsContext = createContext();
 export const ExtensionsProvider = ({ children }) => {
   const audios = ["ogg", "avi", "aac", "flac", "wav"];
   const videos = ["webm", "avi", "mov", "flv", "mp4", "mp3"];
-  const docs = ["doc", "pdf", "docx", "xlsx", "pptx", "csv"];
+  const docs = ["doc", "pdf", "docx", "xlsx", "pptx"];
   const images = ["png","jfif", "jpeg", "gif", "jpg", "tiff", "tif", "webp", "bmp"];
   return (
     <ExtensionsContext.Provider

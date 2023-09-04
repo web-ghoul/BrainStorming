@@ -24,7 +24,7 @@ const ChangeTeamCover = ({ handleChangeFile }) => {
         />
         <Head
           title={"Change Team Cover"}
-          h={"h3"}
+          h={"h4"}
           color={(theme) => theme.palette.primary.main}
         />
       </Box>

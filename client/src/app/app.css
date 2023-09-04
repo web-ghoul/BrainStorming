@@ -61,6 +61,11 @@
   background-color: var(--main) !important;
 }
 
+
+/*File Upload*/
+.guZdik{
+  min-width: 200px !important;
+}
 @media (max-width: 1200px) {
   .css-bbskgl-MuiFormLabel-root-MuiInputLabel-root {
     font-size: 16px;

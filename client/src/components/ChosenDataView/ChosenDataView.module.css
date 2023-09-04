@@ -24,6 +24,16 @@
   height: auto;
 }
 
+.file {
+  background-color: var(--white);
+  padding: 5px;
+}
+
+.file img {
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 1200px) {
   .chosen_data_viewer_box {
     padding: 18px;
@@ -31,7 +41,7 @@
   }
 
   .data_viewer {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -42,7 +52,7 @@
   }
 
   .data_viewer {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -53,6 +63,6 @@
   }
 
   .data_viewer {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }

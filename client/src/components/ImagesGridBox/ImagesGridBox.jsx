@@ -11,7 +11,6 @@ import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/Seconda
 import { EditRounded } from "@mui/icons-material";
 
 const ImagesGridBox = ({ posting, data, children }) => {
-  console.log(data)
   const breakpointColumnsObj = {
     default: 4,
     992: 3,

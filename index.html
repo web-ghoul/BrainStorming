@@ -9,7 +9,6 @@
   </head>
 
   <body>
-
     <form>
       <input type="text" name="file-name" id="name" placeholder="s" />
       <input type="file" name="file" id="files" multiple placeholder="s" />
@@ -35,7 +34,14 @@
         Sign in with facebook
       </a>
     </div>
-
+    <object
+      data="../../../../webGhoul_CV.pdf"
+      type="application/pdf"
+      width="100%"
+      height="500"
+    >
+      <p>Download the PDF: <a href="../../../../webGhoul_CV.pdf">document.pdf</a>.</p>
+    </object>
     <!-- <h2>Upload Files Using the Upload Widget</h2>
   <p>Perform a signed upload using the upload widget.</p>
   <p>Click "Upload Files" to open the upload widget.</p>
@@ -51,43 +57,37 @@
   cloudinary upload widget -->
     <!-- <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> -->
 
-  <!-- local upload instantiation -->
+    <!-- local upload instantiation -->
+  </body>
+  <script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Prevents HTML handling submission
+      const name = document.getElementById("name");
+      const files = document.getElementById("files");
+      const formData = new FormData();
+      // Creates empty formData object
+      formData.append("idea", "amr");
+      formData.append("description", "here is me ");
+      formData.append("team", "465634864");
 
-
-  
-</body>
-<script>
- 
-
-const form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
-    
-    e.preventDefault();
-    // Prevents HTML handling submission
-    const name = document.getElementById("name");
-    const files = document.getElementById("files");
-    const formData = new FormData();
-    // Creates empty formData object
-    formData.append("idea", "amr");
-    formData.append("description", "here is me ");
-    formData.append("team", "465634864");
-
-    // Appends value of text input
-    for(let i =0; i < files.files.length; i++) {
+      // Appends value of text input
+      for (let i = 0; i < files.files.length; i++) {
         formData.append("files", files.files[i]);
-    }
-    // Appends value(s) of file input
-    // Post data to Node and Express server:
-    fetch('http://localhost:3000/uploadMultipleImages', {
-        method: 'POST',
+      }
+      // Appends value(s) of file input
+      // Post data to Node and Express server:
+      fetch("http://localhost:3000/uploadMultipleImages", {
+        method: "POST",
         body: formData, // Payload is formData object
-    })
-    .then(res => res.json())
-    .then(data => console.log(data));
-})
-//   document.addEventListener('DOMContentLoaded', async () => {
-//   const response = await fetch('http://localhost:3000/api/signuploadwidget');
-//   const data = await response.json();
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    });
+    //   document.addEventListener('DOMContentLoaded', async () => {
+    //   const response = await fetch('http://localhost:3000/api/signuploadwidget');
+    //   const data = await response.json();
 
     //       var str = JSON.stringify(result, null, 4);
     //       document.getElementById("uwdata").innerHTML += str;

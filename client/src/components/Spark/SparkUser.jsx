@@ -27,7 +27,7 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
   const { token } = useSelector((state) => state.user);
   const handleDeleteSpark = async () => {
     await axios
-      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/DeleteIdeas/${spark_id}`, {
+      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/deleteIdeas/${spark_id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -37,6 +37,7 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
         handleAlertToastify(err.response.data.message, "error");
       });
   };
+
   if (typeof document !== "undefined") {
     document.addEventListener("click", (event) => {
       if (
@@ -53,7 +54,7 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
     <Box className={`flex jcsb aic g30 ${styles.user}`}>
       <Box className={`flex jcfs aic g10 `}>
         <Box className={`flex jcc aic ${styles.avatar}`}>
-          <Image loading="lazy" la alt="avatar" src={avatar} />
+          <Image loading="lazy" width={100} height={100} la alt="avatar" src={avatar} />
         </Box>
         <Box className={`grid jcfs aic`}>
           <Typography variant="h6" sx={{ lineHeight: "20px" }}>

@@ -6,15 +6,17 @@ import Head from "../Head/Head";
 import FileBox from "../FileBox/FileBox";
 import ImagesGridBox from "../ImagesGridBox/ImagesGridBox";
 import SparkUser from "./SparkUser";
+import { useSelector } from "react-redux";
 
 const Spark = ({ data }) => {
+  const {team} = useSelector((state)=>state.team)
   return (
     <Box className={`grid jcs aic g10 ${styles.spark}`}>
       <SparkUser
-        username={"webGhoul"}
-        avatar={""}
+        username={data.WrittenBy.Name}
+        avatar={data.WrittenBy.Image}
         spark_date={data.createdAt}
-        leader={false}
+        leader={team.TeamLeader.Name === data.WrittenBy.Name}
       />
       <Box className={`grid jcs aic g10 ${styles.spark_data}`}>
         <Box className={`grid jcfs aic g10`}>

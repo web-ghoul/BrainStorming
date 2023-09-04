@@ -18,6 +18,10 @@ export const theme = createTheme({
     gmail: "#ea4335",
     whatsapp: "#25d366",
     github: "#333",
+    pdf:"#F40F02",
+    word:"#1B5EBE",
+    excel:"#1D6F42",
+    power_point:"#D35230"
   },
   breakpoints: {
     xs: {

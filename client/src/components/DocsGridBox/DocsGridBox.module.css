@@ -34,6 +34,16 @@
   z-index: 2;
 }
 
+.file{
+  background-color: var(--white);
+  padding: 5px;
+}
+
+.file img{
+  width: 20px;
+  height: 20px;
+}
+
 .masonry_grid > div {
   display: grid;
   align-items: flex-start;

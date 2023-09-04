@@ -21,7 +21,7 @@ const ChangeAvatar = ({ handleChangeFile }) => {
         />
         <Head
           title={"Change Profile Avatar"}
-          h={"h3"}
+          h={"h4"}
           color={(theme) => theme.palette.primary.main}
         />
       </Box>

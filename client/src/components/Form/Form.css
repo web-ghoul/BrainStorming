@@ -37,7 +37,7 @@ form {
   width: 100%;
   box-shadow: none;
   border-radius: 0px;
-  overflow: auto;
+  top: auto;
 }
 
 .team_form div div label {

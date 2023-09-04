@@ -21,7 +21,7 @@ import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { useContext } from "react";
 import { SparkModalContext } from "@/context/SparkModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
-import VideosGridBox from "@/components/VideosGridBox/VideosGridBox";
+import VideosGridBox from "@/components/DocsGridBox/DocsGridBox";
 import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
 import { RedButton } from "@/MUIComponents/RedButton/RedButton";
 import { ProfileModalContext } from "@/context/ProfileModalContext";

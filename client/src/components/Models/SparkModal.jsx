@@ -20,7 +20,7 @@ const SparkModal = () => {
       aria-describedby="modal-modal-description"
     >
       <Box className={`grid jcs aic g10 ${styles.choose_files_box}`}>
-        <Head align={"center"} h={"h3"} title={"Choose Files And Images"} />
+        <Head align={"center"} h={"h4"} title={"Choose Files And Images"} />
         <FileUploader
           multiple={true}
           types={[...audios, ...images, ...videos, ...docs]}

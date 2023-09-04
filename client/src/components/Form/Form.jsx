@@ -315,23 +315,14 @@ const Form = ({ type }) => {
     validationSchema: createSparkValidationSchema,
     onSubmit: async (values) => {
       const data = new FormData();
-      console.log(imageFiles, videoFiles,audioFiles, docFiles);
-      imageFiles.map((img) => {
-        data.append("files", img);
-      });
-      videoFiles.map((vid) => {
-        data.append("files", vid);
-      });
-      audioFiles.map((aud) => {
-        data.append("files", aud);
-      });
-      docFiles.map((doc) => {
-        data.append("files", doc);
-      });
+      const allFiles = [...imageFiles, ...videoFiles, ...audioFiles, docFiles];
       if (record) {
-        data.append("files", record);
+        data.append("record", record);
       }
-      console.log(data.get("files"),token);
+      for (let i = 0; i < allFiles.length; i++) {
+        data.append("files", allFiles[i]);
+      }
+      data.append("files", allFiles);
       data.append("idea", values.idea);
       data.append("description", values.description);
       data.append("team", id);
@@ -467,74 +458,72 @@ const Form = ({ type }) => {
   }, [type]);
 
   return (
-    <Container>
-      <form
-        onSubmit={
-          type === "login"
-            ? loginFormik.handleSubmit
-            : type === "register"
-            ? registerFormik.handleSubmit
-            : type === "forgot_password"
-            ? forgotPasswordFormik.handleSubmit
-            : type === "reset_password"
-            ? resetPasswordFormik.handleSubmit
-            : type === "add_new_team"
-            ? addNewTeamFormik.handleSubmit
-            : type === "join_team"
-            ? joinTeamFormik.handleSubmit
-            : type === "create_spark"
-            ? createSparkFormik.handleSubmit
-            : type === "change_avatar"
-            ? handleChangeAvatar
-            : type === "change_team_image"
-            ? handleChangeTeamImage
-            : type === "change_cover"
-            ? handleChangeCover
-            : type === "edit_profile" && editProfileFormik.handleSubmit
-        }
-        className={`grid jcs aifs ${
-          (type === "add_new_team" ||
-            type === "join_team" ||
-            type === "edit_profile") &&
-          "team_form"
-        } ${type === "edit_profile" && "g30 edit_profile_box"} ${
-          (type === "change_cover" ||
-            type === "change_team_image" ||
-            type === "change_avatar") &&
-          "profile_form"
-        } ${type === "create_spark" && "g30 spark_form"}`}
-      >
-        {type === "login" ? (
-          <Login formik={loginFormik} />
-        ) : type === "register" ? (
-          <Register formik={registerFormik} />
-        ) : type === "add_new_team" ? (
-          <AddNewTeam
-            handleChangeFile={handleChangeFile}
-            formik={addNewTeamFormik}
-          />
-        ) : type === "join_team" ? (
-          <JoinTeam formik={joinTeamFormik} />
-        ) : type === "reset_password" ? (
-          <ResetPassword formik={resetPasswordFormik} />
-        ) : type === "forgot_password" ? (
-          <ForgotPassword formik={forgotPasswordFormik} />
-        ) : type === "change_cover" ? (
-          <ChangeCover handleChangeFile={handleChangeFile} />
-        ) : type === "change_team_image" ? (
-          <ChangeTeamCover handleChangeFile={handleChangeFile} />
-        ) : type === "change_avatar" ? (
-          <ChangeAvatar handleChangeFile={handleChangeFile} />
-        ) : type === "create_spark" ? (
-          <CreateSpark
-            handleChangeFile={handleChangeFile}
-            formik={createSparkFormik}
-          />
-        ) : (
-          <EditProfile formik={editProfileFormik} />
-        )}
-      </form>
-    </Container>
+    <form
+      onSubmit={
+        type === "login"
+          ? loginFormik.handleSubmit
+          : type === "register"
+          ? registerFormik.handleSubmit
+          : type === "forgot_password"
+          ? forgotPasswordFormik.handleSubmit
+          : type === "reset_password"
+          ? resetPasswordFormik.handleSubmit
+          : type === "add_new_team"
+          ? addNewTeamFormik.handleSubmit
+          : type === "join_team"
+          ? joinTeamFormik.handleSubmit
+          : type === "create_spark"
+          ? createSparkFormik.handleSubmit
+          : type === "change_avatar"
+          ? handleChangeAvatar
+          : type === "change_team_image"
+          ? handleChangeTeamImage
+          : type === "change_cover"
+          ? handleChangeCover
+          : type === "edit_profile" && editProfileFormik.handleSubmit
+      }
+      className={`grid jcs aifs ${
+        (type === "add_new_team" ||
+          type === "join_team" ||
+          type === "edit_profile") &&
+        "team_form"
+      } ${type === "edit_profile" && "g30 edit_profile_box"} ${
+        (type === "change_cover" ||
+          type === "change_team_image" ||
+          type === "change_avatar") &&
+        "profile_form"
+      } ${type === "create_spark" && "g30 spark_form"}`}
+    >
+      {type === "login" ? (
+        <Login formik={loginFormik} />
+      ) : type === "register" ? (
+        <Register formik={registerFormik} />
+      ) : type === "add_new_team" ? (
+        <AddNewTeam
+          handleChangeFile={handleChangeFile}
+          formik={addNewTeamFormik}
+        />
+      ) : type === "join_team" ? (
+        <JoinTeam formik={joinTeamFormik} />
+      ) : type === "reset_password" ? (
+        <ResetPassword formik={resetPasswordFormik} />
+      ) : type === "forgot_password" ? (
+        <ForgotPassword formik={forgotPasswordFormik} />
+      ) : type === "change_cover" ? (
+        <ChangeCover handleChangeFile={handleChangeFile} />
+      ) : type === "change_team_image" ? (
+        <ChangeTeamCover handleChangeFile={handleChangeFile} />
+      ) : type === "change_avatar" ? (
+        <ChangeAvatar handleChangeFile={handleChangeFile} />
+      ) : type === "create_spark" ? (
+        <CreateSpark
+          handleChangeFile={handleChangeFile}
+          formik={createSparkFormik}
+        />
+      ) : (
+        <EditProfile formik={editProfileFormik} />
+      )}
+    </form>
   );
 };
 
