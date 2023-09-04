@@ -99,5 +99,7 @@ router.get("/getTeamInfo/:id", protect, teamController.getTeamInfo);
 
 router.delete("/leaveTeam/:id" , protect , teamController.leaveTeam)
 
+router.delete("/deleteAccount" , protect , userControler.deleteUser)
+
 
 module.exports = router;
