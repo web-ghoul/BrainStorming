@@ -127,6 +127,12 @@ a {
   text-transform: capitalize !important;
 }
 
+.center_x{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .g5 {
   gap: 5px !important;
 }

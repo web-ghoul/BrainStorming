@@ -19,13 +19,16 @@ import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "@/store/authSlice";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
   const drawerContext = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const router = useRouter();
   const handleLogOut = () => {
+    router.push("/");
     dispatch(logOut());
   };
   return (

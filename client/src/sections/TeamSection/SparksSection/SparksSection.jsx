@@ -8,10 +8,21 @@ import avatarImg2 from "../../../../public/images/avatar2.jpg";
 import avatarImg3 from "../../../../public/images/avatar3.jpg";
 import avatarImg4 from "../../../../public/images/avatar4.jpg";
 import avatarImg5 from "../../../../public/images/avatar5.jpg";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Spark from "@/components/Spark/Spark";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getSparks } from "@/store/sparksSlice";
+import { TeamModalContext } from "@/context/TeamModalContext";
+import { useContext } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const SparksSection = () => {
+  const { id } = useParams();
+  const { sparks } = useSelector((state) => state.sparks);
+  const router = useRouter();
+
   const data = [
     // {
     //   avatar: avatarImg1,
@@ -74,11 +85,30 @@ const SparksSection = () => {
     //   images: [sparkImg2],
     // },
   ];
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    try {
+      dispatch(getSparks({ team_id: id, token: Cookies.get("token") }));
+    } catch (err) {
+      router.push("/");
+      handleAlertToastify("Can't Access This Page", "error");
+    }
+  }, []);
+  console.log(sparks);
   return (
     <Box className={`grid jcs aic g30`}>
-      {data.map((spark, i) => (
-        <Spark key={i} data={spark} />
-      ))}
+      {sparks.length > 0 ? (
+        sparks.map((spark, i) => <Spark key={i} data={spark} />)
+      ) : (
+        <Typography
+          variant="h2"
+          sx={{ color: (theme) => theme.palette.gray }}
+          className={`tac`}
+        >
+          No Sparks Yet...
+        </Typography>
+      )}
     </Box>
   );
 };

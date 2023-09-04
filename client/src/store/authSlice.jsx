@@ -19,11 +19,11 @@ export const authSlice = createSlice({
       }
     },
     logOut: (state) => {
-      try{
-        Cookies.remove("token")
-        Cookies.remove("user_id")
-      }catch(err){
-        console.log(err)
+      try {
+        Cookies.remove("token");
+        Cookies.remove("user_id");
+      } catch (err) {
+        console.log(err);
       }
       state.signed = false;
       (state.user_id = null), (state.token = null);

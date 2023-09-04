@@ -1,0 +1,53 @@
+2023-08-13 06:10:44 error: hello error
+2023-08-13 06:10:44 debug: heelo debug
+2023-08-13 06:10:44 warn: hello warn
+2023-08-13 06:10:44 info: ghello info
+2023-08-13 06:11:05 error: hello error
+2023-08-13 06:11:05 debug: heelo debug
+2023-08-13 06:11:05 warn: hello warn
+2023-08-13 06:11:05 info: ghello info
+2023-08-25 11:23:16 info: [object Object]
+2023-08-25 11:25:27 info: [object Object]
+2023-08-25 11:26:00 info: [object Object]
+2023-08-25 11:26:35 info: [object Object]
+2023-08-25 16:05:43 info: [object Object]
+2023-08-25 16:11:57 info: [object Object]
+2023-08-29 14:22:42 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693311761/profileImages/ucgxd8bzbakdspbgayg9.jpg
+2023-08-29 21:00:59 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693335658/profileImages/fg6at9jrspmsvgcsymlo.jpg
+2023-08-29 21:02:04 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693335724/profileImages/i2wwafnvlfgmrug2uhau.jpg
+2023-08-29 21:12:28 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693336348/profileImages/u2cwyzmutcigm5ftoh2b.jpg
+2023-08-29 21:43:10 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693338190/profileImages/hwcuh0j97umwi1q5btt2.jpg
+2023-09-03 01:06:23 info: [object Object]
+2023-09-03 01:16:52 info: [object Object]
+2023-09-03 01:21:46 info: [object Object]
+2023-09-03 01:21:52 info: [object Object]
+2023-09-03 01:24:08 info: [object Object]
+2023-09-03 01:28:04 info: [object Object]
+2023-09-03 01:28:12 info: [object Object]
+2023-09-03 02:32:43 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693701162/profileImages/xtd4m2prdkyzki0q0pnt.jpg
+2023-09-03 02:33:49 info: https://res.cloudinary.com/dz7nwcejb/image/upload/v1693701229/profileImages/ismduxnacwvhpuwkbsol.jpg
+2023-09-03 02:34:43 info: {
+  _id: new ObjectId("64f3bf4f99da357be7443a28"),
+  Name: 'team006',
+  Password: '$2a$10$AvV0mRFhLzpotXj3uQT8n.ICs.sLZnEaUMJ3Sb9s/u.xFJtaqZz0q',
+  Members: [ new ObjectId("64f3c03499da357be7443a36") ],
+  Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693701283/profileImages/rbpf2b6g2k5wa0pftjqf.jpg',
+  TeamLeader: {
+    _id: new ObjectId("64f3b9b352b0ef55633c91a6"),
+    Email: 'amrking006@gmail.com',
+    Password: '$2a$10$/tXwpT4noxboWhwAI4eji.HjkjD3MYzyXzHk2gTKxamCzUgA4Hbra',
+    Name: 'Amr006',
+    Verified: true,
+    Teams: [],
+    Image: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693701162/profileImages/xtd4m2prdkyzki0q0pnt.jpg',
+    BackgroundImage: 'https://res.cloudinary.com/dz7nwcejb/image/upload/v1693701229/profileImages/ismduxnacwvhpuwkbsol.jpg',
+    About: '',
+    Bio: '',
+    createdAt: 2023-09-02T22:39:47.458Z,
+    updatedAt: 2023-09-03T00:33:49.852Z,
+    __v: 0
+  },
+  createdAt: 2023-09-02T23:03:43.820Z,
+  updatedAt: 2023-09-02T23:08:52.337Z,
+  __v: 1
+}

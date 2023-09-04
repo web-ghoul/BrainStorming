@@ -35,6 +35,7 @@ const Sidebar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const handleLogOut = () => {
+    router.push("/");
     dispatch(logOut());
   };
   return (

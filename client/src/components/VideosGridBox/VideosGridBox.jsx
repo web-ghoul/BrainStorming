@@ -14,9 +14,8 @@ const VideosGridBox = ({ posting, data, children }) => {
     992: 3,
     768: 2,
   };
-  const { handleToggleCarousel, setIsPosting, getCarouselData } = useContext(
-    CarouselContext
-  );
+  const { handleToggleCarousel, setIsPosting, getCarouselData } =
+    useContext(CarouselContext);
   const { setDataType, toggleDataViewer } = useContext(ChosenDataViewContext);
   const handleDataPosting = () => {
     toggleDataViewer();

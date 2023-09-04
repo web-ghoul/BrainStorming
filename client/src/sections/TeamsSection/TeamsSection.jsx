@@ -22,7 +22,7 @@ import { getTeams } from "@/store/teamsSlice";
 
 const TeamsSection = () => {
   const dispatch = useDispatch();
-  const { user_teams,teams } = useSelector((state) => state.teams);
+  const { user_teams, teams } = useSelector((state) => state.teams);
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = () => {
     setExpanded(!expanded);

@@ -7,10 +7,13 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import styles from "./CarouselSlider.module.css";
 import { Close } from "@mui/icons-material";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
+import SpecialImage from "../SpecialImage/SpecialImage";
 
 const CarouselSlider = () => {
-  const { data, openCarousel, selectedItem, handleToggleCarousel } =
-    useContext(CarouselContext);
+  const { data, openCarousel, selectedItem, handleToggleCarousel } = useContext(
+    CarouselContext
+  );
+  console.log(data);
   return (
     <Modal
       onClose={handleToggleCarousel}
@@ -18,20 +21,14 @@ const CarouselSlider = () => {
       aria-describedby="modal-modal-description"
       open={openCarousel}
     >
-      <Box className={`${styles.modal_carousel}`}>
+      <Box className={`grid jcs aic g10 ${styles.modal_carousel}`}>
         <MainIconButton onClick={handleToggleCarousel}>
           <Close />
         </MainIconButton>
-        <Carousel selectedItem={selectedItem} infiniteLoop={true}>
+        <Carousel infiniteLoop={true}>
           {data &&
             data.map((img, i) => (
-              <Box key={i} className={`flex aic jcc ${styles.image_box}`}>
-                <Box
-                  sx={{ backgroundImage: `url(${img.src})` }}
-                  className={`${styles.back_img}`}
-                />
-                <Image src={img} alt={"post"} />
-              </Box>
+              <SpecialImage key={i} img={img} slider={true} />
             ))}
         </Carousel>
       </Box>

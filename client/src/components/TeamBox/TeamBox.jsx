@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 const TeamBox = ({ data }) => {
   const { handleToggleJoinTeamModal, setTeamId } = useContext(TeamModalContext);
   const { setButtonLoading } = useContext(LoadingButtonContext);
-  const { user_id,token } = useSelector((state) => state.auth);
+  const { user_id, token } = useSelector((state) => state.auth);
   const router = useRouter();
   const handleEnterTeam = async () => {
     setButtonLoading(true);
@@ -40,7 +40,7 @@ const TeamBox = ({ data }) => {
   return (
     <Box className={`grid jcs aic ${styles.room}`}>
       <Box className={`flex jcc aic ${styles.room_image_box}`}>
-        <Image width={"auto"} height={"auto"} alt="room" src={roomImg} />
+        <Image width={200} height={200} alt="room" src={data.Image} />
       </Box>
       <Box className={`grid jcs aic g20 ${styles.room_data}`}>
         <Box className={`grid jcc aic`}>

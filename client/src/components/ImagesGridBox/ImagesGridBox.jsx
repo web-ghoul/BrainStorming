@@ -11,6 +11,7 @@ import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/Seconda
 import { EditRounded } from "@mui/icons-material";
 
 const ImagesGridBox = ({ posting, data, children }) => {
+  console.log(data)
   const breakpointColumnsObj = {
     default: 4,
     992: 3,
@@ -24,7 +25,7 @@ const ImagesGridBox = ({ posting, data, children }) => {
     toggleDataViewer();
     setDataType("images");
   };
-  const handleDataView = () => {
+  const handleDataView = (i) => {
     handleToggleCarousel(i);
     getCarouselData(data);
     setIsPosting(posting);
@@ -45,23 +46,35 @@ const ImagesGridBox = ({ posting, data, children }) => {
                 handleDataPosting={handleDataPosting}
                 handleDataView={handleDataView}
                 str={str}
+                key={i}
                 overlay={i === 3 && data.length > i + 1 ? true : false}
                 posting={posting}
                 img={URL.createObjectURL(img)}
               />
             ) : (
-              <SpecialImage i={i} posting={posting} img={img} />
+              <SpecialImage
+                i={i}
+                handleDataPosting={handleDataPosting}
+                handleDataView={handleDataView}
+                str={str}
+                key={i}
+                overlay={i === 3 && data.length > i + 1 ? true : false}
+                posting={posting}
+                img={img}
+              />
             );
           })}
         </Masonry>
-        <SecondaryIconButton
-          className={`flex jcc aic g5`}
-          sx={{ width: "fit-content" }}
-          onClick={handleDataPosting}
-        >
-          <EditRounded />
-          <Typography variant="h6">Edit</Typography>
-        </SecondaryIconButton>
+        {posting && (
+          <SecondaryIconButton
+            className={`flex jcc aic g5`}
+            sx={{ width: "fit-content" }}
+            onClick={handleDataPosting}
+          >
+            <EditRounded />
+            <Typography variant="h6">Edit</Typography>
+          </SecondaryIconButton>
+        )}
       </Box>
     )
   );

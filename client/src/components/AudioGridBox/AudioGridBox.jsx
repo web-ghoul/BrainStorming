@@ -22,11 +22,10 @@ const AudioGridBox = ({ posting, data, children }) => {
     992: 3,
     768: 2,
   };
-  const { handleToggleCarousel, setIsPosting, getCarouselData } = useContext(
-    CarouselContext
-  );
+  const { handleToggleCarousel, setIsPosting, getCarouselData } =
+    useContext(CarouselContext);
   const { setDataType, toggleDataViewer, setOpenDataViewer } = useContext(
-    ChosenDataViewContext
+    ChosenDataViewContext,
   );
   const { handleRemoveAudioFile } = useContext(SparkModalContext);
   const handleDataPosting = () => {
