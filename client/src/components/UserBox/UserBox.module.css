@@ -60,8 +60,12 @@
 
 @media (768px >=width >=0px) {
   .user_box {
-    transform: translateY(-75px);
-    height: 200px;
+    transform: translateY(-150px) translateX(-50%);
+    height: 300px;
+    width: min-content;
+    left: 50%;
+    position: relative;
+    display: grid !important;
     justify-content: center !important;
   }
 
@@ -78,5 +82,9 @@
   .avatar {
     width: 250px;
     height: 250px;
+  }
+
+  .edit_button{
+    justify-content: center !important;
   }
 }

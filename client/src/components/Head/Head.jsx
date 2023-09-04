@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import styles from "./Head.module.css";
 
-const Head = ({ title, align, h, color, special }) => {
+const Head = ({ title, teamName, align, h, color, special }) => {
   return (
     <Box
       className={`flex aic ${
@@ -13,7 +13,9 @@ const Head = ({ title, align, h, color, special }) => {
         sx={{ textAlign: { align }, color: color ? color : "#333" }}
         variant={h}
       >
-        {title}
+        {teamName && title && title.length > 20
+          ? title.slice(0, 20) + "..."
+          : title}
       </Typography>
     </Box>
   );

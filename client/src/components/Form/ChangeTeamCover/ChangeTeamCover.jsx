@@ -9,9 +9,12 @@ import { CameraAltRounded } from "@mui/icons-material";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { ExtensionsContext } from "@/context/ExtensionsContext";
+import { TeamModalContext } from "@/context/TeamModalContext";
 
-const ChangeAvatar = ({ handleChangeFile }) => {
-  const { handleToggleChangeAvatarModal } = useContext(ProfileModalContext);
+const ChangeTeamCover = ({ handleChangeFile }) => {
+  const { handleToggleChangeTeamImageModal } = useContext(
+    TeamModalContext
+  );
   const {images} = useContext(ExtensionsContext)
   return (
     <Box className={`grid aic jcs g20 add_new_team_form_contain`}>
@@ -20,7 +23,7 @@ const ChangeAvatar = ({ handleChangeFile }) => {
           sx={{ color: (theme) => theme.palette.primary.main }}
         />
         <Head
-          title={"Change Profile Avatar"}
+          title={"Change Team Cover"}
           h={"h3"}
           color={(theme) => theme.palette.primary.main}
         />
@@ -33,10 +36,12 @@ const ChangeAvatar = ({ handleChangeFile }) => {
       />
       <Box className={`flex jcfe aic g20`}>
         <LoadingButton text={"Change"} />
-        <RedButton onClick={handleToggleChangeAvatarModal}>Cancel</RedButton>
+        <RedButton onClick={handleToggleChangeTeamImageModal}>
+          Cancel
+        </RedButton>
       </Box>
     </Box>
   );
 };
 
-export default ChangeAvatar;
+export default ChangeTeamCover;

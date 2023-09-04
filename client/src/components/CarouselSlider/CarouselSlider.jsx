@@ -13,7 +13,6 @@ const CarouselSlider = () => {
   const { data, openCarousel, selectedItem, handleToggleCarousel } = useContext(
     CarouselContext
   );
-  console.log(data);
   return (
     <Modal
       onClose={handleToggleCarousel}

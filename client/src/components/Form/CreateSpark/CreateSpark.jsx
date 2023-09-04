@@ -24,9 +24,11 @@ import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import VideosGridBox from "@/components/VideosGridBox/VideosGridBox";
 import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
 
-const CreateSpark = ({ handleChangeFile, formik }) => {
+const CreateSpark = ({ formik }) => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
   const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
+  const [dropWithEmoji, setDropWithEmoji] = useState(false)
+  const [brainWaveWithEmoji, setBrainWaveWithEmoji] = useState(false)
   const {
     handleFiles,
     handleToggleChooseFiles,
@@ -38,7 +40,6 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
   } = useContext(SparkModalContext);
   const [recordExist, setRecordExist] = useState(false);
   const [recordBox, setRecordBox] = useState();
-
   const addAudioElement = (blob) => {
     const url = URL.createObjectURL(blob);
     setRecordBox(
@@ -55,12 +56,11 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
             <DeleteRounded />
           </RedIconButton>
         </Box>
-      </Box>,
+      </Box>
     );
     setRecordExist(true);
     setRecord(blob);
   };
-  console.log(imageFiles);
   const deleteAudioElement = () => {
     setRecordBox();
     setRecord();
@@ -92,11 +92,12 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
 
           {dropEmojiShow && (
             <Picker
-              onClickOutside={() => setDropEmojiShow(false)}
+              onClickOutside={() => setDropEmojiShow(!dropEmojiShow)}
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
-                formik.values.idea += e.native;
+                setDropWithEmoji(!dropWithEmoji);
+                formik.values.idea +=  e.native
               }}
             />
           )}
@@ -133,6 +134,7 @@ const CreateSpark = ({ handleChangeFile, formik }) => {
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
+                setBrainWaveWithEmoji(!brainWaveWithEmoji)
                 formik.values.description += e.native;
               }}
             />

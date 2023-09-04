@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import avatar from "../../../public/images/avatar4.jpg";
-import { CameraAltRounded } from "@mui/icons-material";
+import { CameraAltRounded, EditRounded } from "@mui/icons-material";
 import styles from "./UserBox.module.css";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { useContext } from "react";
@@ -13,6 +13,7 @@ const UserBox = () => {
   const {
     handleToggleChangeAvatarModal,
     handleToggleViewAvatarModal,
+    handleToggleEditProfileModal,
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   return (
@@ -36,10 +37,20 @@ const UserBox = () => {
           </Box>
           <Box className={`grid jcfs aic ${styles.user_info}`}>
             <Typography variant="h4">{userData.Name}</Typography>
-            <Typography variant="h6" className={`fw500`}>
+            <Typography
+              sx={{ color: (theme) => !userData.Bio && theme.palette.gray }}
+              variant="h6"
+              className={`fw500`}
+            >
               {userData.Bio ? userData.Bio : "Write your bio..."}
             </Typography>
           </Box>
+        </Box>
+        <Box className={`flex jcfe aic ${styles.edit_button}`}>
+          <MainIconButton onClick={handleToggleEditProfileModal}>
+            <EditRounded />
+            <Typography variant="h6">Edit Profile</Typography>
+          </MainIconButton>
         </Box>
       </Box>
     )

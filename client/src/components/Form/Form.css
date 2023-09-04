@@ -14,6 +14,12 @@ form {
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 }
 
+.edit_profile_box {
+  max-height: 90vh;
+  overflow: auto;
+}
+
+
 .team_form,
 .profile_form {
   grid-template-columns: repeat(1, 1fr);

@@ -3,7 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
-  height: 200px;
+  height: 240px;
 }
 
 .tabs {
@@ -20,9 +20,15 @@
   grid-template-columns: auto 1fr;
 }
 
+.change_cover_button {
+  position: absolute;
+  right: 180px;
+  top: 20px;
+}
+
 @media (1200px >=width >=992px) {
   .room_head {
-    height: 180px;
+    height: 220px;
   }
 
   .tabs,
@@ -34,11 +40,15 @@
   .tabs button {
     padding: 10px;
   }
+
+  .change_cover_button {
+    right: 20px;
+  }
 }
 
 @media (992px > width >=768px) {
   .room_head {
-    height: 160px;
+    height: 200px;
   }
 
   .tabs,
@@ -50,11 +60,15 @@
   .tabs button {
     padding: 8px;
   }
+
+  .change_cover_button {
+    right: 20px;
+  }
 }
 
 @media (768px > width >=640px) {
   .room_head {
-    height: 140px;
+    height: 180px;
   }
 
   .grid_layout {
@@ -70,11 +84,15 @@
   .tabs button {
     padding: 5px;
   }
+
+  .change_cover_button {
+    right: 20px;
+  }
 }
 
 @media (640px > width >=0px) {
   .room_head {
-    height: 140px;
+    height: 160px;
   }
 
   .grid_layout {

@@ -28,25 +28,37 @@ import { TeamModalContext } from "@/context/TeamModalContext";
 import CreateSpark from "./CreateSpark/CreateSpark";
 import { SparkModalContext } from "@/context/SparkModalContext";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
+import EditProfile from "./EditProfile/EditProfile";
+import ChangeTeamCover from "./ChangeTeamCover/ChangeTeamCover";
+import { getTeam } from "@/store/teamSlice";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
-  const { teamId, handleToggleJoinTeamModal } = useContext(TeamModalContext);
-  const { handleToggleAddNewTeamModal } = useContext(TeamModalContext);
-  const { handleToggleChangeProfileCoverModal ,handleToggleChangeAvatarModal} =
-  useContext(ProfileModalContext);
-
-  const { imageFiles } = useContext(SparkModalContext);
+  const {
+    teamId,
+    handleToggleJoinTeamModal,
+    handleToggleAddNewTeamModal,
+    handleToggleChangeTeamImageModal,
+  } = useContext(TeamModalContext);
+  const {
+    handleToggleChangeProfileCoverModal,
+    handleToggleChangeAvatarModal,
+    handleToggleEditProfileModal,
+  } = useContext(ProfileModalContext);
+  const { userData } = useSelector((state) => state.user);
+  const { imageFiles, videoFiles, audioFiles, record, docFiles } = useContext(
+    SparkModalContext
+  );
   const { id, unique } = useParams();
   const router = useRouter();
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState(null);
   const dispatch = useDispatch();
   const { token, user_id } = useSelector((state) => state.auth);
 
   const handleResetPassword = async () => {
     await axios
       .get(
-        process.env.NEXT_PUBLIC_SERVER_URL + `/reset_password/${id}/${unique}`,
+        process.env.NEXT_PUBLIC_SERVER_URL + `/reset_password/${id}/${unique}`
       )
       .then((res) => {
         Cookies.set("hashedUniqueString", res.data.hashedUniqueString);
@@ -119,7 +131,7 @@ const Form = ({ type }) => {
           ? field
               .required("Password isn't Matched")
               .oneOf([yup.ref("password")])
-          : field,
+          : field
       ),
   });
 
@@ -156,9 +168,18 @@ const Form = ({ type }) => {
     description: yup.string("Enter your Description"),
   });
 
-  const handleChangeFile = (files) => {
-    file.push(files);
-    setFile(file);
+  const editProfileInitialValues = {
+    bio: userData && userData.Bio,
+    about: userData && userData.About,
+  };
+
+  const editProfileValidationSchema = yup.object({
+    bio: yup.string("Enter your Bio"),
+    about: yup.string("Enter your About"),
+  });
+
+  const handleChangeFile = (f) => {
+    setFile(f);
   };
 
   const loginFormik = useFormik({
@@ -251,7 +272,7 @@ const Form = ({ type }) => {
         .post(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/Teams`,
           { ...values },
-          { headers: { Authorization: `Bearer ${token}` } },
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
@@ -275,7 +296,7 @@ const Form = ({ type }) => {
         .patch(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/joinTeam`,
           { ...values },
-          { headers: { Authorization: `Bearer ${token}` } },
+          { headers: { Authorization: `Bearer ${token}` } }
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
@@ -293,14 +314,28 @@ const Form = ({ type }) => {
     initialValues: createSparkInitialValues,
     validationSchema: createSparkValidationSchema,
     onSubmit: async (values) => {
-      setButtonLoading(true);
       const data = new FormData();
-      imageFiles.map((img)=>{
+      console.log(imageFiles, videoFiles,audioFiles, docFiles);
+      imageFiles.map((img) => {
         data.append("files", img);
-      })
+      });
+      videoFiles.map((vid) => {
+        data.append("files", vid);
+      });
+      audioFiles.map((aud) => {
+        data.append("files", aud);
+      });
+      docFiles.map((doc) => {
+        data.append("files", doc);
+      });
+      if (record) {
+        data.append("files", record);
+      }
+      console.log(data.get("files"),token);
       data.append("idea", values.idea);
       data.append("description", values.description);
       data.append("team", id);
+      setButtonLoading(true);
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, data, {
           headers: {
@@ -317,25 +352,53 @@ const Form = ({ type }) => {
     },
   });
 
+  const editProfileFormik = useFormik({
+    initialValues: editProfileInitialValues,
+    validationSchema: editProfileValidationSchema,
+    onSubmit: async (values) => {
+      setButtonLoading(true);
+      await axios
+        .patch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/updateProfile`,
+          { ...values },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          handleAlertToastify(res.data.message, "success");
+          dispatch(getUserData(user_id));
+          handleToggleEditProfileModal();
+        })
+        .catch((err) => {
+          handleAlertToastify(err.response.data.message, "error");
+        });
+      setButtonLoading(false);
+    },
+  });
+
   const handleChangeAvatar = async (e) => {
     e.preventDefault();
-    if(file.length === 0){
+    if (!file) {
       handleAlertToastify("Choose your Avatar", "info");
       return;
     }
     setButtonLoading(true);
     const formData = new FormData();
-    formData.append("files", file[0]);
+    formData.append("files", file);
     await axios
       .patch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadProfileImage`,
         formData,
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         handleAlertToastify(res.data.message, "success");
         dispatch(getUserData(user_id));
-        handleToggleChangeAvatarModal()
+        handleToggleChangeAvatarModal();
+        setFile(null);
       })
       .catch((err) => {
         handleAlertToastify(err.response.data.message, "error");
@@ -345,23 +408,51 @@ const Form = ({ type }) => {
 
   const handleChangeCover = async (e) => {
     e.preventDefault();
-    if(file.length === 0){
+    if (!file) {
       handleAlertToastify("Choose your Cover", "info");
       return;
     }
     setButtonLoading(true);
     const formData = new FormData();
-    formData.append("files", file[0]);
+    formData.append("files", file);
     await axios
       .patch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadBackgroundPic`,
         formData,
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         handleAlertToastify(res.data.message, "success");
         dispatch(getUserData(user_id));
-        handleToggleChangeProfileCoverModal()
+        handleToggleChangeProfileCoverModal();
+        setFile(null);
+      })
+      .catch((err) => {
+        handleAlertToastify(err.response.data.message, "error");
+      });
+    setButtonLoading(false);
+  };
+
+  const handleChangeTeamImage = async (e) => {
+    e.preventDefault();
+    if (!file) {
+      handleAlertToastify("Choose Team Cover", "info");
+      return;
+    }
+    setButtonLoading(true);
+    const formData = new FormData();
+    formData.append("files", file);
+    await axios
+      .patch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/uploadTeamImage/${id}`,
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        handleAlertToastify(res.data.message, "success");
+        dispatch(getTeam({ team_id: id, token }));
+        handleToggleChangeTeamImageModal();
+        setFile(null);
       })
       .catch((err) => {
         handleAlertToastify(err.response.data.message, "error");
@@ -395,12 +486,21 @@ const Form = ({ type }) => {
             ? createSparkFormik.handleSubmit
             : type === "change_avatar"
             ? handleChangeAvatar
-            : type === "change_cover" && handleChangeCover
+            : type === "change_team_image"
+            ? handleChangeTeamImage
+            : type === "change_cover"
+            ? handleChangeCover
+            : type === "edit_profile" && editProfileFormik.handleSubmit
         }
         className={`grid jcs aifs ${
-          (type === "add_new_team" || type === "join_team") && "team_form"
-        } ${
-          (type === "change_cover" || type === "change_avatar") &&
+          (type === "add_new_team" ||
+            type === "join_team" ||
+            type === "edit_profile") &&
+          "team_form"
+        } ${type === "edit_profile" && "g30 edit_profile_box"} ${
+          (type === "change_cover" ||
+            type === "change_team_image" ||
+            type === "change_avatar") &&
           "profile_form"
         } ${type === "create_spark" && "g30 spark_form"}`}
       >
@@ -420,16 +520,18 @@ const Form = ({ type }) => {
         ) : type === "forgot_password" ? (
           <ForgotPassword formik={forgotPasswordFormik} />
         ) : type === "change_cover" ? (
-          <ChangeCover handleChangeFile={handleChangeFile}  />
+          <ChangeCover handleChangeFile={handleChangeFile} />
+        ) : type === "change_team_image" ? (
+          <ChangeTeamCover handleChangeFile={handleChangeFile} />
         ) : type === "change_avatar" ? (
           <ChangeAvatar handleChangeFile={handleChangeFile} />
+        ) : type === "create_spark" ? (
+          <CreateSpark
+            handleChangeFile={handleChangeFile}
+            formik={createSparkFormik}
+          />
         ) : (
-          type === "create_spark" && (
-            <CreateSpark
-              handleChangeFile={handleChangeFile}
-              formik={createSparkFormik}
-            />
-          )
+          <EditProfile formik={editProfileFormik} />
         )}
       </form>
     </Container>

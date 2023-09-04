@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const getTeam = createAsyncThunk("teams/getTeams", async (args) => {
+export const getTeam = createAsyncThunk("teams/getTeam", async (args) => {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/getTeamInfo/${args.team_id}`,
     {
@@ -10,13 +10,11 @@ export const getTeam = createAsyncThunk("teams/getTeams", async (args) => {
       },
     }
   );
-  console.log(res.data.data)
   return res.data.data;
 });
 
 const initialState = {
-  team: [],
-  sparks: [],
+  team: null,
   isLoading: true,
 };
 
