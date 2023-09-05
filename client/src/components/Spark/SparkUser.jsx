@@ -18,26 +18,15 @@ import Image from "next/image";
 import React from "react";
 import styles from "./Spark.module.css";
 import { useState } from "react";
-import axios from "axios";
+import { SparkModalContext } from "@/context/SparkModalContext";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { handleAlertToastify } from "@/app/reactToastify";
+import Link from "next/link";
 
-const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
+const SparkUser = ({ user, spark_date, spark_id }) => {
   const [openList, setOpenList] = useState(false);
-  const { token } = useSelector((state) => state.user);
-  const handleDeleteSpark = async () => {
-    await axios
-      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/deleteIdeas/${spark_id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        handleAlertToastify(res.data.message, "success");
-      })
-      .catch((err) => {
-        handleAlertToastify(err.response.data.message, "error");
-      });
-  };
-
+  const { handleToggleDeleteSparkModal,setSparkId } = useContext(SparkModalContext);
+  const { team } = useSelector((state) => state.team);
   if (typeof document !== "undefined") {
     document.addEventListener("click", (event) => {
       if (
@@ -54,15 +43,28 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
     <Box className={`flex jcsb aic g30 ${styles.user}`}>
       <Box className={`flex jcfs aic g10 `}>
         <Box className={`flex jcc aic ${styles.avatar}`}>
-          <Image loading="lazy" width={100} height={100} la alt="avatar" src={avatar} />
+          <Image
+            loading="lazy"
+            width={100}
+            height={100}
+            la
+            alt="avatar"
+            src={user.Image}
+          />
         </Box>
         <Box className={`grid jcfs aic`}>
-          <Typography variant="h6" sx={{ lineHeight: "20px" }}>
-            {username}
-          </Typography>
+          <Link href={`/profile/${user._id}`}>
+            <Typography variant="h6" sx={{ lineHeight: "20px" }}>
+              {user.Name}
+            </Typography>
+          </Link>
           <Box className={`flex jcfs aic g5 ${styles.spark_date}`}>
             <Typography variant="subtitle1">{spark_date}</Typography>
-            {leader ? <AdminPanelSettings /> : <Person />}
+            {user.Name === team.TeamLeader.Name ? (
+              <AdminPanelSettings />
+            ) : (
+              <Person />
+            )}
           </Box>
         </Box>
       </Box>
@@ -79,7 +81,10 @@ const SparkUser = ({ avatar, username, spark_date, leader, spark_id }) => {
         <List className={`${styles.spark_options}`}>
           <ListItem>
             <ListItemButton
-              onClick={handleDeleteSpark}
+              onClick={() => {
+                setSparkId(spark_id)
+                handleToggleDeleteSparkModal();
+              }}
               className={`flex jcfs aic g10`}
             >
               <ListItemIcon sx={{ minWidth: "auto" }}>

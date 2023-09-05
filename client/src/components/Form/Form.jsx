@@ -31,6 +31,8 @@ import { ProfileModalContext } from "@/context/ProfileModalContext";
 import EditProfile from "./EditProfile/EditProfile";
 import ChangeTeamCover from "./ChangeTeamCover/ChangeTeamCover";
 import { getTeam } from "@/store/teamSlice";
+import DeleteSpark from "./DeleteSpark/DeleteSpark";
+import { getSparks } from "@/store/sparksSlice";
 
 const Form = ({ type }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
@@ -46,14 +48,21 @@ const Form = ({ type }) => {
     handleToggleEditProfileModal,
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
-  const { imageFiles, videoFiles, audioFiles, record, docFiles } = useContext(
-    SparkModalContext
-  );
+  const {
+    imageFiles,
+    sparkId,
+    audioFiles,
+    record,
+    docFiles,
+    handleResetData,
+    handleToggleDeleteSparkModal
+  } = useContext(SparkModalContext);
   const { id, unique } = useParams();
   const router = useRouter();
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
   const { token, user_id } = useSelector((state) => state.auth);
+  const { team } = useSelector((state) => state.team);
 
   const handleResetPassword = async () => {
     await axios
@@ -169,11 +178,13 @@ const Form = ({ type }) => {
   });
 
   const editProfileInitialValues = {
+    name: userData && userData.Name,
     bio: userData && userData.Bio,
     about: userData && userData.About,
   };
 
   const editProfileValidationSchema = yup.object({
+    name: yup.string("Enter your name").required("Name is required"),
     bio: yup.string("Enter your Bio"),
     about: yup.string("Enter your About"),
   });
@@ -185,7 +196,7 @@ const Form = ({ type }) => {
   const loginFormik = useFormik({
     initialValues: loginInitialValues,
     validationSchema: loginValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
@@ -196,6 +207,7 @@ const Form = ({ type }) => {
           const authData = { token: res.data.token, user_id: res.data.userId };
           dispatch(getAuthData(authData));
           handleAlertToastify(res.data.message, "success");
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -207,13 +219,14 @@ const Form = ({ type }) => {
   const registerFormik = useFormik({
     initialValues: registerInitialValues,
     validationSchema: registerValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/register`, { ...values })
         .then((res) => {
           handleAlertToastify("Account Created Successfully!", "success");
           handleAlertToastify(res.data.message, "info");
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -225,7 +238,7 @@ const Form = ({ type }) => {
   const forgotPasswordFormik = useFormik({
     initialValues: forgotPasswordInitialValues,
     validationSchema: forgotPasswordValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/ForgotPassword`, {
@@ -233,6 +246,7 @@ const Form = ({ type }) => {
         })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -244,7 +258,7 @@ const Form = ({ type }) => {
   const resetPasswordFormik = useFormik({
     initialValues: resetPasswordInitialValues,
     validationSchema: resetPasswordValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       values["hashedUniqueString"] = Cookies.get("hashedUniqueString");
       await axios
@@ -255,6 +269,7 @@ const Form = ({ type }) => {
           handleAlertToastify(res.data.message, "success");
           Cookies.remove("hashedUniqueString");
           router(process.env.NEXT_PUBLIC_LOGIN_PAGE);
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -266,7 +281,7 @@ const Form = ({ type }) => {
   const addNewTeamFormik = useFormik({
     initialValues: addNewTeamInitialValues,
     validationSchema: addNewTeamValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       await axios
         .post(
@@ -278,6 +293,7 @@ const Form = ({ type }) => {
           handleAlertToastify(res.data.message, "success");
           dispatch(getTeams());
           handleToggleAddNewTeamModal();
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -289,7 +305,7 @@ const Form = ({ type }) => {
   const joinTeamFormik = useFormik({
     initialValues: joinTeamInitialValues,
     validationSchema: joinTeamValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       values["teamId"] = teamId;
       await axios
@@ -302,6 +318,7 @@ const Form = ({ type }) => {
           handleAlertToastify(res.data.message, "success");
           dispatch(getTeams());
           handleToggleJoinTeamModal();
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -313,28 +330,37 @@ const Form = ({ type }) => {
   const createSparkFormik = useFormik({
     initialValues: createSparkInitialValues,
     validationSchema: createSparkValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
+      setButtonLoading(true);
       const data = new FormData();
-      const allFiles = [...imageFiles, ...videoFiles, ...audioFiles, docFiles];
+      const allFiles = [...imageFiles, ...audioFiles, ...docFiles];
       if (record) {
         data.append("record", record);
       }
-      for (let i = 0; i < allFiles.length; i++) {
-        data.append("files", allFiles[i]);
+      if (allFiles.length > 0) {
+        for (let i = 0; i < allFiles.length; i++) {
+          data.append("files", allFiles[i]);
+        }
+      } else {
+        data.append("files", []);
       }
-      data.append("files", allFiles);
       data.append("idea", values.idea);
       data.append("description", values.description);
       data.append("team", id);
-      setButtonLoading(true);
+      data.forEach((value, key) => {
+        console.log(key, value);
+      });
+
       await axios
-        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, data, {
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/Ideas`, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
+          handleResetData();
+          resetForm();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -451,6 +477,28 @@ const Form = ({ type }) => {
     setButtonLoading(false);
   };
 
+  const handleDeleteSpark = async (e) => {
+    e.preventDefault();
+    setButtonLoading(true);
+    await axios
+      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/DeleteIdea/${sparkId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        handleAlertToastify(res.data.message, "success");
+        dispatch(getSparks({ token, team_id: team._id }));
+        handleToggleDeleteSparkModal()
+      })
+      .catch((err) => {
+        try {
+          handleAlertToastify(err.response.data.message, "error");
+        } catch (err) {
+          handleAlertToastify(err, "error");
+        }
+      });
+    setButtonLoading(false);
+  };
+
   useEffect(() => {
     if (type === "reset_password") {
       handleResetPassword();
@@ -478,6 +526,8 @@ const Form = ({ type }) => {
           ? handleChangeAvatar
           : type === "change_team_image"
           ? handleChangeTeamImage
+          : type === "delete_spark"
+          ? handleDeleteSpark
           : type === "change_cover"
           ? handleChangeCover
           : type === "edit_profile" && editProfileFormik.handleSubmit
@@ -490,8 +540,9 @@ const Form = ({ type }) => {
       } ${type === "edit_profile" && "g30 edit_profile_box"} ${
         (type === "change_cover" ||
           type === "change_team_image" ||
-          type === "change_avatar") &&
-        "profile_form"
+          type === "change_avatar" ||
+          type === "delete_spark") &&
+        "profile_form g30"
       } ${type === "create_spark" && "g30 spark_form"}`}
     >
       {type === "login" ? (
@@ -515,6 +566,8 @@ const Form = ({ type }) => {
         <ChangeTeamCover handleChangeFile={handleChangeFile} />
       ) : type === "change_avatar" ? (
         <ChangeAvatar handleChangeFile={handleChangeFile} />
+      ) : type === "delete_spark" ? (
+        <DeleteSpark />
       ) : type === "create_spark" ? (
         <CreateSpark
           handleChangeFile={handleChangeFile}

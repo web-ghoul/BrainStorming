@@ -9,14 +9,12 @@ import SparkUser from "./SparkUser";
 import { useSelector } from "react-redux";
 
 const Spark = ({ data }) => {
-  const {team} = useSelector((state)=>state.team)
   return (
     <Box className={`grid jcs aic g10 ${styles.spark}`}>
       <SparkUser
-        username={data.WrittenBy.Name}
-        avatar={data.WrittenBy.Image}
+        user={data.WrittenBy}
         spark_date={data.createdAt}
-        leader={team.TeamLeader.Name === data.WrittenBy.Name}
+        spark_id={data._id}
       />
       <Box className={`grid jcs aic g10 ${styles.spark_data}`}>
         <Box className={`grid jcfs aic g10`}>

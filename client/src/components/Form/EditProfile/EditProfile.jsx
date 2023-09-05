@@ -39,6 +39,36 @@ const EditProfile = ({ formik }) => {
         <Box className={`grid jcs aic g5`}>
           <Box className={`flex jcs aic g5`}>
             <TextField
+              id="name"
+              name="name"
+              label="Name"
+              fullWidth
+              maxRows={1}
+              variant="standard"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+            <IconButton onClick={() => setBioEmojiShow(!bioEmojiShow)}>
+              <SentimentSatisfiedRounded />
+            </IconButton>
+          </Box>
+          {aboutEmojiShow && (
+            <Picker
+              onClickOutside={() => setAboutEmojiShow(!aboutEmojiShow)}
+              theme={"light"}
+              data={data}
+              onEmojiSelect={(e) => {
+                formik.values.about += e.native;
+              }}
+            />
+          )}
+        </Box>
+        <Box className={`grid jcs aic g5`}>
+          <Box className={`flex jcs aic g5`}>
+            <TextField
               id="bio"
               name="bio"
               label="bio"
@@ -68,7 +98,7 @@ const EditProfile = ({ formik }) => {
             />
           )}
         </Box>
-        <Box>
+        <Box className={`grid jcs aic g5`}>
           <Box className={`flex jcs aifs g5`}>
             <TextField
               id="about"

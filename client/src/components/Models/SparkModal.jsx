@@ -7,12 +7,18 @@ import Head from "../Head/Head";
 import styles from "./Models.module.css";
 import { ExtensionsContext } from "@/context/ExtensionsContext";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
+import Form from "../Form/Form";
 
-const SparkModal = () => {
-  const { chooseFiles, handleToggleChooseFiles, handleFiles } =
-    useContext(SparkModalContext);
+const SparkModal = ({ type }) => {
+  const {
+    chooseFiles,
+    handleToggleChooseFiles,
+    handleFiles,
+    handleToggleDeleteSparkModal,
+    showDeleteSparkModal,
+  } = useContext(SparkModalContext);
   const { audios, videos, images, docs } = useContext(ExtensionsContext);
-  return (
+  return type === "upload_file" ? (
     <Modal
       open={chooseFiles}
       onClose={handleToggleChooseFiles}
@@ -31,6 +37,19 @@ const SparkModal = () => {
         <MainButton onClick={handleToggleChooseFiles}>Done</MainButton>
       </Box>
     </Modal>
+  ) : (
+    type === "delete_spark" && (
+      <Modal
+        open={showDeleteSparkModal}
+        onClose={handleToggleDeleteSparkModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className={`grid jcs aic g10 ${styles.choose_files_box}`}>
+          <Form type={type} />
+        </Box>
+      </Modal>
+    )
   );
 };
 

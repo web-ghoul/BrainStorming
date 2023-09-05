@@ -63,14 +63,18 @@ const Main = ({ children }) => {
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />
-      <TeamModal type="view_team_image"/>
-      <TeamModal type="change_team_image"/>
-      <SparkModal />
+      <TeamModal type="view_team_image" />
+      <TeamModal type="change_team_image" />
+      <SparkModal type="upload_file" />
+      <SparkModal type="delete_spark" />
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
       <ProfileModal type="edit_profile" />
       <ProfileModal type="view_avatar" img={userData && userData.Image} />
-      <ProfileModal type="view_cover" img={userData && userData.BackgroundImage} />
+      <ProfileModal
+        type="view_cover"
+        img={userData && userData.BackgroundImage}
+      />
       <FloatActionButtons />
       <ToastContainer />
       <Footer />

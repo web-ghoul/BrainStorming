@@ -8,11 +8,13 @@ export const SparkModalContext = createContext();
 
 export const SparkModalProvider = ({ children }) => {
   const [chooseFiles, setChooseFiles] = useState(false);
+  const [showDeleteSparkModal, setShowDeleteSparkModal] = useState(false);
   const { audios, images, docs } = useContext(ExtensionsContext);
   const [audioFiles, setAudioFiles] = useState([]);
   const [docFiles, setDocFiles] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
   const [record, setRecord] = useState(null);
+  const [sparkId, setSparkId] = useState(null);
 
   const handleToggleChooseFiles = () => {
     setChooseFiles(!chooseFiles);
@@ -47,6 +49,17 @@ export const SparkModalProvider = ({ children }) => {
     audioFiles.splice(index, 1);
     setAudioFiles(audioFiles);
   };
+
+  const handleToggleDeleteSparkModal = () => {
+    setShowDeleteSparkModal(!showDeleteSparkModal);
+  };
+
+  const handleResetData=()=>{
+    setImageFiles([])
+    setDocFiles([])
+    setAudioFiles([])
+    setRecord(null)
+  }
   return (
     <SparkModalContext.Provider
       value={{
@@ -56,9 +69,14 @@ export const SparkModalProvider = ({ children }) => {
         handleRemoveImageFile,
         handleRemoveDocFile,
         handleRemoveAudioFile,
+        handleToggleDeleteSparkModal,
+        handleResetData,
+        showDeleteSparkModal,
         audioFiles,
         docFiles,
         imageFiles,
+        sparkId,
+        setSparkId,
         record,
         setAudioFiles,
         setDocFiles,
