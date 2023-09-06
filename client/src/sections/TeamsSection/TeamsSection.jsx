@@ -6,10 +6,8 @@ import {
   AccordionSummary,
   Box,
   Container,
-  useMediaQuery,
 } from "@mui/material";
 import Head from "../../components/Head/Head";
-import TeamBox from "../../components/TeamBox/TeamBox";
 import styles from "./TeamsSection.module.css";
 import Image from "next/image";
 import roomsSectionImg1 from "../../../public/images/brain1.png";
@@ -19,10 +17,11 @@ import { ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTeams } from "@/store/teamsSlice";
+import LoadingTeamsGridBox from "@/components/TeamsGridBox/LoadingTeamsGridBox";
 
 const TeamsSection = () => {
   const dispatch = useDispatch();
-  const { user_teams, teams } = useSelector((state) => state.teams);
+  const { user_teams, teams, isLoading } = useSelector((state) => state.teams);
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = () => {
     setExpanded(!expanded);
@@ -58,12 +57,16 @@ const TeamsSection = () => {
             <Head special={true} title={"My Teams"} align="left" h={"h4"} />
           </AccordionSummary>
           <AccordionDetails>
-            <TeamsGridBox data={user_teams} />
+            {isLoading ? (
+              <LoadingTeamsGridBox />
+            ) : (
+              <TeamsGridBox data={user_teams} />
+            )}
           </AccordionDetails>
         </Accordion>
         <Box className={`grid jcs aic g30`}>
           <Head special={true} title={"Explore Teams"} align="left" h={"h4"} />
-          <TeamsGridBox data={teams} />
+          {isLoading ? <LoadingTeamsGridBox /> : <TeamsGridBox data={teams} />}
         </Box>
       </Container>
     </MyBox>

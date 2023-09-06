@@ -18,52 +18,37 @@ const TeamsGridBox = ({ data }) => {
         <>
           <Box className={`grid jcs aic g20 ${styles.rooms}`}>
             {data.map(
-              (room, i) => i % 2 === 0 && <TeamBox key={i} data={room} />,
+              (room, i) => i % 2 === 0 && <TeamBox key={i} data={room} />
             )}
           </Box>
           <Box className={`grid jcs aic g20 ${styles.rooms}`}>
             {data.map(
-              (room, i) => i % 2 !== 0 && <TeamBox key={i} data={room} />,
+              (room, i) => i % 2 !== 0 && <TeamBox key={i} data={room} />
             )}
           </Box>
         </>
       ) : (
         <>
-          <Box
-            cascade={true}
-            direction="left"
-            damping={0.0001}
-            className={`grid jcs aic g20 ${styles.rooms}`}
-          >
+          <Box className={`grid jcs aic g20 ${styles.rooms}`}>
             {data.map(
               (room, i) =>
-                (i === 0 || i % 3 === 0) && <TeamBox key={i} data={room} />,
+                (i === 0 || i % 3 === 0) && <TeamBox key={i} data={room} />
             )}
           </Box>
-          <Box
-            cascade={true}
-            direction="up"
-            damping={0.0001}
-            className={`grid jcs aic g20 ${styles.rooms}`}
-          >
+          <Box className={`grid jcs aic g20 ${styles.rooms}`}>
             {data.map(
               (room, i) =>
                 (i - 1 === 0 || (i - 1) % 3 === 0) && (
                   <TeamBox key={i} data={room} />
-                ),
+                )
             )}
           </Box>
-          <Box
-            cascade={true}
-            direction="right"
-            damping={0.0001}
-            className={`grid jcs aic g20 ${styles.rooms}`}
-          >
+          <Box className={`grid jcs aic g20 ${styles.rooms}`}>
             {data.map(
               (room, i) =>
                 (i - 2 === 0 || (i - 2) % 3 === 0) && (
                   <TeamBox key={i} data={room} />
-                ),
+                )
             )}
           </Box>
         </>

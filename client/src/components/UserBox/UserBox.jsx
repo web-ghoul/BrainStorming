@@ -8,6 +8,7 @@ import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { useContext } from "react";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import { useSelector } from "react-redux";
+import LoadingUserBox from "./LoadingUserBox";
 
 const UserBox = ({ isUser }) => {
   const {
@@ -17,7 +18,7 @@ const UserBox = ({ isUser }) => {
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   return (
-    userData && (
+    userData ? (
       <Box className={`flex jcsb aic g30 ${styles.user_box}`}>
         <Box className={`flex jcfs aic g10 ${styles.avatar_box}`}>
           <Box sx={{ position: "relative" }}>
@@ -57,6 +58,8 @@ const UserBox = ({ isUser }) => {
           )}
         </Box>
       </Box>
+    ):(
+      <LoadingUserBox/>
     )
   );
 };

@@ -6,6 +6,7 @@ import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { useContext } from "react";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import { useSelector } from "react-redux";
+import LoadingUserBack from "./LoadingUserBack";
 
 const UserBack = ({isUser}) => {
   const {
@@ -14,7 +15,7 @@ const UserBack = ({isUser}) => {
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   return (
-    userData && (
+    userData ? (
       <Box className={`${styles.user_back}`}>
         <Box
           sx={{ backgroundImage: `url(${userData.BackgroundImage})` }}
@@ -35,7 +36,7 @@ const UserBack = ({isUser}) => {
           </MainIconButton>
         )}
       </Box>
-    )
+    ):(<LoadingUserBack/>)
   );
 };
 
