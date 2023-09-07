@@ -63,7 +63,7 @@ const createTeam = asyncHandler(async (req, res, next) => {
 const displayTeams = asyncHandler((req, res, next) => {
   Teams.find()
     .select("-Password")
-    .populate("TeamLeader")
+    .populate("TeamLeader").sort({createdAt: -1})
     .then((result) => {
       return res.status(200).json({
         data: result,
