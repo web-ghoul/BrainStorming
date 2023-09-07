@@ -30,7 +30,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
   //use mac to secure data form idor
   if(req.files && req.files['files'] && req.files['files'].length > 10)
   {
-    return res.status(400).json({ error: 'Too many files uploaded.' });
+    return res.status(400).json({ message: 'Too many files uploaded.' });
   }
 
   var arrayOfUrls = [] ;
@@ -114,10 +114,19 @@ const postIdeas = asyncHandler(async (req, res, next) => {
   // }
 });
 
-const displayIdeas = asyncHandler((req, res, next) => {
+const displayIdeas = asyncHandler(async(req, res, next) => {
   const teamId = req.params.id;
   // protect users onlly in the team
-  Ideas.find({ Team: teamId }).populate("WrittenBy")
+  const userData = await User.findById(req.userId)
+
+  if(!userData.Teams.includes(teamId))
+  {
+    return res.status(403).json({
+      message : "you are not authorized"
+    })
+  }
+
+  Ideas.find({ Team: teamId }).populate("WrittenBy").sort({createdAt: -1})
     .then((result) => {
       return res.status(200).json({
         data: result,
