@@ -21,8 +21,8 @@ import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { useContext } from "react";
 import { SparkModalContext } from "@/context/SparkModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
-import VideosGridBox from "@/components/VideosGridBox/VideosGridBox";
 import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
+import DocsGridBox from "@/components/DocsGridBox/DocsGridBox";
 
 const CreateSpark = ({ formik }) => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
@@ -33,8 +33,8 @@ const CreateSpark = ({ formik }) => {
     handleFiles,
     handleToggleChooseFiles,
     imageFiles,
-    videoFiles,
     audioFiles,
+    docFiles,
     setAudioFiles,
     setRecord,
   } = useContext(SparkModalContext);
@@ -48,7 +48,7 @@ const CreateSpark = ({ formik }) => {
           <KeyboardVoiceRounded
             sx={{ color: (theme) => theme.palette.primary.main }}
           />
-          <Typography variant="h6">Records</Typography>
+          <Typography variant="h6">Record</Typography>
         </Box>
         <Box className={`flex jcfs aic g10`}>
           <audio src={url} controls={true} />
@@ -162,7 +162,7 @@ const CreateSpark = ({ formik }) => {
 
       {(recordExist ||
         imageFiles.length > 0 ||
-        videoFiles.length > 0 ||
+        docFiles.length > 0 ||
         audioFiles.length > 0) && (
         <Box className={`grid jcs aic g30`}>
           {recordExist && recordBox}
@@ -174,14 +174,14 @@ const CreateSpark = ({ formik }) => {
               <Typography variant="h6">Images</Typography>
             </Box>
           </ImagesGridBox>
-          <VideosGridBox posting={true} data={videoFiles}>
+          <DocsGridBox posting={true} data={docFiles}>
             <Box className={`flex jcfs aic g5`}>
               <VideoLibraryRounded
                 sx={{ color: (theme) => theme.palette.primary.main }}
               />
-              <Typography variant="h6">Videos</Typography>
+              <Typography variant="h6">Documents</Typography>
             </Box>
-          </VideosGridBox>
+          </DocsGridBox>
           <AudioGridBox posting={true} data={audioFiles}>
             <Box className={`flex jcfs aic g5`}>
               <AudiotrackRounded

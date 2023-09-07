@@ -11,3 +11,10 @@
   justify-content: stretch;
   gap: 10px;
 }
+
+
+@media (max-width:992px) {
+  .spark_images img {
+    max-width: 200px;
+  }
+}

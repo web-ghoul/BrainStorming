@@ -8,8 +8,9 @@ import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { useContext } from "react";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import { useSelector } from "react-redux";
+import LoadingUserBox from "./LoadingUserBox";
 
-const UserBox = () => {
+const UserBox = ({ isUser }) => {
   const {
     handleToggleChangeAvatarModal,
     handleToggleViewAvatarModal,
@@ -17,7 +18,7 @@ const UserBox = () => {
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   return (
-    userData && (
+    userData ? (
       <Box className={`flex jcsb aic g30 ${styles.user_box}`}>
         <Box className={`flex jcfs aic g10 ${styles.avatar_box}`}>
           <Box sx={{ position: "relative" }}>
@@ -28,12 +29,14 @@ const UserBox = () => {
             >
               <Box className={`overlay ${styles.overlay}`}></Box>
             </Box>
-            <MainIconButton
-              onClick={handleToggleChangeAvatarModal}
-              className={`${styles.change_avatar_button}`}
-            >
-              <CameraAltRounded />
-            </MainIconButton>
+            {isUser && (
+              <MainIconButton
+                onClick={handleToggleChangeAvatarModal}
+                className={`${styles.change_avatar_button}`}
+              >
+                <CameraAltRounded />
+              </MainIconButton>
+            )}
           </Box>
           <Box className={`grid jcfs aic ${styles.user_info}`}>
             <Typography variant="h4">{userData.Name}</Typography>
@@ -47,12 +50,16 @@ const UserBox = () => {
           </Box>
         </Box>
         <Box className={`flex jcfe aic ${styles.edit_button}`}>
-          <MainIconButton onClick={handleToggleEditProfileModal}>
-            <EditRounded />
-            <Typography variant="h6">Edit Profile</Typography>
-          </MainIconButton>
+          {isUser && (
+            <MainIconButton onClick={handleToggleEditProfileModal}>
+              <EditRounded />
+              <Typography variant="h6">Edit Profile</Typography>
+            </MainIconButton>
+          )}
         </Box>
       </Box>
+    ):(
+      <LoadingUserBox/>
     )
   );
 };

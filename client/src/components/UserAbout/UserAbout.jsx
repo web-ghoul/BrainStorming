@@ -3,11 +3,11 @@ import React from "react";
 import styles from "./UserAbout.module.css";
 import { Fade } from "react-awesome-reveal";
 import { useSelector } from "react-redux";
+import LoadingUserAbout from "./LoadingUserAbout";
 
-const UserAbout = () => {
-  const { userData } = useSelector((state) => state.user);
+const UserAbout = ({about}) => {
   return (
-    userData && (
+    about ? (
       <Box className={`grid jcs aic g10`}>
         <Typography variant="h5">About</Typography>
         <Typography
@@ -16,10 +16,10 @@ const UserAbout = () => {
           className={`fw500 flex jcfs aic ${styles.user_about_box}`}
           sx={{ color: (theme) => !userData.About && theme.palette.gray }}
         >
-          {userData.About ? userData.About : "Write a Brief..."}
+          {about ? about : "Write a Brief..."}
         </Typography>
       </Box>
-    )
+    ):(<LoadingUserAbout/>)
   );
 };
 

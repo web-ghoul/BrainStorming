@@ -27,6 +27,7 @@
   transform: translate(-50%, -50%);
   position: absolute;
   padding: 20px;
+  border-radius: 6px;
 }
 
 
@@ -35,11 +36,24 @@
     padding: 18px;
     border-radius: 7px;
   }
+
+  .choose_files_box {
+    width: 70vw;
+    padding: 15px;
+    border-radius: 4px;
+  }
 }
 
-@media (992px >=width >=768px) {
+@media (992px >=width >=0px) {
   .avatar_box {
     padding: 15px;
     border-radius: 6px;
+  }
+
+  .choose_files_box {
+    background-color: var(--white);
+    width: 80vw;
+    padding: 10px;
+    border-radius: 2px;
   }
 }

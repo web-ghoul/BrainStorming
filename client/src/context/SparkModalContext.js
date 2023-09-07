@@ -8,48 +8,57 @@ export const SparkModalContext = createContext();
 
 export const SparkModalProvider = ({ children }) => {
   const [chooseFiles, setChooseFiles] = useState(false);
-  const { audios, videos, images, docs } = useContext(ExtensionsContext);
+  const [showDeleteSparkModal, setShowDeleteSparkModal] = useState(false);
+  const { audios, images, docs } = useContext(ExtensionsContext);
   const [audioFiles, setAudioFiles] = useState([]);
   const [docFiles, setDocFiles] = useState([]);
   const [imageFiles, setImageFiles] = useState([]);
-  const [videoFiles, setVideoFiles] = useState([]);
-  const [record, setRecord] = useState();
+  const [record, setRecord] = useState(null);
+  const [sparkId, setSparkId] = useState(null);
 
   const handleToggleChooseFiles = () => {
     setChooseFiles(!chooseFiles);
   };
-  
+
   const handleFiles = (files) => {
-    Object.keys(files).map((key)=>{
-      const fileType=files[key].type.split("/")[1]
-      if(audios.includes(fileType)){
-        setAudioFiles((prev)=>[...prev,files[key]])
+    Object.keys(files).map((key) => {
+      const fileType = files[key].name.split(".")[
+        files[key].name.split(".").length - 1
+      ];
+      if (audios.includes(fileType)) {
+        setAudioFiles((prev) => [...prev, files[key]]);
+      } else if (images.includes(fileType)) {
+        setImageFiles((prev) => [...prev, files[key]]);
+      } else if (docs.includes(fileType)) {
+        setDocFiles((prev) => [...prev, files[key]]);
       }
-      else if(videos.includes(fileType)){
-        setVideoFiles((prev)=>[...prev,files[key]])
-      }
-      else if(images.includes(fileType)){
-        setImageFiles((prev)=>[...prev,files[key]])
-      }
-      else if(docs.includes(fileType)){
-        setDocFiles((prev)=>[...prev,files[key]])
-      }
-    })
+    });
   };
 
-  const handleRemoveImageFile = (index)=>{
-    imageFiles.splice(index,1)
-    setImageFiles(imageFiles)
-  }
+  const handleRemoveImageFile = (index) => {
+    imageFiles.splice(index, 1);
+    setImageFiles(imageFiles);
+  };
 
-  const handleRemoveVideoFile = (index)=>{
-    videoFiles.splice(index,1)
-    setVideoFiles(videoFiles)
-  }
+  const handleRemoveDocFile = (index) => {
+    docFiles.splice(index, 1);
+    setDocFiles(docFiles);
+  };
 
-  const handleRemoveAudioFile = (index)=>{
-    audioFiles.splice(index,1)
-    setAudioFiles(audioFiles)
+  const handleRemoveAudioFile = (index) => {
+    audioFiles.splice(index, 1);
+    setAudioFiles(audioFiles);
+  };
+
+  const handleToggleDeleteSparkModal = () => {
+    setShowDeleteSparkModal(!showDeleteSparkModal);
+  };
+
+  const handleResetData=()=>{
+    setImageFiles([])
+    setDocFiles([])
+    setAudioFiles([])
+    setRecord(null)
   }
   return (
     <SparkModalContext.Provider
@@ -58,18 +67,21 @@ export const SparkModalProvider = ({ children }) => {
         handleToggleChooseFiles,
         handleFiles,
         handleRemoveImageFile,
-        handleRemoveVideoFile,
+        handleRemoveDocFile,
         handleRemoveAudioFile,
+        handleToggleDeleteSparkModal,
+        handleResetData,
+        showDeleteSparkModal,
         audioFiles,
         docFiles,
         imageFiles,
-        videoFiles,
+        sparkId,
+        setSparkId,
         record,
         setAudioFiles,
         setDocFiles,
         setImageFiles,
-        setVideoFiles,
-        setRecord
+        setRecord,
       }}
     >
       {children}

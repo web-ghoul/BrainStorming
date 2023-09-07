@@ -16,11 +16,18 @@ const MembersBox = () => {
         <Box className={`grid jcs aic g10 ${styles.members}`}>
           {smallSize ? (
             <>
-              <Member data={data.filter((m) => m.role === "Leader")[0]} />
+              {team.Members.map(
+                (member, i) =>
+                  team.TeamLeader.Name === member.Name && (
+                    <Member leader={true} key={i} data={member} />
+                  )
+              )}
               <Box className={`flex flex_wrap jcc aic g10`}>
-                {data.map(
+                {team.Members.map(
                   (member, i) =>
-                    member.role === "Member" && <Member key={i} data={member} />
+                    team.TeamLeader.Name !== member.Name && (
+                      <Member key={i} data={member} />
+                    )
                 )}
               </Box>
             </>

@@ -23,7 +23,7 @@ const ChangeCover = ({ handleChangeFile }) => {
         />
         <Head
           title={"Change Profile Cover"}
-          h={"h3"}
+          h={"h4"}
           color={(theme) => theme.palette.primary.main}
         />
       </Box>

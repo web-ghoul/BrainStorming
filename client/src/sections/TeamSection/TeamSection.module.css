@@ -63,6 +63,7 @@
 
   .change_cover_button {
     right: 20px;
+    top: 15px;
   }
 }
 
@@ -87,6 +88,7 @@
 
   .change_cover_button {
     right: 20px;
+    top:10px
   }
 }
 
@@ -107,5 +109,9 @@
 
   .tabs button {
     padding: 5px;
+  }
+  .change_cover_button {
+    right: 10px;
+    top: 5px;
   }
 }

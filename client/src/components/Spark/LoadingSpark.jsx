@@ -1,14 +1,8 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import {Box,Typography} from "@mui/material";
 import styles from "./Spark.module.css";
-import Head from "../Head/Head";
-import FileBox from "../FileBox/FileBox";
-import ImagesGridBox from "../ImagesGridBox/ImagesGridBox";
-import SparkUser from "./SparkUser";
-import { useSelector } from "react-redux";
 
-const Spark = ({ data }) => {
+const LoadingSpark = () => {
   return (
     <Box className={`grid jcs aic g10 ${styles.spark}`}>
       <SparkUser
@@ -26,13 +20,10 @@ const Spark = ({ data }) => {
         {data.Images && data.Images.length > 0 && (
           <ImagesGridBox data={data.Images} />
         )}
-        {/* <Box className={`grid jcs aic g5 ${styles.spark_files}`}>
-          {data.files &&
-            data.files.map((file, i) => <FileBox key={i} title={file} />)}
-        </Box> */}
+
       </Box>
     </Box>
   );
 };
 
-export default Spark;
+export default LoadingSpark;

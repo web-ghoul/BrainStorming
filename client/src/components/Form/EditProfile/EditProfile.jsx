@@ -21,7 +21,7 @@ import { Box, IconButton, TextField, Typography } from "@mui/material";
 import { useContext } from "react";
 import { SparkModalContext } from "@/context/SparkModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
-import VideosGridBox from "@/components/VideosGridBox/VideosGridBox";
+import VideosGridBox from "@/components/DocsGridBox/DocsGridBox";
 import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
 import { RedButton } from "@/MUIComponents/RedButton/RedButton";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
@@ -36,6 +36,36 @@ const EditProfile = ({ formik }) => {
     <>
       <Head align={"center"} h={"h3"} title={"Edit Profile"} />
       <Box className={`grid jcs aic g20`}>
+        <Box className={`grid jcs aic g5`}>
+          <Box className={`flex jcs aic g5`}>
+            <TextField
+              id="name"
+              name="name"
+              label="Name"
+              fullWidth
+              maxRows={1}
+              variant="standard"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.name && Boolean(formik.errors.name)}
+              helperText={formik.touched.name && formik.errors.name}
+            />
+            <IconButton onClick={() => setBioEmojiShow(!bioEmojiShow)}>
+              <SentimentSatisfiedRounded />
+            </IconButton>
+          </Box>
+          {aboutEmojiShow && (
+            <Picker
+              onClickOutside={() => setAboutEmojiShow(!aboutEmojiShow)}
+              theme={"light"}
+              data={data}
+              onEmojiSelect={(e) => {
+                formik.values.about += e.native;
+              }}
+            />
+          )}
+        </Box>
         <Box className={`grid jcs aic g5`}>
           <Box className={`flex jcs aic g5`}>
             <TextField
@@ -68,7 +98,7 @@ const EditProfile = ({ formik }) => {
             />
           )}
         </Box>
-        <Box>
+        <Box className={`grid jcs aic g5`}>
           <Box className={`flex jcs aifs g5`}>
             <TextField
               id="about"
