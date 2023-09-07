@@ -7,7 +7,6 @@ import FloatActionButtons from "@/components/FloatActionButtons/FloatActionButto
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { PageBox } from "@/MUIComponents/PageBox/PageBox";
 import BackLoading from "@/components/BackLoading/BackLoading";
-import CarouselSlider from "@/components/CarouselSlider/CarouselSlider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfileModal from "@/components/Models/ProfileModal";
@@ -63,7 +62,6 @@ const Main = ({ children }) => {
       <Header />
       <BackLoading />
       <Sidebar />
-      <CarouselSlider />
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />

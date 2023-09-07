@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import styles from "./AudioGridBox.module.css";
 import Masonry from "react-masonry-css";
-import { CarouselContext } from "@/context/CarouselContext";
 import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
 import {
@@ -22,8 +21,6 @@ const AudioGridBox = ({ posting, data, children }) => {
     992: 3,
     768: 2,
   };
-  const { handleToggleCarousel, setIsPosting, getCarouselData } =
-    useContext(CarouselContext);
   const { setDataType, toggleDataViewer, setOpenDataViewer } = useContext(
     ChosenDataViewContext,
   );
@@ -33,9 +30,9 @@ const AudioGridBox = ({ posting, data, children }) => {
     setDataType("audios");
   };
   const handleDataView = () => {
-    handleToggleCarousel(i);
-    getCarouselData(data);
-    setIsPosting(posting);
+    toggleDataShow();
+    setDataType("audios");
+    setShowAudioFiles(data);
   };
   return (
     data.length > 0 && (

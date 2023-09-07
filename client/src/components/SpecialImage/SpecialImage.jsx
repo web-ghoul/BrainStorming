@@ -25,9 +25,6 @@ const SpecialImage = ({
       onClick={posting ? handleDataPosting : handleDataView}
     >
       <Box
-        // sx={{
-        //   backgroundImage: posting ? `url(${img})` : `url(${img.src})`,
-        // }}
         className={`${overlay && "overlay"} ${overlay && styles.overlay} ${
           styles.back_img
         }`}

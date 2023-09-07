@@ -3,7 +3,6 @@ import { Box, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import styles from "./DocsGridBox.module.css";
 import Masonry from "react-masonry-css";
-import { CarouselContext } from "@/context/CarouselContext";
 import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
 import { EditRounded, Preview } from "@mui/icons-material";

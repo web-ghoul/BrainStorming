@@ -1,33 +1,31 @@
 "use client";
 import { Box, Typography } from "@mui/material";
-import Image from "next/image";
 import React, { useContext } from "react";
 import styles from "./ImagesGridBox.module.css";
 import Masonry from "react-masonry-css";
-import { CarouselContext } from "@/context/CarouselContext";
 import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 import SpecialImage from "../SpecialImage/SpecialImage";
 import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
 import { EditRounded } from "@mui/icons-material";
 
 const ImagesGridBox = ({ posting, data, children }) => {
+  const { setShowImageFiles } = useContext(ChosenDataViewContext);
   const breakpointColumnsObj = {
     default: 4,
     992: 3,
     768: 2,
   };
-  const { handleToggleCarousel, setIsPosting, getCarouselData } = useContext(
-    CarouselContext
+  const { setDataType, toggleDataViewer, toggleDataShow } = useContext(
+    ChosenDataViewContext
   );
-  const { setDataType, toggleDataViewer } = useContext(ChosenDataViewContext);
   const handleDataPosting = () => {
     toggleDataViewer();
     setDataType("images");
   };
   const handleDataView = (i) => {
-    handleToggleCarousel(i);
-    getCarouselData(data);
-    setIsPosting(posting);
+    setShowImageFiles(data);
+    setDataType("images");
+    toggleDataShow();
   };
   return (
     data.length > 0 && (

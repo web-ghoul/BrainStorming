@@ -4,21 +4,26 @@ import { useContext } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Head from "../Head/Head";
 import styles from "./Models.module.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { ExtensionsContext } from "@/context/ExtensionsContext";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 import Form from "../Form/Form";
 import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 import { Box, IconButton, Modal, Typography } from "@mui/material";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
-import { DeleteRounded, Preview } from "@mui/icons-material";
+import { Close, DeleteRounded, Preview } from "@mui/icons-material";
 import SpecialImage from "../SpecialImage/SpecialImage";
 import Image from "next/image";
 import pdfImg from "../../../public/images/pdf.png";
 import powerPointImg from "../../../public/images/pptx.png";
 import excelImg from "../../../public/images/xlsx.png";
 import wordImg from "../../../public/images/doc.png";
+import { MyThemeContext } from "@/context/MyThemeContext";
+import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
+import { Carousel } from "react-responsive-carousel";
 
 const SparkModal = ({ type }) => {
+  const { mode } = useContext(MyThemeContext);
   const {
     chooseFiles,
     handleToggleChooseFiles,
@@ -40,6 +45,7 @@ const SparkModal = ({ type }) => {
     showAudioFiles,
     showDocFiles,
     toggleDataShow,
+    showImageFiles,
   } = useContext(ChosenDataViewContext);
   const { audios, images, docs } = useContext(ExtensionsContext);
   return type === "upload_file" ? (
@@ -228,10 +234,31 @@ const SparkModal = ({ type }) => {
         aria-describedby="modal-modal-description"
         open={openDataShow}
       >
-        <Box className={`grid jcs aifs g30 ${styles.chosen_data_viewer_box}`}>
+        <Box
+          className={`grid jcs aifs g30 ${
+            dataType === "images"
+              ? styles.modal_carousel
+              : styles.chosen_data_viewer_box
+          }`}
+          sx={{
+            backgroundColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.white
+                : theme.palette.black,
+            borderColor: (theme) =>
+              theme.palette.mode === "light"
+                ? theme.palette.white
+                : theme.palette.primary.main,
+          }}
+        >
           {dataType === "docs" ? (
             <>
-              <Head align={"center"} h={"h4"} title={"Documents"} />
+              <Head
+                color={mode === "dark" ? "#fff" : "#000"}
+                align={"center"}
+                h={"h4"}
+                title={"Documents"}
+              />
               <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
                 {showDocFiles.map((doc, i) => {
                   const fileType = doc.split(".")[doc.split(".").length - 1];
@@ -289,9 +316,7 @@ const SparkModal = ({ type }) => {
                         <Typography variant="h6">
                           File-{i}.{fileType}
                         </Typography>
-                        <IconButton
-                          onClick={() => window.open(doc)}
-                        >
+                        <IconButton onClick={() => window.open(doc)}>
                           <Preview
                             sx={{
                               "&:hover": {
@@ -307,9 +332,14 @@ const SparkModal = ({ type }) => {
                 })}
               </Box>
             </>
-          ) : (
+          ) : dataType === "audios" ? (
             <>
-              <Head align={"center"} h={"h3"} title={"Chosen Audios"} />
+              <Head
+                color={mode === "dark" ? "#fff" : "#000"}
+                align={"center"}
+                h={"h3"}
+                title={"Chosen Audios"}
+              />
               <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
                 {showAudioFiles.map((d, i) => (
                   <Box
@@ -317,15 +347,24 @@ const SparkModal = ({ type }) => {
                     className={`grid jcs aife g10`}
                     sx={{ height: "100%" }}
                   >
-                    <audio
-                      src={d}
-                      loading="lazy"
-                      controls
-                    />
+                    <audio src={d} loading="lazy" controls />
                   </Box>
                 ))}
               </Box>
             </>
+          ) : (
+            dataType === "images" && (
+              <>
+                <MainIconButton onClick={toggleDataShow}>
+                  <Close />
+                </MainIconButton>
+                <Carousel selectedItem={true} infiniteLoop={true}>
+                  {showImageFiles.map((img, i) => (
+                    <SpecialImage key={i} img={img} slider={true} />
+                  ))}
+                </Carousel>
+              </>
+            )
           )}
         </Box>
       </Modal>

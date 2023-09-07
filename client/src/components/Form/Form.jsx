@@ -8,7 +8,6 @@ import AddNewTeam from "./AddNewTeam/AddNewTeam";
 import JoinTeam from "./JoinTeam/JoinTeam";
 import ResetPassword from "./ResetPassword/ResetPassword";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
-import { Container } from "@mui/material";
 import axios from "axios";
 import { useContext } from "react";
 import { LoadingButtonContext } from "@/context/LoadingButtonContext";
@@ -18,7 +17,6 @@ import ChangeAvatar from "./ChangeAvatar/ChangeAvatar";
 import ChangeCover from "./ChangeCover/ChangeCover";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthData, logOut } from "@/store/authSlice";
@@ -34,10 +32,11 @@ import { getTeam } from "@/store/teamSlice";
 import DeleteSpark from "./DeleteSpark/DeleteSpark";
 import { getSparks } from "@/store/sparksSlice";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
-import { BackLoadingContext } from "@/context/BackLoadingContext";
+import { MyThemeContext } from "@/context/MyThemeContext";
 
-const Form = ({ type,setValue }) => {
+const Form = ({ type, setValue }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
+  const { mode } = useContext(MyThemeContext);
   const {
     teamId,
     handleToggleJoinTeamModal,
@@ -48,7 +47,7 @@ const Form = ({ type,setValue }) => {
     handleToggleChangeProfileCoverModal,
     handleToggleChangeAvatarModal,
     handleToggleEditProfileModal,
-    handleToggleShowDeleteAccount
+    handleToggleShowDeleteAccount,
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   const {
@@ -60,7 +59,6 @@ const Form = ({ type,setValue }) => {
     handleResetData,
     handleToggleDeleteSparkModal,
   } = useContext(SparkModalContext);
-  const {handleOpenBackLoading,handleCloseBackLoading} = useContext(BackLoadingContext)
   const { id, unique } = useParams();
   const router = useRouter();
   const [file, setFile] = useState(null);
@@ -337,20 +335,21 @@ const Form = ({ type,setValue }) => {
     onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       const data = new FormData();
-      const allFiles = [...imageFiles, ...audioFiles, ...docFiles];
+      const allFiles = [...imageFiles, ...audioFiles, ...docFiles, record];
       if (record) {
-        data.append("record", record);
+        console.log(URL.createObjectURL(record));
+        // data.append("record", record);
       }
       if (allFiles.length > 0) {
         for (let i = 0; i < allFiles.length; i++) {
           data.append("files", allFiles[i]);
         }
-      } 
+      }
       data.append("idea", values.idea);
       data.append("description", values.description);
       data.append("team", id);
       data.forEach((value, key) => {
-        console.log(data.get(key));
+        console.log(key, data.get(key));
       });
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/Ideas`, data, {
@@ -362,7 +361,7 @@ const Form = ({ type,setValue }) => {
           handleAlertToastify(res.data.message, "success");
           handleResetData();
           resetForm();
-          setValue(1)
+          setValue(1);
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -511,7 +510,7 @@ const Form = ({ type,setValue }) => {
       .then((res) => {
         handleAlertToastify(res.data.message, "success");
         dispatch(logOut());
-        router.push("/")
+        router.push("/");
         handleToggleShowDeleteAccount();
       })
       .catch((err) => {
@@ -571,7 +570,12 @@ const Form = ({ type,setValue }) => {
           type === "delete_spark" ||
           type === "delete_account") &&
         "profile_form g30"
-      } ${type === "create_spark" && "g30 spark_form"}`}
+      } ${type === "create_spark" && "g30 spark_form border_none"}`}
+      style={
+        mode === "light"
+          ? { backgroundColor: "#fff" }
+          : { backgroundColor: "#000" ,border:"2px solid #037ef3"}
+      }
     >
       {type === "login" ? (
         <Login formik={loginFormik} />

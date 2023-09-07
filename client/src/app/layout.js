@@ -6,7 +6,6 @@ import { TeamModalProvider } from "@/context/TeamModalContext";
 import { DrawerProvider } from "@/context/DrawerContext";
 import Main from "./Main/Main";
 import { BackLoadingProvider } from "@/context/BackLoadingContext";
-import { CarouselProvider } from "@/context/CarouselContext";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import { LoadingButtonProvider } from "@/context/LoadingButtonContext";
@@ -37,7 +36,7 @@ export default function RootLayout({ children }) {
         />
         <title>BrainStorming</title>
       </head>
-      <body >
+      <body>
         <Provider store={store}>
           <MyThemeProvider>
             <ExtensionsProvider>
@@ -45,17 +44,15 @@ export default function RootLayout({ children }) {
                 <SparkModalProvider>
                   <LoadingButtonProvider>
                     <ModeProvider>
-                      <CarouselProvider>
-                        <BackLoadingProvider>
-                          <TeamModalProvider>
-                            <ProfileModalProvider>
-                              <DrawerProvider>
-                                  <Main>{children}</Main>
-                              </DrawerProvider>
-                            </ProfileModalProvider>
-                          </TeamModalProvider>
-                        </BackLoadingProvider>
-                      </CarouselProvider>
+                      <BackLoadingProvider>
+                        <TeamModalProvider>
+                          <ProfileModalProvider>
+                            <DrawerProvider>
+                              <Main>{children}</Main>
+                            </DrawerProvider>
+                          </ProfileModalProvider>
+                        </TeamModalProvider>
+                      </BackLoadingProvider>
                     </ModeProvider>
                   </LoadingButtonProvider>
                 </SparkModalProvider>
