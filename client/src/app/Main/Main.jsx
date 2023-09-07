@@ -18,7 +18,6 @@ import { getUserData } from "@/store/userSlice";
 import Cookies from "js-cookie";
 import { getAuthData } from "@/store/authSlice";
 import SparkModal from "@/components/Models/SparkModal";
-import ChosenDataView from "@/components/ChosenDataView/ChosenDataView";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
@@ -36,7 +35,7 @@ const Main = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [Cookies, dispatch]);
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||
     pathname === process.env.NEXT_PUBLIC_LOGIN_PAGE ||
@@ -54,12 +53,17 @@ const Main = ({ children }) => {
   }
 
   return (
-    <PageBox component={"main"}>
+    <PageBox
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light" ? theme.palette.white : theme.palette.black,
+      }}
+      component={"main"}
+    >
       <Header />
       <BackLoading />
       <Sidebar />
       <CarouselSlider />
-      <ChosenDataView />
       {children}
       <TeamModal type="add_new_team" />
       <TeamModal type="join_team" />
@@ -67,9 +71,12 @@ const Main = ({ children }) => {
       <TeamModal type="change_team_image" />
       <SparkModal type="upload_file" />
       <SparkModal type="delete_spark" />
+      <SparkModal type="view_data" />
+      <SparkModal type="show_data" />
       <ProfileModal type="change_cover" />
       <ProfileModal type="change_avatar" />
       <ProfileModal type="edit_profile" />
+      <ProfileModal type="delete_account" />
       <ProfileModal type="view_avatar" img={userData && userData.Image} />
       <ProfileModal
         type="view_cover"

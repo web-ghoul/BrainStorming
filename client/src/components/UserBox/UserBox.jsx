@@ -16,9 +16,9 @@ const UserBox = ({ isUser }) => {
     handleToggleViewAvatarModal,
     handleToggleEditProfileModal,
   } = useContext(ProfileModalContext);
-  const { userData } = useSelector((state) => state.user);
+  const { userData,isLoading } = useSelector((state) => state.user);
   return (
-    userData ? (
+    !isLoading ? (
       <Box className={`flex jcsb aic g30 ${styles.user_box}`}>
         <Box className={`flex jcfs aic g10 ${styles.avatar_box}`}>
           <Box sx={{ position: "relative" }}>
@@ -40,13 +40,6 @@ const UserBox = ({ isUser }) => {
           </Box>
           <Box className={`grid jcfs aic ${styles.user_info}`}>
             <Typography variant="h4">{userData.Name}</Typography>
-            <Typography
-              sx={{ color: (theme) => !userData.Bio && theme.palette.gray }}
-              variant="h6"
-              className={`fw500`}
-            >
-              {userData.Bio ? userData.Bio : "Write your bio..."}
-            </Typography>
           </Box>
         </Box>
         <Box className={`flex jcfe aic ${styles.edit_button}`}>

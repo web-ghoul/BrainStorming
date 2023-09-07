@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const getUserData = createAsyncThunk("user/getUserData", async (user_id) => {
   const res = await axios.get(
@@ -10,6 +11,7 @@ export const getUserData = createAsyncThunk("user/getUserData", async (user_id) 
 
 const initialState = {
   userData: null,
+  isUser:false,
   isLoading: true,
 };
 
@@ -20,6 +22,18 @@ export const userSlice = createSlice({
     builder.addCase(getUserData.fulfilled, (state, action) => {
       state.userData = action.payload;
       state.isLoading = false
+      try{
+        const user_id = Cookies.get("user_id")
+        if(user_id === state.userData._id){
+          state.isUser = true
+        }else{
+          state.isUser = false
+        }
+      }catch(err){
+          state.userData = null
+          state.isUser = false
+          console.log(err)
+      }
     });
   },
 });

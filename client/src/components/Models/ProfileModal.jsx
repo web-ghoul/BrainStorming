@@ -7,19 +7,24 @@ import { Img } from "react-image";
 import styles from "./Models.module.css";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { CameraAltRounded } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 const ProfileModal = ({ img, type }) => {
+  const { signed } = useSelector((state) => state.auth);
+  const { isUser } = useSelector((state) => state.user);
   const {
     showChangeProfileCoverModal,
     showChangeAvatarModal,
     viewAvatarModal,
     viewCoverModal,
+    showDeleteAccount,
     showEditProfileModal,
     handleToggleChangeAvatarModal,
     handleToggleChangeProfileCoverModal,
     handleToggleViewAvatarModal,
     handleToggleViewCoverModal,
-    handleToggleEditProfileModal
+    handleToggleEditProfileModal,
+    handleToggleShowDeleteAccount,
   } = useContext(ProfileModalContext);
   return type === "change_avatar" ? (
     <Modal
@@ -28,7 +33,7 @@ const ProfileModal = ({ img, type }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`grid jcs aic g10`}>
+      <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type="change_avatar" />
       </Box>
     </Modal>
@@ -39,18 +44,18 @@ const ProfileModal = ({ img, type }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`grid jcs aic g10 `}>
+      <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type="change_cover" />
       </Box>
     </Modal>
-  ): type === "edit_profile" ? (
+  ) : type === "edit_profile" ? (
     <Modal
       open={showEditProfileModal}
       onClose={handleToggleEditProfileModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`grid jcs aic g10 ${styles.edit_profile_box}`}>
+      <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type="edit_profile" />
       </Box>
     </Modal>
@@ -61,40 +66,61 @@ const ProfileModal = ({ img, type }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`grid jcs aic g30 ${styles.avatar_box}`}>
+      <Box
+        className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
+      >
         <Img alt="avatar" src={img} crossOrigin="anonymous" />
-        <MainIconButton
-          onClick={() => {
-            handleToggleChangeAvatarModal();
-            handleToggleViewAvatarModal();
-          }}
-          className={`${styles.change_avatar_button}`}
-        >
-          <CameraAltRounded />
-          <Typography variant="h6">Change Avatar</Typography>
-        </MainIconButton>
+        {signed && isUser && (
+          <MainIconButton
+            onClick={() => {
+              handleToggleChangeAvatarModal();
+              handleToggleViewAvatarModal();
+            }}
+            className={`${styles.change_avatar_button}`}
+          >
+            <CameraAltRounded />
+            <Typography variant="h6">Change Avatar</Typography>
+          </MainIconButton>
+        )}
       </Box>
     </Modal>
-  ) : (
+  ) : type === "delete_account" ? (
     <Modal
-      open={viewCoverModal}
-      onClose={handleToggleViewCoverModal}
+      open={showDeleteAccount}
+      onClose={handleToggleShowDeleteAccount}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`grid jcs aic g30 ${styles.avatar_box}`}>
-        <Img alt="cover" src={img} crossOrigin="anonymous" />
-        <MainIconButton
-          onClick={() => {
-            handleToggleChangeProfileCoverModal();
-            handleToggleViewCoverModal();
-          }}
-        >
-          <CameraAltRounded />
-          <Typography variant="h6">Change Cover</Typography>
-        </MainIconButton>
+      <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
+        <Form type={type} />
       </Box>
     </Modal>
+  ) : (
+    type === "view_cover" && (
+      <Modal
+        open={viewCoverModal}
+        onClose={handleToggleViewCoverModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
+        >
+          <Img alt="cover" src={img} crossOrigin="anonymous" />
+          {signed && isUser && (
+            <MainIconButton
+              onClick={() => {
+                handleToggleChangeProfileCoverModal();
+                handleToggleViewCoverModal();
+              }}
+            >
+              <CameraAltRounded />
+              <Typography variant="h6">Change Cover</Typography>
+            </MainIconButton>
+          )}
+        </Box>
+      </Modal>
+    )
   );
 };
 

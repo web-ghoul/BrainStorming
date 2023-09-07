@@ -13,7 +13,7 @@ const SpecialImage = ({
   slider,
 }) => {
   return slider ? (
-    <Box className={`center_x`}>
+    <Box sx={{position:"absolute"}} className={`center_x`}>
       <Image src={img} height={200} width={200} alt={"post"} loading="lazy" />
     </Box>
   ) : (

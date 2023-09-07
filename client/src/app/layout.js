@@ -5,17 +5,17 @@ import { ModeProvider } from "@/context/ModeContext";
 import { TeamModalProvider } from "@/context/TeamModalContext";
 import { DrawerProvider } from "@/context/DrawerContext";
 import Main from "./Main/Main";
-import { theme } from "./theme";
 import { BackLoadingProvider } from "@/context/BackLoadingContext";
 import { CarouselProvider } from "@/context/CarouselContext";
 import { Provider } from "react-redux";
 import { store } from "../store/store";
 import { LoadingButtonProvider } from "@/context/LoadingButtonContext";
-import { ThemeProvider } from "@mui/material/styles";
 import { ProfileModalProvider } from "@/context/ProfileModalContext";
 import { SparkModalProvider } from "@/context/SparkModalContext";
 import { ExtensionsProvider } from "@/context/ExtensionsContext";
 import { ChosenDataViewProvider } from "@/context/ChosenDataViewContext";
+import MyThemeProvider from "@/context/MyThemeContext";
+import { useContext } from "react";
 
 export default function RootLayout({ children }) {
   return (
@@ -37,31 +37,31 @@ export default function RootLayout({ children }) {
         />
         <title>BrainStorming</title>
       </head>
-      <body>
+      <body >
         <Provider store={store}>
-          <ExtensionsProvider>
-            <ChosenDataViewProvider>
-              <SparkModalProvider>
-                <LoadingButtonProvider>
-                  <ModeProvider>
-                    <CarouselProvider>
-                      <BackLoadingProvider>
-                        <TeamModalProvider>
-                          <ProfileModalProvider>
-                            <DrawerProvider>
-                              <ThemeProvider theme={theme}>
-                                <Main>{children}</Main>
-                              </ThemeProvider>
-                            </DrawerProvider>
-                          </ProfileModalProvider>
-                        </TeamModalProvider>
-                      </BackLoadingProvider>
-                    </CarouselProvider>
-                  </ModeProvider>
-                </LoadingButtonProvider>
-              </SparkModalProvider>
-            </ChosenDataViewProvider>
-          </ExtensionsProvider>
+          <MyThemeProvider>
+            <ExtensionsProvider>
+              <ChosenDataViewProvider>
+                <SparkModalProvider>
+                  <LoadingButtonProvider>
+                    <ModeProvider>
+                      <CarouselProvider>
+                        <BackLoadingProvider>
+                          <TeamModalProvider>
+                            <ProfileModalProvider>
+                              <DrawerProvider>
+                                  <Main>{children}</Main>
+                              </DrawerProvider>
+                            </ProfileModalProvider>
+                          </TeamModalProvider>
+                        </BackLoadingProvider>
+                      </CarouselProvider>
+                    </ModeProvider>
+                  </LoadingButtonProvider>
+                </SparkModalProvider>
+              </ChosenDataViewProvider>
+            </ExtensionsProvider>
+          </MyThemeProvider>
         </Provider>
       </body>
     </html>

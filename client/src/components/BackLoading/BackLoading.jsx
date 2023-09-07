@@ -10,7 +10,7 @@ const BackLoading = () => {
       sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.modal + 1 }}
       open={openBackLoading}
     >
-      <CircularProgress color="inherit" />
+      <CircularProgress sx={{zIndex:1000,color:(theme)=>theme.palette.primary.main}} />
     </Backdrop>
   );
 };

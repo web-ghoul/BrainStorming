@@ -11,7 +11,16 @@
   padding: 20px;
 }
 
-@media (1200px >= width >= 992px) {
+.loading_members_box {
+  min-width: 200px;
+  padding: 10px;
+}
+
+.loading_members_box .members {
+  padding: 0;
+}
+
+@media (1200px >=width >=992px) {
   .members_box {
     top: 70px;
   }
@@ -21,7 +30,7 @@
   }
 }
 
-@media (992px > width >= 768px) {
+@media (992px > width >=768px) {
   .members_box {
     top: 60px;
   }
@@ -31,7 +40,7 @@
   }
 }
 
-@media (768px > width >= 0) {
+@media (768px > width >=0) {
   .members_box {
     top: auto;
     position: relative;
@@ -40,6 +49,6 @@
 
   .members {
     padding: 15px;
-    justify-content: center !important;
+    /* justify-content: center !important; */
   }
 }

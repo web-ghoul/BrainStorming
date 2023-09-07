@@ -1,9 +1,8 @@
 import React from "react";
-import { Box } from "@mui/material";
 import Form from "@/components/Form/Form";
 
-const CreateIdeaSection = () => {
-  return <Form type="create_spark" />;
+const CreateIdeaSection = ({setValue}) => {
+  return <Form type="create_spark" setValue={setValue}/>;
 };
 
 export default CreateIdeaSection;

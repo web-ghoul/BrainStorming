@@ -6,6 +6,7 @@ export const ProfileModalContext = createContext();
 
 export const ProfileModalProvider = ({ children }) => {
   const [showChangeAvatarModal, setShowChangeAvatarModal] = useState(false);
+  const [showDeleteAccount, setShowDeleteAccount] = useState(false);
   const [viewAvatarModal, setViewAvatarModal] = useState(false);
   const [viewCoverModal, setViewCoverModal] = useState(false);
   const [showChangeProfileCoverModal, setShowChangeProfileCoverModal] = useState(
@@ -16,6 +17,9 @@ export const ProfileModalProvider = ({ children }) => {
   );
   const handleToggleChangeAvatarModal = () => {
     setShowChangeAvatarModal(!showChangeAvatarModal);
+  };
+  const handleToggleShowDeleteAccount = () => {
+    setShowDeleteAccount(!showDeleteAccount);
   };
   const handleToggleChangeProfileCoverModal = () => {
     setShowChangeProfileCoverModal(!showChangeProfileCoverModal);
@@ -37,8 +41,10 @@ export const ProfileModalProvider = ({ children }) => {
         viewAvatarModal,
         viewCoverModal,
         showEditProfileModal,
+        showDeleteAccount,
         handleToggleChangeAvatarModal,
         handleToggleChangeProfileCoverModal,
+        handleToggleShowDeleteAccount,
         handleToggleViewAvatarModal,
         handleToggleViewCoverModal,
         handleToggleEditProfileModal

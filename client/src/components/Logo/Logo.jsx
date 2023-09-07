@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Logo = ({ title, color, align }) => {
   return (
-    <IconButton>
+    <IconButton className={`${styles.logo}`}>
       <Link
         className={`flex ${
           align && align === "center" ? "jcc" : "jcfs"

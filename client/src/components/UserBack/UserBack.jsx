@@ -13,9 +13,9 @@ const UserBack = ({isUser}) => {
     handleToggleChangeProfileCoverModal,
     handleToggleViewCoverModal,
   } = useContext(ProfileModalContext);
-  const { userData } = useSelector((state) => state.user);
+  const { userData,isLoading } = useSelector((state) => state.user);
   return (
-    userData ? (
+    !isLoading ? (
       <Box className={`${styles.user_back}`}>
         <Box
           sx={{ backgroundImage: `url(${userData.BackgroundImage})` }}

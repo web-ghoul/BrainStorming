@@ -21,7 +21,7 @@ import Cookies from "js-cookie";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuthData } from "@/store/authSlice";
+import { getAuthData, logOut } from "@/store/authSlice";
 import { getUserData } from "@/store/userSlice";
 import { getTeams } from "@/store/teamsSlice";
 import { TeamModalContext } from "@/context/TeamModalContext";
@@ -33,8 +33,10 @@ import ChangeTeamCover from "./ChangeTeamCover/ChangeTeamCover";
 import { getTeam } from "@/store/teamSlice";
 import DeleteSpark from "./DeleteSpark/DeleteSpark";
 import { getSparks } from "@/store/sparksSlice";
+import DeleteAccount from "./DeleteAccount/DeleteAccount";
+import { BackLoadingContext } from "@/context/BackLoadingContext";
 
-const Form = ({ type }) => {
+const Form = ({ type,setValue }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
   const {
     teamId,
@@ -46,6 +48,7 @@ const Form = ({ type }) => {
     handleToggleChangeProfileCoverModal,
     handleToggleChangeAvatarModal,
     handleToggleEditProfileModal,
+    handleToggleShowDeleteAccount
   } = useContext(ProfileModalContext);
   const { userData } = useSelector((state) => state.user);
   const {
@@ -55,8 +58,9 @@ const Form = ({ type }) => {
     record,
     docFiles,
     handleResetData,
-    handleToggleDeleteSparkModal
+    handleToggleDeleteSparkModal,
   } = useContext(SparkModalContext);
+  const {handleOpenBackLoading,handleCloseBackLoading} = useContext(BackLoadingContext)
   const { id, unique } = useParams();
   const router = useRouter();
   const [file, setFile] = useState(null);
@@ -184,9 +188,9 @@ const Form = ({ type }) => {
   };
 
   const editProfileValidationSchema = yup.object({
-    name: yup.string("Enter your name").required("Name is required"),
-    bio: yup.string("Enter your Bio"),
-    about: yup.string("Enter your About"),
+    name: yup.string("Enter your name").required("Name is required").max(15),
+    bio: yup.string("Enter your Bio").max(50),
+    about: yup.string("Enter your About").max(200),
   });
 
   const handleChangeFile = (f) => {
@@ -341,16 +345,13 @@ const Form = ({ type }) => {
         for (let i = 0; i < allFiles.length; i++) {
           data.append("files", allFiles[i]);
         }
-      } else {
-        data.append("files", []);
-      }
+      } 
       data.append("idea", values.idea);
       data.append("description", values.description);
       data.append("team", id);
       data.forEach((value, key) => {
-        console.log(key, value);
+        console.log(data.get(key));
       });
-
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/Ideas`, data, {
           headers: {
@@ -361,6 +362,7 @@ const Form = ({ type }) => {
           handleAlertToastify(res.data.message, "success");
           handleResetData();
           resetForm();
+          setValue(1)
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -487,7 +489,30 @@ const Form = ({ type }) => {
       .then((res) => {
         handleAlertToastify(res.data.message, "success");
         dispatch(getSparks({ token, team_id: team._id }));
-        handleToggleDeleteSparkModal()
+        handleToggleDeleteSparkModal();
+      })
+      .catch((err) => {
+        try {
+          handleAlertToastify(err.response.data.message, "error");
+        } catch (err) {
+          handleAlertToastify(err, "error");
+        }
+      });
+    setButtonLoading(false);
+  };
+
+  const handleDeleteAccount = async (e) => {
+    e.preventDefault();
+    setButtonLoading(true);
+    await axios
+      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/deleteAccount`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        handleAlertToastify(res.data.message, "success");
+        dispatch(logOut());
+        router.push("/")
+        handleToggleShowDeleteAccount();
       })
       .catch((err) => {
         try {
@@ -530,7 +555,9 @@ const Form = ({ type }) => {
           ? handleDeleteSpark
           : type === "change_cover"
           ? handleChangeCover
-          : type === "edit_profile" && editProfileFormik.handleSubmit
+          : type === "edit_profile"
+          ? editProfileFormik.handleSubmit
+          : type === "delete_account" && handleDeleteAccount
       }
       className={`grid jcs aifs ${
         (type === "add_new_team" ||
@@ -541,7 +568,8 @@ const Form = ({ type }) => {
         (type === "change_cover" ||
           type === "change_team_image" ||
           type === "change_avatar" ||
-          type === "delete_spark") &&
+          type === "delete_spark" ||
+          type === "delete_account") &&
         "profile_form g30"
       } ${type === "create_spark" && "g30 spark_form"}`}
     >
@@ -573,8 +601,10 @@ const Form = ({ type }) => {
           handleChangeFile={handleChangeFile}
           formik={createSparkFormik}
         />
-      ) : (
+      ) : type === "edit_profile" ? (
         <EditProfile formik={editProfileFormik} />
+      ) : (
+        type === "delete_account" && <DeleteAccount />
       )}
     </form>
   );

@@ -13,14 +13,11 @@ const TeamModal = ({ type }) => {
     handleToggleAddNewTeamModal,
     handleToggleViewTeamImageModal,
     handleToggleChangeTeamImageModal,
-    handleSetTeamImage,
     showAddNewTeamModal,
     showJoinTeamModal,
     viewTeamImageModal,
     showChangeTeamImageModal,
-    teamId,
     teamImage,
-    setTeamId,
   } = useContext(TeamModalContext);
   return type === "add_new_team" ? (
     <Modal
@@ -63,7 +60,7 @@ const TeamModal = ({ type }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box className={`grid jcs aic g30 ${styles.avatar_box}`}>
+        <Box className={`grid jcs aic g30  ${styles.modal_box} ${styles.avatar_box}`}>
           <Img alt="team cover" src={teamImage} crossOrigin="anonymous" />
           <MainIconButton
             onClick={() => {

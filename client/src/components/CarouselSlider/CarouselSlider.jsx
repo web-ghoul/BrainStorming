@@ -10,7 +10,7 @@ import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import SpecialImage from "../SpecialImage/SpecialImage";
 
 const CarouselSlider = () => {
-  const { data, openCarousel, selectedItem, handleToggleCarousel } = useContext(
+  const { data, openCarousel, handleToggleCarousel } = useContext(
     CarouselContext
   );
   return (
