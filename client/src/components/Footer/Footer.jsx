@@ -8,12 +8,16 @@ import { Facebook, Google, Instagram, WhatsApp } from "@mui/icons-material";
 import Link from "next/link";
 
 const Footer = () => {
-  const theme = useTheme();
   return (
     <Box
       component={"footer"}
       className={`${styles.footer}`}
-      sx={{ backgroundColor: theme.palette.black }}
+      sx={{
+        backgroundColor: (theme) =>
+          theme.palette.mode === "light"
+            ? theme.palette.black
+            : theme.palette.primary.main,
+      }}
     >
       <Container className={`grid jcs aic g20 ${styles.footer_contain}`}>
         <Logo title={true} align={"center"} color="#fff" />

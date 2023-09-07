@@ -26,12 +26,14 @@ import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
 import { RedButton } from "@/MUIComponents/RedButton/RedButton";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import Head from "@/components/Head/Head";
+import { handleAlertToastify } from "@/app/reactToastify";
 
 const EditProfile = ({ formik }) => {
   const [bioEmojiShow, setBioEmojiShow] = useState(false);
   const [aboutEmojiShow, setAboutEmojiShow] = useState(false);
+  const [usernameEmojiShow, setUsernameEmojiShow] = useState(false);
   const { handleToggleEditProfileModal } = useContext(ProfileModalContext);
-  console.log(bioEmojiShow, aboutEmojiShow);
+  const [help, setHelp] = useState(false);
   return (
     <>
       <Head align={"center"} h={"h3"} title={"Edit Profile"} />
@@ -51,17 +53,25 @@ const EditProfile = ({ formik }) => {
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
             />
-            <IconButton onClick={() => setBioEmojiShow(!bioEmojiShow)}>
+            <IconButton
+              onClick={() => {
+                setUsernameEmojiShow(!usernameEmojiShow);
+              }}
+            >
               <SentimentSatisfiedRounded />
             </IconButton>
           </Box>
-          {aboutEmojiShow && (
+          {usernameEmojiShow && (
             <Picker
-              onClickOutside={() => setAboutEmojiShow(!aboutEmojiShow)}
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
-                formik.values.about += e.native;
+                if (formik.values.name.length >= 15) {
+                  handleAlertToastify("15 letter Maximum", "warningX");
+                } else {
+                  formik.values.name += e.native;
+                  setHelp(!help);
+                }
               }}
             />
           )}
@@ -89,11 +99,11 @@ const EditProfile = ({ formik }) => {
 
           {bioEmojiShow && (
             <Picker
-              onClickOutside={() => setBioEmojiShow(false)}
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
                 formik.values.bio += e.native;
+                setHelp(!help);
               }}
             />
           )}
@@ -120,11 +130,11 @@ const EditProfile = ({ formik }) => {
           </Box>
           {aboutEmojiShow && (
             <Picker
-              onClickOutside={() => setAboutEmojiShow(!aboutEmojiShow)}
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
                 formik.values.about += e.native;
+                setHelp(!help);
               }}
             />
           )}

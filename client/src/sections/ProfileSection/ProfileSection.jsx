@@ -1,31 +1,35 @@
-import UserAbout from "@/components/UserAbout/UserAbout";
 import UserBack from "@/components/UserBack/UserBack";
 import UserBox from "@/components/UserBox/UserBox";
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import UserInfo from "@/components/UserInfo/UserInfo";
+import { DeleteRounded } from "@mui/icons-material";
+import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
+import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { ProfileModalContext } from "@/context/ProfileModalContext";
 
 const ProfileSection = () => {
-  const [isUser, setIsUser] = useState(false);
-  const { id } = useParams();
-  const router = useRouter();
-  useEffect(() => {
-    try {
-      const user_id = Cookies.get("user_id");
-      setIsUser(id === user_id);
-    } catch (err) {
-      router.push("/");
-    }
-  }, [isUser, id]);
+  const { signed } = useSelector((state) => state.auth);
+  const { handleToggleShowDeleteAccount } = useContext(ProfileModalContext);
+  const {isUser}= useSelector((state)=>state.user)
   return (
     <Box>
-      <UserBack isUser={isUser}/>
-      <Container>
-        <UserBox isUser={isUser}/>
-        <UserAbout />
+      <UserBack isUser={isUser} />
+      <Container className={`grid jcs aic g30`}>
+        <UserBox isUser={isUser} />
+        <UserInfo title="Bio" />
+        <UserInfo title="About" />
+        {signed && isUser && (
+          <RedIconButton onClick={handleToggleShowDeleteAccount}>
+            <DeleteRounded />
+            <Typography variant="h6">Delete Account</Typography>
+          </RedIconButton>
+        )}
       </Container>
     </Box>
   );

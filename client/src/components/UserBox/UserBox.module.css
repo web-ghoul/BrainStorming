@@ -60,7 +60,7 @@
 
 @media (768px >=width >=0px) {
   .user_box {
-    transform: translateY(-150px) translateX(-50%);
+    transform: translateY(-120px) translateX(-50%);
     height: 300px;
     width: min-content;
     left: 50%;

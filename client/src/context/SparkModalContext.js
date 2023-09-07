@@ -22,7 +22,8 @@ export const SparkModalProvider = ({ children }) => {
 
   const handleFiles = (files) => {
     Object.keys(files).map((key) => {
-      const fileType = files[key].name.split(".")[
+      let fileType;
+      fileType = files[key].name.split(".")[
         files[key].name.split(".").length - 1
       ];
       if (audios.includes(fileType)) {
@@ -54,12 +55,12 @@ export const SparkModalProvider = ({ children }) => {
     setShowDeleteSparkModal(!showDeleteSparkModal);
   };
 
-  const handleResetData=()=>{
-    setImageFiles([])
-    setDocFiles([])
-    setAudioFiles([])
-    setRecord(null)
-  }
+  const handleResetData = () => {
+    setImageFiles([]);
+    setDocFiles([]);
+    setAudioFiles([]);
+    setRecord(null);
+  };
   return (
     <SparkModalContext.Provider
       value={{

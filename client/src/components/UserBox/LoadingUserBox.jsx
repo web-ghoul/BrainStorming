@@ -18,7 +18,6 @@ const LoadingUserBox = () => {
         </Box>
         <Box className={`grid jcfs aic ${styles.user_info}`}>
           <Skeleton variant="text" width={200} height={50} />
-          <Skeleton variant="text" className={`fw500`} width={200}  height={50} />
         </Box>
       </Box>
     </Box>

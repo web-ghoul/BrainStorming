@@ -1,3 +1,7 @@
+main{
+  min-height: 100vh;
+}
+
 .sc-aXZVg,
 .guZdik {
   max-width: 100% !important;
@@ -53,19 +57,36 @@
 }
 
 .carousel-root .slide img {
-  width: auto !important;
-  height: 100%;
+  width: max-content !important;
+  height: inherit !important;
+  top:50%;
+  transform: translateY(-50%);
+  position: relative;
 }
 
 .carousel-root .control-arrow {
   background-color: var(--main) !important;
 }
 
-
 /*File Upload*/
 .guZdik{
   min-width: 200px !important;
 }
+
+/*Scrollbar*/
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: var(--white);
+}
+
+::-webkit-scrollbar-thumb
+{
+	-webkit-box-shadow: inset 0 0 6px var(--main);
+	background-color: var(--main);
+}
+
 @media (max-width: 1200px) {
   .css-bbskgl-MuiFormLabel-root-MuiInputLabel-root {
     font-size: 16px;

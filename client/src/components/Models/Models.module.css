@@ -1,59 +1,105 @@
-.avatar_box {
+.modal_box {
   background-color: var(--white);
-  padding: 20px;
-  border-radius: 8px;
-  height: max-content;
-  width: max-content;
-  max-width: 90vw;
-  max-height: 90vh;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  overflow: auto;
-}
-
-
-.avatar_box img {
-  width: 100%;
-  height: auto;
-}
-
-.choose_files_box {
-  background-color: var(--white);
-  width: 60vw;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
   padding: 20px;
   border-radius: 6px;
+  max-width: 60vw;
+}
+
+.avatar_box {
+  height: max-content;
+  width: max-content;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.avatar_box img {
+  width: 100%;
+  height: auto;
+}
+
+.chosen_data_viewer_box {
+  max-height: 90vh;
+  height: fit-content;
+  width: 90vw;
+  padding: 20px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.data_viewer {
+  max-height: 60vh;
+  height: min-content;
+  overflow-y: auto;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.data_viewer video {
+  width: 100%;
+  height: auto;
+}
+
+.file {
+  background-color: var(--white);
+  padding: 5px;
+}
+
+.file img {
+  width: 20px;
+  height: 20px;
 }
 
 
 @media (1200px >=width >=992px) {
-  .avatar_box {
-    padding: 18px;
-    border-radius: 7px;
-  }
-
-  .choose_files_box {
-    width: 70vw;
+  .modal_box {
     padding: 15px;
     border-radius: 4px;
+    max-width: 75vw;
+  }
+
+  .chosen_data_viewer_box {
+    padding: 18px;
+    border-radius: 8px;
+  }
+
+  .data_viewer {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (992px >=width >=0px) {
-  .avatar_box {
+  .modal_box {
+    padding: 10px;
+    border-radius: 3px;
+    max-width: 85vw;
+  }
+
+  .chosen_data_viewer_box {
     padding: 15px;
     border-radius: 6px;
   }
 
-  .choose_files_box {
-    background-color: var(--white);
-    width: 80vw;
+  .data_viewer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .chosen_data_viewer_box {
     padding: 10px;
-    border-radius: 2px;
+    border-radius: 4px;
+  }
+
+  .data_viewer {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

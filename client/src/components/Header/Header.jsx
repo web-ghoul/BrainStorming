@@ -32,7 +32,10 @@ const Header = () => {
     dispatch(logOut());
   };
   return (
-    <AppBar color="primary" className={`${styles.header}`}>
+    <AppBar sx={{
+      backgroundColor: (theme) =>
+           theme.palette.primary.main,
+    }} className={`${styles.header}`}>
       <Container
         sx={{ height: { lg: "70px", md: "60px", sm: "50px", xs: "40px" } }}
         className={`flex jcsb aic g30 ${styles.header_contain} header_wrapped`}

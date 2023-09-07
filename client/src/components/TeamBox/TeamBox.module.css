@@ -1,11 +1,9 @@
 .room {
-  background-color: var(--white);
   border-radius: 6px;
-  box-shadow:
-    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   position: relative;
   z-index: 10;
+  border-style: solid;
+  border-width: 2px;
 }
 
 .room_image_box {
@@ -13,6 +11,7 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+  background-color: var(--white);
 }
 
 .room_image_box img {
