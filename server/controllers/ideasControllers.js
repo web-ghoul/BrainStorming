@@ -1,4 +1,6 @@
 const Ideas = require("../models/IdeasSchema");
+const User = require('../models/UserSchema')
+const Teams = require('../models/TeamsSchema')
 const uploadImage = require("../utils/uploadImage");
 const logger = require("../logger/index");
 const asyncHandler = require("express-async-handler");
@@ -11,6 +13,13 @@ const path = require("path");
 
 const postIdeas = asyncHandler(async (req, res, next) => {
   const { idea, description, team } = req.body;
+  const teamData = await Teams.findById(team)
+  if(!teamData.Members.includes(req.userId))
+  {
+    return res.status(404).json({
+      message : "You are not authorized"
+    })
+  }
   console.log(req.files.files);
   console.log(idea);
   if (!idea) {
@@ -50,7 +59,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
   }
   var audio = "";
   console.log(req.files.record)
-  if(req.files && req.files.record && req.files.record.length > 0 )
+  if(req.files && req.files.record && req.files.record.length > 0)
   {
     try {
       console.log(req.files.record)
@@ -107,7 +116,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
 
 const displayIdeas = asyncHandler((req, res, next) => {
   const teamId = req.params.id;
-
+  // protect users onlly in the team
   Ideas.find({ Team: teamId }).populate("WrittenBy")
     .then((result) => {
       return res.status(200).json({
@@ -123,8 +132,8 @@ const displayIdeas = asyncHandler((req, res, next) => {
 
 const deleteIdea = asyncHandler(async (req, res, next) => {
   const data = await Ideas.findOne({ _id: req.params.id });
-
-  if (data && data.WrittenBy == req.userId) {
+  const teamData = await Teams.findById(data.Team)
+  if (data && (data.WrittenBy == req.userId || req.userId == teamData.TeamLeader) ) {
     await Ideas.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: "Data deleted successfully." });
   } else {
