@@ -1363,7 +1363,7 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
-const otherRegister = (req, res, next) => {
+const googleRegister = (req, res, next) => {
   //res.send(userProfile)
 
   const email = req.user._json.email;
@@ -1435,6 +1435,158 @@ const otherRegister = (req, res, next) => {
   });
 };
 
+const facebookRegister = (req, res, next) => {
+  //res.send(userProfile)
+
+  const id = req.user.id;
+  const name = req.user.displayName;
+
+  User.findOne({ FacebookId: id }).then((user) => {
+    if (user) {
+      let token = jwt.sign(
+        { Id: user.id, Name: user.Name },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "30h",
+        },
+      );
+
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 60 * 1000);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: expirationDate,
+      });
+
+      var csrfToken = uuidv4();
+      res.status(200).json({
+        message: "login successfully !",
+        token: token,
+        csrfToken: csrfToken,
+      });
+    } else {
+      let user = new User({
+        Name: name,
+        FacebookId: id,
+      });
+      user
+        .save()
+        .then((user) => {
+          let token = jwt.sign(
+            { Id: user.id, Name: user.Name  },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "30h",
+            },
+          );
+          const expirationDate = new Date();
+          expirationDate.setTime(
+            expirationDate.getTime() + 30 * 60 * 60 * 1000,
+          );
+          res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            expires: expirationDate,
+          });
+          var csrfToken = uuidv4();
+          res.status(200).json({
+            message: "login successfully !",
+            token: token,
+            csrfToken: csrfToken,
+          });
+        })
+        .catch((error) => {
+          console.log(error)
+          res.json({
+            message: "An error occured ! ",
+          });
+        });
+    }
+  });
+};
+
+const linkedinRegister = (req, res, next) => {
+  //res.send(userProfile)
+  console.log(req.userData)
+  const email = req.userData.email;
+  const name = req.userData.name;
+  const pic = req.userData.picture;
+
+
+  User.findOne({ Email: email }).then((user) => {
+    if (user) {
+      let token = jwt.sign(
+        { Id: user.id, Name: user.Name },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "30h",
+        },
+      );
+
+      const expirationDate = new Date();
+      expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 60 * 1000);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        expires: expirationDate,
+      });
+
+      var csrfToken = uuidv4();
+      res.status(200).json({
+        message: "login successfully !",
+        token: token,
+        csrfToken: csrfToken,
+      });
+    } else {
+      let user = new User({
+        Name: name,
+        Email: email,
+        Image: pic,
+      });
+      console.log("user")
+      console.log(user)
+      user
+        .save()
+        .then((user) => {
+          let token = jwt.sign(
+            { Id: user.id, Name: user.Name },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "30h",
+            },
+          );
+          const expirationDate = new Date();
+          expirationDate.setTime(
+            expirationDate.getTime() + 30 * 60 * 60 * 1000,
+          );
+          res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            expires: expirationDate,
+          });
+          var csrfToken = uuidv4();
+          res.status(200).json({
+            message: "login successfully !",
+            token: token,
+            csrfToken: csrfToken,
+          });
+        })
+        .catch((error) => {
+          console.log(error)
+          res.json({
+            message: "An error occured ! ",
+          });
+        });
+    }
+  });
+};
+
+
 module.exports = {
   register,
   verify,
@@ -1442,5 +1594,7 @@ module.exports = {
   forgetPasswordRequest,
   resetPassword,
   forgetPasswordResponse,
-  otherRegister,
+  googleRegister,
+  facebookRegister,
+  linkedinRegister,
 };

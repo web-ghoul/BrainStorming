@@ -128,6 +128,13 @@ const allPostsForUser = asyncHandler( async(req,res,next) => {
     console.log(teamIdeas)
     ideas.push(...teamIdeas)
   }
+  ideas.sort((a, b) => {
+    const dateA = new Date(a.updatedAt);
+    const dateB = new Date(b.updatedAt);
+  
+    // Compare the dates in descending order (latest first)
+    return dateB - dateA;
+  });
   
   return res.status(200).json({
     data : ideas
