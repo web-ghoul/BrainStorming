@@ -101,5 +101,6 @@ router.delete("/leaveTeam/:id" , protect , teamController.leaveTeam)
 
 router.delete("/deleteAccount" , protect , userControler.deleteUser)
 
+router.get("/allIdeas" , protect , userControler.allPostsForUser)
 
 module.exports = router;
