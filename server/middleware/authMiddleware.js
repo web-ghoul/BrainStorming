@@ -16,7 +16,6 @@ const protect = asyncHandler(async (req, res, next) => {
 
       req.userId = decode.Id;
       req.userName = decode.Name;
-      req.userEmail = decode.Email;
       
       return next();
     } catch (error) {

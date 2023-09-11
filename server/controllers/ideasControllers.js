@@ -157,8 +157,8 @@ const updateIdea = asyncHandler(async (req, res, next) => {
   const { idea, description } = req.body;
 
   const data = await Ideas.findOne({ _id: req.params.id }).populate("WrittenBy") ;
-  console.log(req.userEmail)
-  if (data && data.WrittenBy.Email == req.userEmail) {
+  console.log(data)
+  if (data && data.WrittenBy._id == req.userId) {
     data.Idea = idea;
     data.Description = description;
     await data.save();

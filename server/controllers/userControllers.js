@@ -1,6 +1,7 @@
 const express = require("express");
 const Teams = require("../models/TeamsSchema");
 const User = require("../models/UserSchema");
+const Ideas = require("../models/IdeasSchema")
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
 const uploadImage = require("../utils/uploadImage");
@@ -114,4 +115,39 @@ const deleteUser = asyncHandler( async(req,res,next) => {
 }
 )
 
-module.exports = { getProfile, setProfilePic, setBackgroundPic, updateProfile ,deleteUser};
+const allPostsForUser = asyncHandler( async(req,res,next) => {
+  try
+  {
+  const userData = await User.findById(req.userId)
+  console.log(userData)
+  var ideas = []
+  for(let i = 0 ; i < userData.Teams.length ; i++)
+  {
+    console.log(userData.Teams[i])
+    var teamIdeas = await Ideas.find({Team: userData.Teams[i]})
+    console.log(teamIdeas)
+    ideas.push(...teamIdeas)
+  }
+  ideas.sort((a, b) => {
+    const dateA = new Date(a.updatedAt);
+    const dateB = new Date(b.updatedAt);
+  
+    // Compare the dates in descending order (latest first)
+    return dateB - dateA;
+  });
+  
+  return res.status(200).json({
+    data : ideas
+  })
+  }
+  catch(err)
+  {
+    console.log(err)
+    return res.status(404).json({
+      message : err
+    })
+  }
+}
+)
+
+module.exports = { getProfile, setProfilePic, setBackgroundPic, updateProfile ,deleteUser , allPostsForUser};

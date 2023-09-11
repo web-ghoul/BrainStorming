@@ -6,7 +6,6 @@ const UserSchema = Schema(
   {
     Email: {
       type: String,
-      required: true,
       validate: {
         validator: (val) => {
           return valid.isEmail(val);
@@ -21,8 +20,6 @@ const UserSchema = Schema(
     //chessUserName
     Name: {
       type: String,
-      required: true,
-      unique: true,
     },
     Verified: {
       type: Boolean,
@@ -50,6 +47,10 @@ const UserSchema = Schema(
       type: String,
       default: "",
     },
+    FacebookId: {
+      type : String ,
+
+    }
     
   },
   { timestamps: true },

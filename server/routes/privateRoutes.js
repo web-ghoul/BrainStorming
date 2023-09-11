@@ -6,6 +6,7 @@ const router = express.Router();
 const protect = require("../middleware/authMiddleware");
 const multer = require("multer");
 const path = require("path");
+
 const maxSize = 10 * 1024 * 1024;
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -25,7 +26,6 @@ const upload = multer({
     const extname = allowedFileTypes.test(
       path.extname(file.originalname).toLowerCase()
     );
-    console.log(file)
     if (extname || file.fieldname === "record") {
       return cb(null, true);
     } else {
@@ -100,6 +100,8 @@ router.get("/getTeamInfo/:id", protect, teamController.getTeamInfo);
 router.delete("/leaveTeam/:id" , protect , teamController.leaveTeam)
 
 router.delete("/deleteAccount" , protect , userControler.deleteUser)
+
+router.get("/allIdeas" , protect , userControler.allPostsForUser)
 
 
 module.exports = router;
