@@ -19,6 +19,10 @@ const IdeaSchema = Schema(
       type: [String],
       default: [],
     },
+    Audios: {
+      type: [String],
+      default: [],
+    },
     Team: {
       type: Schema.Types.ObjectId,
       ref: "Team",

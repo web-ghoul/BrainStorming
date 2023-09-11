@@ -40,33 +40,18 @@ const TeamBox = ({ data }) => {
   return (
     <Box
       className={`grid jcs aic ${styles.room}`}
-      sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === "dark"
-            ? theme.palette.black
-            : theme.palette.white,
-        borderColor: (theme) =>
-          theme.palette.mode === "dark"
-            ? theme.palette.primary.main
-            : "transparent",
-        boxShadow: (theme) =>
-          theme.palette.mode === "dark"
-            ? "none"
-            : "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;",
-      }}
     >
-      <Box className={`flex jcc aic ${styles.room_image_box}`}>
+      <Box
+        className={`flex jcc aic ${styles.room_image_box}`}
+        sx={{
+          backgroundColor: (theme) => theme.palette.white,
+        }}
+      >
         <Image width={200} height={200} alt="room" src={data.Image} />
       </Box>
       <Box className={`grid jcs aic g20 ${styles.room_data}`}>
         <Box className={`grid jcc aic`}>
           <Typography
-            sx={{
-              color: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.black
-                  : theme.palette.white,
-            }}
             variant="h5"
             className={`fw700`}
           >

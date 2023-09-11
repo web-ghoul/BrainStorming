@@ -1134,6 +1134,7 @@ const verify = (req, res, next) => {
                   .then((result) => {
                     Userverification.deleteOne({ userId: userId })
                       .then((result) => {
+                        console.log(process.env.CLIENT_URL)
                         res.redirect(`${process.env.CLIENT_URL}/login`);
                       })
                       .catch((err) => {

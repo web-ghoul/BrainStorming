@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import MainSection from "@/sections/MainSection/MainSection";
+import HomeSection from "@/sections/HomeSection/HomeSection";
 
 export default function Home() {
   return (
     <>
-      <MainSection />
+      <HomeSection />
     </>
   );
 }

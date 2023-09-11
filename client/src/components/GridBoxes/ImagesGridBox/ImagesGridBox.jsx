@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import styles from "./ImagesGridBox.module.css";
 import Masonry from "react-masonry-css";
 import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
-import SpecialImage from "../SpecialImage/SpecialImage";
+import SpecialImage from "../../SpecialImage/SpecialImage";
 import { SecondaryIconButton } from "@/MUIComponents/SecondaryIconButton/SecondaryIconButton";
 import { EditRounded } from "@mui/icons-material";
 

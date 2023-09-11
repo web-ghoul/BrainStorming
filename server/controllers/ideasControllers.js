@@ -47,12 +47,14 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     console.log(arrayOfUrls)
     var imagesArray = [];
     var filesArray = [];
-    
+    var audiosArray = [];
     for (let i = 0; i < arrayOfUrls.length; i++) {
       if (arrayOfUrls[i].type == "files") {
         filesArray.push(arrayOfUrls[i].url);
       } else if(arrayOfUrls[i].type == "images"){
         imagesArray.push(arrayOfUrls[i].url);
+      } else if(arrayOfUrls[i].type == "audio"){
+        audiosArray.push(arrayOfUrls[i].url);
       }
     }
       
@@ -77,6 +79,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     Description: description,
     Images: imagesArray,
     Files: filesArray,
+    Audios: audiosArray,
     Record: audio,
     Team: team,
     WrittenBy: req.userId,

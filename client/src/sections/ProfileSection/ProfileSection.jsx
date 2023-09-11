@@ -1,12 +1,11 @@
-import UserBack from "@/components/UserBack/UserBack";
-import UserBox from "@/components/UserBox/UserBox";
+import UserBack from "@/components/User/UserBack/UserBack";
+import UserBox from "@/components/User/UserBox/UserBox";
 import { Box, Container, Typography } from "@mui/material";
 import Cookies from "js-cookie";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { useEffect } from "react";
-import { useState } from "react";
-import UserInfo from "@/components/UserInfo/UserInfo";
+import UserInfo from "@/components/User/UserInfo/UserInfo";
 import { DeleteRounded } from "@mui/icons-material";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
 import { useSelector } from "react-redux";

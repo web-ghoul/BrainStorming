@@ -7,7 +7,6 @@ import Head from "@/components/Head/Head";
 import CreateIdeaSection from "./CreateIdeaSection/CreateIdeaSection";
 import SparksSection from "./SparksSection/SparksSection";
 import styles from "./TeamSection.module.css";
-import roomImg from "../../../public/images/team3.jpg";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
 import MembersBox from "@/components/MembersBox/MembersBox";
 import { useEffect } from "react";
@@ -16,14 +15,13 @@ import { getTeam } from "@/store/teamSlice";
 import { useParams, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
-import { EditRounded } from "@mui/icons-material";
+import { EditRounded, ExitToAppRounded } from "@mui/icons-material";
 import { useContext } from "react";
 import { TeamModalContext } from "@/context/TeamModalContext";
-import { SparkModalContext } from "@/context/SparkModalContext";
-import { ChosenDataViewContext } from "@/context/ChosenDataViewContext";
 import LoadingTeamSection from "./LoadingTeamSection";
-
+import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
 const TeamSection = () => {
+  const { handleToggleLeaveTeamModal } = useContext(TeamModalContext);
   function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     return (
@@ -37,7 +35,13 @@ const TeamSection = () => {
         {value === index && (
           <Container>
             <MyBox className={`grid jcs aifs g30 ${styles.grid_layout}`}>
-              <MembersBox />
+              <Box className={`grid jcs aic g20`}>
+                <MembersBox />
+                <RedIconButton onClick={handleToggleLeaveTeamModal}>
+                  <ExitToAppRounded />
+                  <Typography variant="h6">Leave Team</Typography>
+                </RedIconButton>
+              </Box>
               {children}
             </MyBox>
           </Container>
@@ -71,6 +75,7 @@ const TeamSection = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { team, isLoading } = useSelector((state) => state.team);
+  const { user_id } = useSelector((state) => state.auth);
   const router = useRouter();
   useEffect(() => {
     try {
@@ -100,7 +105,7 @@ const TeamSection = () => {
           centered
           onChange={handleChange}
           aria-label="basic tabs example"
-          className={`flex jcc aic ${styles.tabs}`}
+          className={`${styles.tabs}`}
         >
           <Tab label="Create a Spark" {...a11yProps(0)} />
           <Tab label="Sparks" {...a11yProps(1)} />
@@ -113,14 +118,16 @@ const TeamSection = () => {
             handleToggleViewTeamImageModal();
           }}
         />
-        <MainIconButton
-          sx={{ position: "absolute", top: "10%", right: "0" }}
-          onClick={handleToggleChangeTeamImageModal}
-          className={`${styles.change_cover_button}`}
-        >
-          <EditRounded />
-          <Typography variant="h6">Change Cover</Typography>
-        </MainIconButton>
+        {team.TeamLeader._id === user_id && (
+          <MainIconButton
+            sx={{ position: "absolute", top: "10%", right: "0" }}
+            onClick={handleToggleChangeTeamImageModal}
+            className={`${styles.change_cover_button}`}
+          >
+            <EditRounded />
+            <Typography variant="h6">Change Cover</Typography>
+          </MainIconButton>
+        )}
       </Box>
       <CustomTabPanel value={value} index={0}>
         <CreateIdeaSection setValue={setValue} />

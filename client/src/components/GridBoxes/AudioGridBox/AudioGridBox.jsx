@@ -21,10 +21,9 @@ const AudioGridBox = ({ posting, data, children }) => {
     992: 3,
     768: 2,
   };
-  const { setDataType, toggleDataViewer, setOpenDataViewer } = useContext(
-    ChosenDataViewContext,
+  const { setDataType, toggleDataViewer,toggleDataShow,setShowAudioFiles } = useContext(
+    ChosenDataViewContext
   );
-  const { handleRemoveAudioFile } = useContext(SparkModalContext);
   const handleDataPosting = () => {
     toggleDataViewer();
     setDataType("audios");
@@ -46,13 +45,14 @@ const AudioGridBox = ({ posting, data, children }) => {
           {data.slice(0, 4).map((audio, i) => {
             const str = '"' + ("+" + (data.length - i).toString()) + '"';
             const overlay = i === 3 && data.length > i + 1;
-            return posting ? (
+            return (
               <Box
                 sx={{
                   "&:after": overlay && { content: str },
                 }}
                 className={`flex aic jcc ${styles.image_box}`}
                 onClick={posting ? handleDataPosting : handleDataView}
+                key={i}
               >
                 <Box
                   className={`${overlay && "overlay"} ${
@@ -60,24 +60,24 @@ const AudioGridBox = ({ posting, data, children }) => {
                   }`}
                 />
                 <audio
-                  src={URL.createObjectURL(audio)}
+                  src={posting ? URL.createObjectURL(audio) : audio}
                   loading="lazy"
                   controls
                 />
               </Box>
-            ) : (
-              <></>
             );
           })}
         </Masonry>
-        <SecondaryIconButton
-          className={`flex jcc aic g5`}
-          sx={{ width: "fit-content" }}
-          onClick={handleDataPosting}
-        >
-          <EditRounded />
-          <Typography variant="h6">Edit</Typography>
-        </SecondaryIconButton>
+        {posting && (
+          <SecondaryIconButton
+            className={`flex jcc aic g5`}
+            sx={{ width: "fit-content" }}
+            onClick={handleDataPosting}
+          >
+            <EditRounded />
+            <Typography variant="h6">Edit</Typography>
+          </SecondaryIconButton>
+        )}
       </Box>
     )
   );

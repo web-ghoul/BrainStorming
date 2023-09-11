@@ -1,6 +1,7 @@
 .footer {
   padding: 40px 0;
   border-top: 4px solid var(--main);
+  background-color: var(--black);
 }
 
 .links a {

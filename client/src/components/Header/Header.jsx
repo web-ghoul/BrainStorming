@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   AppBar,
   Container,
@@ -32,10 +32,12 @@ const Header = () => {
     dispatch(logOut());
   };
   return (
-    <AppBar sx={{
-      backgroundColor: (theme) =>
-           theme.palette.primary.main,
-    }} className={`${styles.header}`}>
+    <AppBar
+      sx={{
+        backgroundColor: (theme) => theme.palette.primary.main,
+      }}
+      className={`${styles.header}`}
+    >
       <Container
         sx={{ height: { lg: "70px", md: "60px", sm: "50px", xs: "40px" } }}
         className={`flex jcsb aic g30 ${styles.header_contain} header_wrapped`}
@@ -61,7 +63,6 @@ const Header = () => {
                   </ListItemButton>
                 </Link>
               </ListItem>
-
               <ListItem sx={{ padding: 0 }}>
                 <Link href={`${process.env.NEXT_PUBLIC_TEAMS_PAGE}`}>
                   <ListItemButton>
@@ -112,7 +113,6 @@ const Header = () => {
                 </SecondaryButton>
               </>
             )}
-            <ModeToggle />
           </Box>
         )}
       </Container>

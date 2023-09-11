@@ -6,9 +6,10 @@ import Logo from "@/components/Logo/Logo";
 import Head from "@/components/Head/Head";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import Link from "next/link";
-import { FacebookRounded, Google } from "@mui/icons-material";
+import { FacebookRounded, LinkedIn } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = ({ formik }) => {
   return (
@@ -60,12 +61,13 @@ const Register = ({ formik }) => {
         <Divider />
         <Box className={`flex jcc aic g10`}>
           <SpecialIconButton>
-            <Google sx={{ color: (theme) => theme.palette.gmail }} />
+            <FcGoogle />
           </SpecialIconButton>
-          <SpecialIconButton>
-            <FacebookRounded
-              sx={{ color: (theme) => theme.palette.facebook }}
-            />
+          <SpecialIconButton sx={{ color: (theme) => theme.palette.facebook }}>
+            <FacebookRounded />
+          </SpecialIconButton>
+          <SpecialIconButton sx={{ color: (theme) => theme.palette.linkedin }}>
+            <LinkedIn />
           </SpecialIconButton>
         </Box>
       </Box>

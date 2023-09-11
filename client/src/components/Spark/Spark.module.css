@@ -1,15 +1,14 @@
 .spark {
   border-radius: 10px;
-  overflow: hidden;
   position: relative;
-  border-width: 2px;
-  border-style: solid;
+  box-shadow: var(--box_shadow);
 }
 
 .user {
   background-color: var(--main);
   color: var(--white);
   padding: 10px;
+  border-radius: 10px 10px 0px 0px;
 }
 
 .avatar {
@@ -17,6 +16,7 @@
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
+  background-color: var(--white);
 }
 
 .avatar img {
@@ -26,6 +26,9 @@
 
 .spark_data {
   padding: 10px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .spark_files {
@@ -54,12 +57,13 @@
 .spark_options svg {
   color: var(--main);
 }
-.loading_spark_data span{
-  width:800px;
+
+.loading_spark_data span {
+  width: 800px;
   height: 50px;
 }
 
-.loading_spark_data span:nth-child(2){
+.loading_spark_data span:nth-child(2) {
   height: 200px;
 }
 
@@ -70,6 +74,7 @@
 
   .user {
     padding: 8px;
+    border-radius: 8px 8px 0px 0px;
   }
 
   .avatar {
@@ -84,6 +89,15 @@
   .spark_date svg {
     font-size: 16px;
   }
+
+  .loading_spark_data span {
+    width: 700px;
+    height: 40px;
+  }
+
+  .loading_spark_data span:nth-child(2) {
+    height: 180px;
+  }
 }
 
 @media (992px > width >=768px) {
@@ -93,6 +107,7 @@
 
   .user {
     padding: 6px;
+    border-radius: 6px 6px 0px 0px;
   }
 
   .avatar {
@@ -111,6 +126,15 @@
   .spark_date svg {
     font-size: 14px;
   }
+
+  .loading_spark_data span {
+    width: 450px;
+    height: 30px;
+  }
+
+  .loading_spark_data span:nth-child(2) {
+    height: 160px;
+  }
 }
 
 @media (768px > width >=640px) {
@@ -120,6 +144,7 @@
 
   .user {
     padding: 4px;
+    border-radius: 4px 4px 0px 0px;
   }
 
   .avatar {
@@ -138,6 +163,15 @@
   .spark_files {
     grid-template-columns: repeat(1, 1fr);
   }
+
+  .loading_spark_data span {
+    width: 350px;
+    height: 20px;
+  }
+
+  .loading_spark_data span:nth-child(2) {
+    height: 120px;
+  }
 }
 
 @media (640px > width >=0px) {
@@ -147,6 +181,7 @@
 
   .user {
     padding: 5px;
+    border-radius: 2px 2px 0px 0px;
   }
 
   .avatar {
@@ -160,5 +195,14 @@
 
   .spark_date svg {
     font-size: 10px;
+  }
+
+  .loading_spark_data span {
+    width: 350px;
+    height: 20px;
+  }
+
+  .loading_spark_data span:nth-child(2) {
+    height: 120px;
   }
 }

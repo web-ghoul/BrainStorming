@@ -1,13 +1,11 @@
 import React from "react";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Spark from "@/components/Spark/Spark";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSparks } from "@/store/sparksSlice";
 import { useParams, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import LoadingSparksSection from "./LoadingSparksSection";
-
 const SparksSection = () => {
   const { id } = useParams();
   const { sparks, isLoading } = useSelector((state) => state.sparks);

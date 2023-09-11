@@ -22,11 +22,11 @@ const upload = multer({
   limits: { fileSize: maxSize },
   fileFilter: (req, file, cb) => {
     const allowedFileTypes = /\.(jpeg|jpg|png|pdf|ogg|avi|aac|flac|wav|webm|avi|mov|flv|mp4|mp3|doc|pdf|docx|xlsx|pptx|csv|png|jfif|jpeg|gif|jpg|tiff|tif|webp|bmp)$/i; // Add allowed file extensions
-
     const extname = allowedFileTypes.test(
       path.extname(file.originalname).toLowerCase()
     );
-    if (extname) {
+    console.log(file)
+    if (extname || file.fieldname === "record") {
       return cb(null, true);
     } else {
       return cb("Error: Invalid file type.");

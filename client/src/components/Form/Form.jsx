@@ -33,6 +33,8 @@ import DeleteSpark from "./DeleteSpark/DeleteSpark";
 import { getSparks } from "@/store/sparksSlice";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
 import { MyThemeContext } from "@/context/MyThemeContext";
+import LeaveTeam from "./LeaveTeam/LeaveTeam";
+import UpdateSpark from "./UpdateSpark/UpdateSpark";
 
 const Form = ({ type, setValue }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
@@ -42,6 +44,7 @@ const Form = ({ type, setValue }) => {
     handleToggleJoinTeamModal,
     handleToggleAddNewTeamModal,
     handleToggleChangeTeamImageModal,
+    handleToggleLeaveTeamModal,
   } = useContext(TeamModalContext);
   const {
     handleToggleChangeProfileCoverModal,
@@ -57,7 +60,10 @@ const Form = ({ type, setValue }) => {
     record,
     docFiles,
     handleResetData,
+    updateIdea,
+    updateDescription,
     handleToggleDeleteSparkModal,
+    handleToggleUpdateSparkModal,
   } = useContext(SparkModalContext);
   const { id, unique } = useParams();
   const router = useRouter();
@@ -189,6 +195,16 @@ const Form = ({ type, setValue }) => {
     name: yup.string("Enter your name").required("Name is required").max(15),
     bio: yup.string("Enter your Bio").max(50),
     about: yup.string("Enter your About").max(200),
+  });
+
+  const updateSparkInitialValues = {
+    idea: updateIdea,
+    description: updateDescription,
+  };
+
+  const updateSparkValidationSchema = yup.object({
+    idea: yup.string("Enter your Idea").required("Idea is required"),
+    description: yup.string("Enter your Description"),
   });
 
   const handleChangeFile = (f) => {
@@ -335,10 +351,9 @@ const Form = ({ type, setValue }) => {
     onSubmit: async (values, { resetForm }) => {
       setButtonLoading(true);
       const data = new FormData();
-      const allFiles = [...imageFiles, ...audioFiles, ...docFiles, record];
+      const allFiles = [...imageFiles, ...audioFiles, ...docFiles];
       if (record) {
-        console.log(URL.createObjectURL(record));
-        // data.append("record", record);
+        data.append("record", record);
       }
       if (allFiles.length > 0) {
         for (let i = 0; i < allFiles.length; i++) {
@@ -348,9 +363,6 @@ const Form = ({ type, setValue }) => {
       data.append("idea", values.idea);
       data.append("description", values.description);
       data.append("team", id);
-      data.forEach((value, key) => {
-        console.log(key, data.get(key));
-      });
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/Ideas`, data, {
           headers: {
@@ -389,6 +401,33 @@ const Form = ({ type, setValue }) => {
           handleAlertToastify(res.data.message, "success");
           dispatch(getUserData(user_id));
           handleToggleEditProfileModal();
+        })
+        .catch((err) => {
+          handleAlertToastify(err.response.data.message, "error");
+        });
+      setButtonLoading(false);
+    },
+  });
+
+  const updateSparkFormik = useFormik({
+    initialValues: updateSparkInitialValues,
+    validationSchema: updateSparkValidationSchema,
+    onSubmit: async (values) => {
+      setButtonLoading(true);
+      await axios
+        .put(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/updateIdea/${sparkId}`,
+          { ...values },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          handleAlertToastify(res.data.message, "success");
+          dispatch(getSparks({ team_id: id, token: Cookies.get("token") }));
+          handleToggleUpdateSparkModal();
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -523,6 +562,28 @@ const Form = ({ type, setValue }) => {
     setButtonLoading(false);
   };
 
+  const handleLeaveTeam = async (e) => {
+    e.preventDefault();
+    setButtonLoading(true);
+    await axios
+      .delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/leaveTeam/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        handleAlertToastify(res.data.message, "success");
+        router.push(`${process.env.NEXT_PUBLIC_TEAMS_PAGE}`);
+        handleToggleLeaveTeamModal();
+      })
+      .catch((err) => {
+        try {
+          handleAlertToastify(err.response.data.message, "error");
+        } catch (err) {
+          handleAlertToastify(err, "error");
+        }
+      });
+    setButtonLoading(false);
+  };
+
   useEffect(() => {
     if (type === "reset_password") {
       handleResetPassword();
@@ -546,6 +607,8 @@ const Form = ({ type, setValue }) => {
           ? joinTeamFormik.handleSubmit
           : type === "create_spark"
           ? createSparkFormik.handleSubmit
+          : type === "update_spark"
+          ? updateSparkFormik.handleSubmit
           : type === "change_avatar"
           ? handleChangeAvatar
           : type === "change_team_image"
@@ -556,25 +619,29 @@ const Form = ({ type, setValue }) => {
           ? handleChangeCover
           : type === "edit_profile"
           ? editProfileFormik.handleSubmit
-          : type === "delete_account" && handleDeleteAccount
+          : type === "delete_account"
+          ? handleDeleteAccount
+          : type === "leave_team" && handleLeaveTeam
       }
       className={`grid jcs aifs ${
         (type === "add_new_team" ||
           type === "join_team" ||
-          type === "edit_profile") &&
+          type === "edit_profile" ||
+          type === "update_spark") &&
         "team_form"
       } ${type === "edit_profile" && "g30 edit_profile_box"} ${
         (type === "change_cover" ||
           type === "change_team_image" ||
           type === "change_avatar" ||
           type === "delete_spark" ||
-          type === "delete_account") &&
+          type === "delete_account" ||
+          type === "leave_team") &&
         "profile_form g30"
       } ${type === "create_spark" && "g30 spark_form border_none"}`}
       style={
         mode === "light"
           ? { backgroundColor: "#fff" }
-          : { backgroundColor: "#000" ,border:"2px solid #037ef3"}
+          : { backgroundColor: "#000", border: "2px solid #037ef3" }
       }
     >
       {type === "login" ? (
@@ -607,8 +674,12 @@ const Form = ({ type, setValue }) => {
         />
       ) : type === "edit_profile" ? (
         <EditProfile formik={editProfileFormik} />
+      ) : type === "delete_account" ? (
+        <DeleteAccount />
+      ) : type === "leave_team" ? (
+        <LeaveTeam />
       ) : (
-        type === "delete_account" && <DeleteAccount />
+        type === "update_spark" && <UpdateSpark formik={updateSparkFormik} />
       )}
     </form>
   );

@@ -1,6 +1,6 @@
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
-import TeamBox from "../TeamBox/TeamBox";
+import TeamBox from "../../TeamBox/TeamBox";
 import styles from "./TeamsGridBox.module.css";
 
 const TeamsGridBox = ({ data }) => {

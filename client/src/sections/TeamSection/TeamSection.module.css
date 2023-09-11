@@ -8,11 +8,10 @@
 }
 
 .tabs {
-  background-color: var(--white);
   position: relative;
   z-index: 2;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: max-content;
+  background-color: var(--white);
   left: 50%;
   transform: translateX(-50%);
 }
@@ -89,7 +88,7 @@
 
   .change_cover_button {
     right: 20px;
-    top:10px
+    top: 10px
   }
 }
 
@@ -111,6 +110,7 @@
   .tabs button {
     padding: 5px;
   }
+
   .change_cover_button {
     right: 10px;
     top: 5px;

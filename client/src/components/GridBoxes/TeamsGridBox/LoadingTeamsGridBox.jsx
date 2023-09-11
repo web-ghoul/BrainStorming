@@ -1,8 +1,8 @@
 import { Box, Skeleton, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
-import TeamBox from "../TeamBox/TeamBox";
+import TeamBox from "../../TeamBox/TeamBox";
 import styles from "./TeamsGridBox.module.css";
-import LoadingTeamBox from "../TeamBox/LoadingTeamBox";
+import LoadingTeamBox from "../../TeamBox/LoadingTeamBox";
 
 const LoadingTeamsGridBox = () => {
   const smallSize = useMediaQuery("(max-width:768px)");

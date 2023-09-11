@@ -19,7 +19,7 @@ import Image from "next/image";
 import React from "react";
 import styles from "./Spark.module.css";
 
-const LoadingSparkUser = () => {
+const LoadingSparkHead = () => {
   return (
     <Box className={`flex jcsb aic g30 ${styles.user}`}>
       <Box className={`flex jcfs aic g10 `}>
@@ -37,4 +37,4 @@ const LoadingSparkUser = () => {
   );
 };
 
-export default LoadingSparkUser;
+export default LoadingSparkHead;

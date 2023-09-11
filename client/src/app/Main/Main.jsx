@@ -64,9 +64,11 @@ const Main = ({ children }) => {
       <Sidebar />
       {children}
       <TeamModal type="add_new_team" />
+      <TeamModal type="leave_team" />
       <TeamModal type="join_team" />
       <TeamModal type="view_team_image" />
       <TeamModal type="change_team_image" />
+      <SparkModal type="update_spark" />
       <SparkModal type="upload_file" />
       <SparkModal type="delete_spark" />
       <SparkModal type="view_data" />

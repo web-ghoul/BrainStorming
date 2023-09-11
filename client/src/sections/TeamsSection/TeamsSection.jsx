@@ -12,17 +12,14 @@ import styles from "./TeamsSection.module.css";
 import Image from "next/image";
 import roomsSectionImg1 from "../../../public/images/brain1.png";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
-import TeamsGridBox from "@/components/TeamsGridBox/TeamsGridBox";
+import TeamsGridBox from "@/components/GridBoxes/TeamsGridBox/TeamsGridBox";
 import { ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getTeams } from "@/store/teamsSlice";
-import LoadingTeamsGridBox from "@/components/TeamsGridBox/LoadingTeamsGridBox";
-import { useContext } from "react";
-import { MyThemeContext } from "@/context/MyThemeContext";
+import LoadingTeamsGridBox from "@/components/GridBoxes/TeamsGridBox/LoadingTeamsGridBox";
 
 const TeamsSection = () => {
-  const { mode } = useContext(MyThemeContext);
   const dispatch = useDispatch();
   const { user_teams, teams, isLoading } = useSelector((state) => state.teams);
   const { signed } = useSelector((state) => state.auth);
@@ -47,19 +44,6 @@ const TeamsSection = () => {
           <Accordion
             expanded={expanded}
             onChange={handleChange}
-            sx={{
-              boxShadow: (theme) =>
-                theme.palette.mode === "dark"
-                  ? "rgb(3, 126, 243,0.2) 0px 5px 10px;"
-                  : "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-              "&:before": { opacity: 0 },
-              borderRadius: "4px",
-              color: (theme) => theme.palette.black,
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.white
-                  : theme.palette.primary.main,
-            }}
           >
             <AccordionSummary
               expandIcon={<ExpandMore />}
@@ -67,11 +51,9 @@ const TeamsSection = () => {
               id="panel1bh-header"
             >
               <Head
-                color={mode === "dark" ? "#fff" : "#000"}
                 special={true}
-                specialColor={mode === "dark" && "#000"}
                 title={"My Teams"}
-                align="left"
+                align={"left"}
                 h={"h4"}
               />
             </AccordionSummary>
@@ -87,7 +69,6 @@ const TeamsSection = () => {
         <Box className={`grid jcs aic g30`}>
           <Head
             special={true}
-            color={mode === "dark" ? "#fff" : "#000"}
             title={"Explore Teams"}
             align="left"
             h={"h4"}

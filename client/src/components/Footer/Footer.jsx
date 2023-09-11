@@ -12,12 +12,6 @@ const Footer = () => {
     <Box
       component={"footer"}
       className={`${styles.footer}`}
-      sx={{
-        backgroundColor: (theme) =>
-          theme.palette.mode === "light"
-            ? theme.palette.black
-            : theme.palette.primary.main,
-      }}
     >
       <Container className={`grid jcs aic g20 ${styles.footer_contain}`}>
         <Logo title={true} align={"center"} color="#fff" />

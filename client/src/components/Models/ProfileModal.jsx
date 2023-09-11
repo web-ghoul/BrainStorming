@@ -68,16 +68,6 @@ const ProfileModal = ({ img, type }) => {
     >
       <Box
         className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.white
-              : theme.palette.black,
-          borderColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.white
-              : theme.palette.primary.main,
-        }}
       >
         <Img alt="avatar" src={img} crossOrigin="anonymous" />
         {signed && isUser && (
@@ -115,16 +105,6 @@ const ProfileModal = ({ img, type }) => {
       >
         <Box
           className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.white
-                : theme.palette.black,
-            borderColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.white
-                : theme.palette.primary.main,
-          }}
         >
           <Img alt="cover" src={img} crossOrigin="anonymous" />
           {signed && isUser && (

@@ -6,8 +6,7 @@
   padding: 20px;
   border-radius: 6px;
   max-width: 60vw;
-  border-width: 2px;
-  border-style: solid;
+  background-color: var(--white);
 }
 
 .avatar_box {
@@ -16,6 +15,7 @@
   max-width: 90vw;
   max-height: 90vh;
   overflow: auto;
+  background-color: var(--white);
 }
 
 .avatar_box img {
@@ -34,8 +34,7 @@
   transform: translate(-50%, -50%);
   border-radius: 10px;
   overflow: hidden;
-  border-width: 2px;
-  border-style: solid;
+  background-color: var(--white);
 }
 
 .data_viewer {
@@ -43,6 +42,7 @@
   height: min-content;
   overflow-y: auto;
   grid-template-columns: repeat(4, 1fr);
+  background-color: var(--white);
 }
 
 .data_viewer video {

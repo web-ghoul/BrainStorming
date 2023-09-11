@@ -7,14 +7,19 @@ import styles from "./Models.module.css";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { CameraAltRounded } from "@mui/icons-material";
 import { Img } from "react-image";
+import { useSelector } from "react-redux";
 const TeamModal = ({ type }) => {
+  const { user_id } = useSelector((state) => state.auth);
+  const { team } = useSelector((state) => state.team);
   const {
     handleToggleJoinTeamModal,
     handleToggleAddNewTeamModal,
     handleToggleViewTeamImageModal,
     handleToggleChangeTeamImageModal,
+    handleToggleLeaveTeamModal,
     showAddNewTeamModal,
     showJoinTeamModal,
+    showLeaveTeamModal,
     viewTeamImageModal,
     showChangeTeamImageModal,
     teamImage,
@@ -52,33 +57,23 @@ const TeamModal = ({ type }) => {
         <Form type="change_team_image" />
       </Box>
     </Modal>
-  ) : (
-    type === "view_team_image" && (
-      <Modal
-        open={viewTeamImageModal}
-        onClose={handleToggleViewTeamImageModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+  ) : type === "view_team_image" ? (
+    <Modal
+      open={viewTeamImageModal}
+      onClose={handleToggleViewTeamImageModal}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box
+        className={`grid jcs aic g30 ${styles.view_team_image_box}  ${styles.modal_box} ${styles.avatar_box}`}
       >
-        <Box
-          className={`grid jcs aic g30 ${styles.view_team_image_box}  ${styles.modal_box} ${styles.avatar_box}`}
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.white
-                : theme.palette.black,
-            borderColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.white
-                : theme.palette.primary.main,
-          }}
-        >
-          <Img
-            alt="team cover"
-            loading={"lazy"}
-            src={teamImage}
-            crossOrigin="anonymous"
-          />
+        <Img
+          alt="team cover"
+          loading={"lazy"}
+          src={teamImage}
+          crossOrigin="anonymous"
+        />
+        {team && user_id && team.TeamLeader._id === user_id && (
           <MainIconButton
             onClick={() => {
               handleToggleChangeTeamImageModal();
@@ -89,6 +84,19 @@ const TeamModal = ({ type }) => {
             <CameraAltRounded />
             <Typography variant="h6">Change Team Image</Typography>
           </MainIconButton>
+        )}
+      </Box>
+    </Modal>
+  ) : (
+    type === "leave_team" && (
+      <Modal
+        open={showLeaveTeamModal}
+        onClose={handleToggleLeaveTeamModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
+          <Form type={type} />
         </Box>
       </Modal>
     )

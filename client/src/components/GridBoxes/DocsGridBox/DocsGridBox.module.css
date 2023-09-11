@@ -1,0 +1,6 @@
+.masonry_grid > div {
+  display: grid;
+  align-items: flex-start;
+  justify-content: stretch;
+  gap: 10px;
+}
