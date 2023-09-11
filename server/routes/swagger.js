@@ -1578,3 +1578,59 @@
  *                   description: Error message.
  *                   example: User not found.
  */
+
+/**
+ * @swagger
+ * https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77pvrp0ctq9az2&redirect_uri=http://localhost:3000/api/auth/linkedin/callback&scope=openid%20profile%20email:
+ *   get:
+ *     summary: LinkedIn Registration
+ *     tags: [Authentication]
+ *     description: Register or log in a user using LinkedIn OAuth2 data.
+ *     responses:
+ *       200:
+ *         description: LinkedIn registration successful.
+ *       500:
+ *         description: LinkedIn registration failed.
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management
+ */
+
+/**
+ * @swagger
+ * /allIdeas:
+ *   get:
+ *     summary: Get all ideas associated with user's teams
+ *     tags: [Users]
+ *     description: Retrieve all ideas that are associated with the user's teams.
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of ideas retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   description: List of ideas associated with the user's teams.
+ *                   items:
+ *                     $ref: '#/components/schemas/Idea'
+ *       404:
+ *         description: Error occurred or no ideas found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ */
+
