@@ -129,7 +129,7 @@ const displayIdeas = asyncHandler(async(req, res, next) => {
     })
   }
 
-  Ideas.find({ Team: teamId }).populate("WrittenBy").sort({createdAt: -1})
+  Ideas.find({ Team: teamId }).populate("WrittenBy").populate("Team").sort({createdAt: -1})
     .then((result) => {
       return res.status(200).json({
         data: result,
