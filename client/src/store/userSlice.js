@@ -32,7 +32,6 @@ export const userSlice = createSlice({
       }catch(err){
           state.userData = null
           state.isUser = false
-          console.log(err)
       }
     });
   },

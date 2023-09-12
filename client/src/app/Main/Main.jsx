@@ -17,6 +17,7 @@ import { getUserData } from "@/store/userSlice";
 import Cookies from "js-cookie";
 import { getAuthData } from "@/store/authSlice";
 import SparkModal from "@/components/Models/SparkModal";
+import { getUserSparks } from "@/store/userSparksSlice";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
@@ -28,6 +29,7 @@ const Main = ({ children }) => {
       const token = Cookies.get("token");
       const user_id = Cookies.get("user_id");
       dispatch(getAuthData({ token, user_id }));
+      dispatch(getUserSparks({ token,user_id }));
       if (user_id) {
         dispatch(getUserData(user_id));
       }
