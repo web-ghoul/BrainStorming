@@ -77,6 +77,7 @@ const TeamSection = () => {
   const { team, isLoading } = useSelector((state) => state.team);
   const { user_id } = useSelector((state) => state.auth);
   const router = useRouter();
+  console.log(team);
   useEffect(() => {
     try {
       dispatch(getTeam({ team_id: id, token: Cookies.get("token") }));
@@ -118,7 +119,7 @@ const TeamSection = () => {
             handleToggleViewTeamImageModal();
           }}
         />
-        {team.TeamLeader._id === user_id && (
+        {!isLoading && team.TeamLeader._id === user_id && (
           <MainIconButton
             sx={{ position: "absolute", top: "10%", right: "0" }}
             onClick={handleToggleChangeTeamImageModal}
