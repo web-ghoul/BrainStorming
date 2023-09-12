@@ -124,7 +124,7 @@ const allPostsForUser = asyncHandler( async(req,res,next) => {
   for(let i = 0 ; i < userData.Teams.length ; i++)
   {
     console.log(userData.Teams[i])
-    var teamIdeas = await Ideas.find({Team: userData.Teams[i]})
+    var teamIdeas = await Ideas.find({Team: userData.Teams[i]}).populate("WrittenBy").populate("Team")
     console.log(teamIdeas)
     ideas.push(...teamIdeas)
   }
