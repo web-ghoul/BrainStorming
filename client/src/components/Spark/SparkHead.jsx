@@ -30,6 +30,7 @@ import { handleSparkDate } from "@/app/handleSparkDate";
 const SparkHead = ({ data }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const { user_id } = useSelector((state) => state.auth);
+  console.log(data)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -109,7 +110,7 @@ const SparkHead = ({ data }) => {
                 </Typography>
               </Popover>
             </Box>
-            {data.WrittenBy.Name === team.TeamLeader.Name ? (
+            {data.WrittenBy.Name === data.team.TeamLeader.Name ? (
               <AdminPanelSettings />
             ) : (
               <Person />
@@ -117,7 +118,7 @@ const SparkHead = ({ data }) => {
           </Box>
         </Box>
       </Box>
-      {(user_id === data.WrittenBy._id || user_id === team.TeamLeader._id) && (
+      {(user_id === data.WrittenBy._id || user_id === data.team.TeamLeader._id) && (
         <IconButton
           id={`list_button_${data._id}`}
           onClick={() => setOpenList(!openList)}
