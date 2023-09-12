@@ -1,0 +1,28 @@
+.avatar{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.drawer,.drawer > div{
+    width: max-content !important;
+    min-width: 200px !important;
+}
+
+.drawer_head{
+    padding: 10px;
+}
+
+@media (640px >= width >= 0) {
+    .avatar{
+        width: 20px;
+        height: 20px;
+    }
+    
+    .drawer_head{
+        padding: 5px 10px;
+    }
+}

@@ -12,6 +12,7 @@ export const SpecialIconButtonWithText = styled(SpecialIconButton)(
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
+    backgroundColor:"none",
     gap: "10px",
     [theme.breakpoints.down("md")]: {
       width: "fit-content",

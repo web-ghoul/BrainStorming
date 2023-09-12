@@ -11,6 +11,7 @@ import {
   IconButton,
   Box,
   Typography,
+  Modal,
 } from "@mui/material";
 import {
   Groups,
@@ -27,6 +28,8 @@ import { useRouter } from "next/navigation";
 import { SpecialIconButtonWithText } from "@/MUIComponents/SpecialIconButtonWithText/SpecialIconButtonWithText";
 import Logo from "../Logo/Logo";
 import { logOut } from "@/store/authSlice";
+import styles from "./Sidebar.module.css";
+import ModeToggle from "../ModeToggle/ModeToggle";
 
 const Sidebar = () => {
   const { toggleDrawer, openDrawer } = useContext(DrawerContext);
@@ -39,112 +42,137 @@ const Sidebar = () => {
     dispatch(logOut());
   };
   return (
-    <Drawer
-      sx={{
-        width: "250px",
-        flexShrink: 0,
-        "& .MuiDrawer-paper": {
-          width: "250px",
-        },
-      }}
-      variant="persistent"
-      anchor="right"
+    <Modal
       open={openDrawer}
+      onClose={toggleDrawer}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
     >
-      <Box className={`flex jcfs aic g10`} sx={{ padding: "5px" }}>
-        <IconButton onClick={toggleDrawer}>
-          <ChevronRight />
-        </IconButton>
-        {signed ? (
-          <SpecialIconButtonWithText
-            onClick={() =>
-              router.push(`${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`)
-            }
-            sx={{ color: (theme) => theme.palette.primary.main }}
-          >
-            <AccountCircle />
-            <Typography variant="h6">{userData && userData.Name}</Typography>
-          </SpecialIconButtonWithText>
-        ) : (
-          <Logo title={true} color={"#333"} />
-        )}
-      </Box>
+      <Drawer
+        className={`${styles.drawer}`}
+        variant="persistent"
+        anchor="right"
+        open={openDrawer}
+      >
+        <Box className={`flex jcs aic g10 ${styles.drawer_head}`}>
+          {signed ? (
+            <SpecialIconButtonWithText
+              onClick={() => {
+                router.push(
+                  `${process.env.NEXT_PUBLIC_PROFILE_PAGE}/${user_id}`
+                );
+                toggleDrawer();
+              }}
+            >
+              <Box
+                sx={{ backgroundImage: `url(${userData && userData.Image})` }}
+                className={`${styles.avatar}`}
+              />
+              <Typography variant="h6">{userData && userData.Name}</Typography>
+            </SpecialIconButtonWithText>
+          ) : (
+            <Logo title={true} color={"#333"} />
+          )}
+        </Box>
 
-      <Divider />
+        <Divider />
 
-      <List>
-        <ListItem key={"Home"} disablePadding>
-          <ListItemButton
-            onClick={() => router.push(process.env.NEXT_PUBLIC_HOME_PAGE)}
-          >
-            <ListItemIcon>
-              <Home sx={{ color: (theme) => theme.palette.primary.main }} />
-            </ListItemIcon>
-            <ListItemText primary={"Home"} />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem key={"Teams"} disablePadding>
-          <ListItemButton
-            onClick={() => router.push(process.env.NEXT_PUBLIC_TEAMS_PAGE)}
-          >
-            <ListItemIcon>
-              <Groups sx={{ color: (theme) => theme.palette.primary.main }} />
-            </ListItemIcon>
-            <ListItemText primary={"Teams"} />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem key={"About"} disablePadding>
-          <ListItemButton
-            onClick={() => router.push(process.env.NEXT_PUBLIC_ABOUT_PAGE)}
-          >
-            <ListItemIcon>
-              <Info sx={{ color: (theme) => theme.palette.primary.main }} />
-            </ListItemIcon>
-            <ListItemText primary={"About"} />
-          </ListItemButton>
-        </ListItem>
-
-        {signed ? (
-          <ListItem key={"Log Out"} disablePadding>
-            <ListItemButton onClick={handleLogOut}>
+        <List>
+          <ListItem key={"Home"} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
+                toggleDrawer();
+              }}
+            >
               <ListItemIcon>
-                <Logout sx={{ color: (theme) => theme.palette.primary.main }} />
+                <Home sx={{ color: (theme) => theme.palette.primary.main }} />
               </ListItemIcon>
-              <ListItemText primary={"Log Out"} />
+              <ListItemText primary={"Home"} />
             </ListItemButton>
           </ListItem>
-        ) : (
-          <>
-            <ListItem key={"Login"} disablePadding>
+
+          <ListItem key={"Teams"} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                router.push(process.env.NEXT_PUBLIC_TEAMS_PAGE);
+                toggleDrawer();
+              }}
+            >
+              <ListItemIcon>
+                <Groups sx={{ color: (theme) => theme.palette.primary.main }} />
+              </ListItemIcon>
+              <ListItemText primary={"Teams"} />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem key={"About"} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                router.push(process.env.NEXT_PUBLIC_ABOUT_PAGE);
+                toggleDrawer();
+              }}
+            >
+              <ListItemIcon>
+                <Info sx={{ color: (theme) => theme.palette.primary.main }} />
+              </ListItemIcon>
+              <ListItemText primary={"About"} />
+            </ListItemButton>
+          </ListItem>
+
+          {signed ? (
+            <ListItem key={"Log Out"} disablePadding>
               <ListItemButton
-                onClick={() => router.push(process.env.NEXT_PUBLIC_LOGIN_PAGE)}
+                onClick={() => {
+                  handleLogOut();
+                  toggleDrawer();
+                }}
               >
                 <ListItemIcon>
-                  <Login
+                  <Logout
                     sx={{ color: (theme) => theme.palette.primary.main }}
                   />
                 </ListItemIcon>
-                <ListItemText primary={"Login"} />
+                <ListItemText primary={"Log Out"} />
               </ListItemButton>
             </ListItem>
-            <ListItem key={"Register"} disablePadding>
-              <ListItemButton
-                onClick={() =>
-                  router.push(process.env.NEXT_PUBLIC_REGISTER_PAGE)
-                }
-              >
-                <ListItemIcon>
-                  <Info sx={{ color: (theme) => theme.palette.primary.main }} />
-                </ListItemIcon>
-                <ListItemText primary={"Register"} />
-              </ListItemButton>
-            </ListItem>
-          </>
-        )}
-      </List>
-    </Drawer>
+          ) : (
+            <>
+              <ListItem key={"Login"} disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    router.push(process.env.NEXT_PUBLIC_LOGIN_PAGE);
+                    toggleDrawer();
+                  }}
+                >
+                  <ListItemIcon>
+                    <Login
+                      sx={{ color: (theme) => theme.palette.primary.main }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={"Login"} />
+                </ListItemButton>
+              </ListItem>
+              <ListItem key={"Register"} disablePadding>
+                <ListItemButton
+                  onClick={() => {
+                    router.push(process.env.NEXT_PUBLIC_REGISTER_PAGE);
+                    toggleDrawer();
+                  }}
+                >
+                  <ListItemIcon>
+                    <Info
+                      sx={{ color: (theme) => theme.palette.primary.main }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={"Register"} />
+                </ListItemButton>
+              </ListItem>
+            </>
+          )}
+        </List>
+      </Drawer>
+    </Modal>
   );
 };
 

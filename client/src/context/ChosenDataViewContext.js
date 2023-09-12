@@ -4,11 +4,12 @@ import { createContext } from "react";
 export const ChosenDataViewContext = createContext();
 
 export const ChosenDataViewProvider = ({ children }) => {
-  const [dataType, setDataType] = useState("image");
+  const [dataType, setDataType] = useState("images");
   const [openDataViewer, setOpenDataViewer] = useState(false);
   const [openDataShow, setOpenDataShow] = useState(false);
   const [showDocFiles, setShowDocFiles] = useState([]);
   const [showAudioFiles, setShowAudioFiles] = useState([]);
+  const [showImageFiles, setShowImageFiles] = useState([]);
   const toggleDataViewer = () => {
     setOpenDataViewer(!openDataViewer);
   };
@@ -23,9 +24,11 @@ export const ChosenDataViewProvider = ({ children }) => {
         openDataShow,
         showDocFiles,
         showAudioFiles,
+        showImageFiles,
         setDataType,
         setShowDocFiles,
         setShowAudioFiles,
+        setShowImageFiles,
         toggleDataViewer,
         toggleDataShow,
         setOpenDataViewer

@@ -8,8 +8,11 @@ import { MyBox } from "@/MUIComponents/MyBox/MyBox";
 import LoadingCreateIdeaSection from "./CreateIdeaSection/LoadingCreateIdeaSection";
 import LoadingSparksSection from "./SparksSection/LoadingSparksSection";
 import LoadingMembersBox from "@/components/MembersBox/LoadingMembersBox";
+import { useContext } from "react";
+import { MyThemeContext } from "@/context/MyThemeContext";
 
 const LoadingTeamSection = () => {
+  const {mode} = useContext(MyThemeContext)
   function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     return (
@@ -23,7 +26,10 @@ const LoadingTeamSection = () => {
         {value === index && (
           <Container>
             <MyBox className={`grid jcs aifs g30 ${styles.grid_layout}`}>
-              <LoadingMembersBox />
+              <Box className={`grid jcs aic g20`}>
+                <LoadingMembersBox />
+                <Skeleton variant="rectangular" height={40} width={"100%"} />
+              </Box>
               {children}
             </MyBox>
           </Container>
@@ -67,8 +73,11 @@ const LoadingTeamSection = () => {
         centered
         onChange={handleChange}
         aria-label="basic tabs example"
-        className={`flex jcc aic ${styles.tabs}`}
-        sx={{ zIndex: 2,bottom:"100%" }}
+        className={`flex jcc aic ${mode === "dark" && styles.tabs_dark} ${styles.tabs}`}
+        sx={{
+          zIndex: 2,
+          bottom: "100%",
+        }}
       >
         <Tab label="Create a Spark" {...a11yProps(0)} />
         <Tab label="Sparks" {...a11yProps(1)} />

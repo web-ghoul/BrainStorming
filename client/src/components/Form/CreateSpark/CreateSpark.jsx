@@ -16,19 +16,19 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
-import ImagesGridBox from "@/components/ImagesGridBox/ImagesGridBox";
-import { Box, IconButton, TextField, Typography } from "@mui/material";
+import ImagesGridBox from "@/components/GridBoxes/ImagesGridBox/ImagesGridBox";
+import { Box, IconButton, TextField, Tooltip, Typography } from "@mui/material";
 import { useContext } from "react";
 import { SparkModalContext } from "@/context/SparkModalContext";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
-import AudioGridBox from "@/components/AudioGridBox/AudioGridBox";
-import DocsGridBox from "@/components/DocsGridBox/DocsGridBox";
+import AudioGridBox from "@/components/GridBoxes/AudioGridBox/AudioGridBox";
+import DocsGridBox from "@/components/GridBoxes/DocsGridBox/DocsGridBox";
 
 const CreateSpark = ({ formik }) => {
   const [dropEmojiShow, setDropEmojiShow] = useState(false);
   const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
-  const [dropWithEmoji, setDropWithEmoji] = useState(false)
-  const [brainWaveWithEmoji, setBrainWaveWithEmoji] = useState(false)
+  const [dropWithEmoji, setDropWithEmoji] = useState(false);
+  const [brainWaveWithEmoji, setBrainWaveWithEmoji] = useState(false);
   const {
     handleFiles,
     handleToggleChooseFiles,
@@ -97,7 +97,7 @@ const CreateSpark = ({ formik }) => {
               data={data}
               onEmojiSelect={(e) => {
                 setDropWithEmoji(!dropWithEmoji);
-                formik.values.idea +=  e.native
+                formik.values.idea += e.native;
               }}
             />
           )}
@@ -134,7 +134,7 @@ const CreateSpark = ({ formik }) => {
               theme={"light"}
               data={data}
               onEmojiSelect={(e) => {
-                setBrainWaveWithEmoji(!brainWaveWithEmoji)
+                setBrainWaveWithEmoji(!brainWaveWithEmoji);
                 formik.values.description += e.native;
               }}
             />
@@ -143,9 +143,11 @@ const CreateSpark = ({ formik }) => {
       </Box>
 
       <Box className={`flex jcfs aic g10`}>
-        <IconButton onClick={handleToggleChooseFiles}>
-          <AttachFileRounded />
-        </IconButton>
+        <Tooltip title="Attach">
+          <IconButton onClick={handleToggleChooseFiles}>
+            <AttachFileRounded />
+          </IconButton>
+        </Tooltip>
         {!recordExist && (
           <AudioRecorder
             onRecordingComplete={addAudioElement}

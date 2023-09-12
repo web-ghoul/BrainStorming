@@ -7,12 +7,17 @@ export const TeamModalContext = createContext();
 export const TeamModalProvider = ({ children }) => {
   const [showAddNewTeamModal, setShowAddNewTeamModal] = useState(false);
   const [showJoinTeamModal, setShowJoinTeamModal] = useState(false);
+  const [showLeaveTeamModal, setShowLeaveTeamModal] = useState(false);
   const [showChangeTeamImageModal, setShowChangeTeamImageModal] = useState(
     false
   );
   const [viewTeamImageModal, setViewTeamImageModal] = useState(false);
   const [teamImage, setTeamImage] = useState("");
   const [teamId, setTeamId] = useState(null);
+  const handleToggleLeaveTeamModal =()=>{
+    setShowLeaveTeamModal(!showLeaveTeamModal)
+  }
+
   const handleToggleAddNewTeamModal = () => {
     setShowAddNewTeamModal(!showAddNewTeamModal);
   };
@@ -36,8 +41,10 @@ export const TeamModalProvider = ({ children }) => {
         handleToggleViewTeamImageModal,
         handleToggleChangeTeamImageModal,
         handleSetTeamImage,
+        handleToggleLeaveTeamModal,
         showAddNewTeamModal,
         showJoinTeamModal,
+        showLeaveTeamModal,
         viewTeamImageModal,
         showChangeTeamImageModal,
         teamId,

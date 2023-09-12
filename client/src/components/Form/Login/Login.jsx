@@ -1,4 +1,3 @@
-import { MainButton } from "@/MUIComponents/MainButton/MainButton";
 import { Box, Divider, TextField, Typography } from "@mui/material";
 import React from "react";
 import "../Form.css";
@@ -7,8 +6,9 @@ import Logo from "@/components/Logo/Logo";
 import Head from "@/components/Head/Head";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import Link from "next/link";
-import { FacebookRounded, Google } from "@mui/icons-material";
+import { FacebookRounded, LinkedIn } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
+import { FcGoogle } from "react-icons/fc";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 const Login = ({ formik }) => {
   return (
@@ -54,11 +54,14 @@ const Login = ({ formik }) => {
         </Box>
         <Divider />
         <Box className={`flex jcc aic g10`}>
-          <SpecialIconButton sx={{ color: (theme) => theme.palette.gmail }}>
-            <Google />
+          <SpecialIconButton>
+            <FcGoogle />
           </SpecialIconButton>
           <SpecialIconButton sx={{ color: (theme) => theme.palette.facebook }}>
             <FacebookRounded />
+          </SpecialIconButton>
+          <SpecialIconButton sx={{ color: (theme) => theme.palette.linkedin }}>
+            <LinkedIn />
           </SpecialIconButton>
         </Box>
       </Box>

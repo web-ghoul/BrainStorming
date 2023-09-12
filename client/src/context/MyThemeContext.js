@@ -1,7 +1,8 @@
-import { createTheme } from "@mui/material";
+import { CssBaseline, createTheme } from "@mui/material";
 import { createContext } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 export const MyThemeContext = createContext();
 
@@ -171,10 +172,14 @@ const MyThemeProvider = ({ children }) => {
 
   const handleToggleMode = () => {
     setMode((mode) => (mode === "light" ? "dark" : "light"));
+    Cookies.set("mode", mode);
   };
   return (
     <MyThemeContext.Provider value={{ theme, mode, handleToggleMode }}>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </MyThemeContext.Provider>
   );
 };

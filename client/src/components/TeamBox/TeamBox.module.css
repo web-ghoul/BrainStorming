@@ -2,8 +2,7 @@
   border-radius: 6px;
   position: relative;
   z-index: 10;
-  border-style: solid;
-  border-width: 2px;
+  box-shadow: var(--box_shadow);
 }
 
 .room_image_box {
@@ -11,7 +10,6 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  background-color: var(--white);
 }
 
 .room_image_box img {
