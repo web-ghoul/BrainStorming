@@ -37,7 +37,7 @@ const UserSchema = Schema(
     BackgroundImage: {
       type: String,
       default:
-        "https://i.pinimg.com/564x/8c/98/99/8c98994518b575bfd8c949e91d20548b.jpg",
+        "https://img.freepik.com/free-vector/remote-management-distant-work-flat-line-composition-with-earth-globe-location-signs-views-freelancers-vector-illustration_98292-9077.jpg?w=1380&t=st=1694549599~exp=1694550199~hmac=aea753c94e4a1e8505d0fc48b214afacb9999f3aea5b09c671774993436c3f09",
     },
     About: {
       type: String,
