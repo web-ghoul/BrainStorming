@@ -73,12 +73,12 @@ const Login = ({
           <SpecialIconButton onClick={handleGoogleAuth}>
             <FcGoogle />
           </SpecialIconButton>
-          <SpecialIconButton
+          {/* <SpecialIconButton
             onClick={handleFacebookAuth}
             sx={{ color: (theme) => theme.palette.facebook }}
           >
             <FacebookRounded />
-          </SpecialIconButton>
+          </SpecialIconButton> */}
           <SpecialIconButton
             onClick={handleLinkedinAuth}
             sx={{ color: (theme) => theme.palette.linkedin }}
