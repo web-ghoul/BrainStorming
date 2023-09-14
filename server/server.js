@@ -29,6 +29,9 @@ const Routes = require("./routes/authRoutes");
 const GoogleStrategy = require("./utils/google-auth");
 const FacebookStrategy = require("./utils/facebook-auth");
 
+
+// Use the express.static middleware to serve static files from the public folder
+app.use(express.static(__dirname + '/public'));
 // logger.error("hello error")
 // logger.debug("heelo debug")
 // logger.warn("hello warn")
@@ -36,7 +39,7 @@ const FacebookStrategy = require("./utils/facebook-auth");
 //app.use(express.static("public"));
 const corsOptions = {
   origin: [
-    "http://localhost:3001",
+    "https://brainstorming-omega.vercel.app",
     "http://localhost:4000",
     "http://127.0.0.1:5500",
 
@@ -103,6 +106,7 @@ app.use(
           "'self'",
           "http://localhost:4000",
           "http://127.0.0.1:5500",
+          "https://brainstorming-omega.vercel.app",
         ],
       },
     },
