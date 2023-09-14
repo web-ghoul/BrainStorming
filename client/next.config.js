@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
   images: {
-    domains: ["res.cloudinary.com", "", "cdn-icons-png.flaticon.com"],
+    domains: [
+      "img.freepik.com",
+      "res.cloudinary.com",
+      "cdn-icons-png.flaticon.com",
+      "",
+    ],
   },
 };
 

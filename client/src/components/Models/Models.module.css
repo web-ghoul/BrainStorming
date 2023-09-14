@@ -6,7 +6,6 @@
   padding: 20px;
   border-radius: 6px;
   max-width: 60vw;
-  background-color: var(--white);
 }
 
 .avatar_box {
@@ -85,6 +84,7 @@
     padding: 15px;
     border-radius: 4px;
     max-width: 75vw;
+    width: 100%;
   }
 
   .chosen_data_viewer_box {
@@ -102,6 +102,7 @@
     padding: 10px;
     border-radius: 3px;
     max-width: 85vw;
+    width: 100%;
   }
 
   .chosen_data_viewer_box {

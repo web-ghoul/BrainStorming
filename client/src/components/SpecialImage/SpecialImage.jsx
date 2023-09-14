@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./SpecialImage.module.css";
 import { Box } from "@mui/material";
 import Image from "next/image";
+import { Img } from "react-image";
 
 const SpecialImage = ({
   str,
@@ -14,7 +15,7 @@ const SpecialImage = ({
 }) => {
   return slider ? (
     <Box sx={{position:"absolute"}} className={`center_x`}>
-      <Image src={img} height={200} width={200} alt={"post"} loading="lazy" />
+      <Img src={img} alt={"post"} loading="lazy" />
     </Box>
   ) : (
     <Box
@@ -29,7 +30,7 @@ const SpecialImage = ({
           styles.back_img
         }`}
       />
-      <Image src={img} height={200} width={200} alt={"post"} loading="lazy" />
+      <Img src={img} alt={"post"} loading="lazy" />
     </Box>
   );
 };

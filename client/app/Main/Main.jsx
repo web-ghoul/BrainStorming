@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
 import TeamModal from "@/components/Models/TeamModal";
 import FloatActionButtons from "@/components/FloatActionButtons/FloatActionButtons";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -18,6 +18,7 @@ import Cookies from "js-cookie";
 import { getAuthData } from "@/store/authSlice";
 import SparkModal from "@/components/Models/SparkModal";
 import { getUserSparks } from "@/store/userSparksSlice";
+import { getTeam } from "@/store/teamSlice";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
@@ -33,10 +34,14 @@ const Main = ({ children }) => {
       if (user_id) {
         dispatch(getUserData(user_id));
       }
+      if(id){
+        dispatch(getTeam({team_id:id,token}))
+      }
     } catch (err) {
       console.log(err);
     }
-  }, [Cookies, dispatch]);
+    
+  }, [Cookies, dispatch,id]);
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||
     pathname === process.env.NEXT_PUBLIC_LOGIN_PAGE ||

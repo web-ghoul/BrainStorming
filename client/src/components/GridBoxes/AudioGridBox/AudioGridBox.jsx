@@ -20,6 +20,7 @@ const AudioGridBox = ({ posting, data, children }) => {
     default: 4,
     992: 3,
     768: 2,
+    640:1
   };
   const { setDataType, toggleDataViewer,toggleDataShow,setShowAudioFiles } = useContext(
     ChosenDataViewContext

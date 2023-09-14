@@ -7,7 +7,7 @@ import { DrawerProvider } from "@/context/DrawerContext";
 import Main from "./Main/Main";
 import { BackLoadingProvider } from "@/context/BackLoadingContext";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
+import { store } from "@/store/store";
 import { LoadingButtonProvider } from "@/context/LoadingButtonContext";
 import { ProfileModalProvider } from "@/context/ProfileModalContext";
 import { SparkModalProvider } from "@/context/SparkModalContext";
@@ -32,7 +32,6 @@ export default function RootLayout({ children }) {
             rel="stylesheet"
           />
         </>
-        <link href="../../public/fonts/cairo.css" rel="stylesheet" />
         <meta
           name="description"
           content="App for help student to share our ideas with our teams"

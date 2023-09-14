@@ -1,4 +1,4 @@
-import { Box, Divider, TextField } from "@mui/material";
+import { Box, Divider, TextField, Typography } from "@mui/material";
 import React from "react";
 import "../Form.css";
 import registerImg from "../../../../public/images/register.png";
@@ -10,10 +10,21 @@ import { FacebookRounded, LinkedIn } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 import { FcGoogle } from "react-icons/fc";
+import Or from "@/components/Or/Or";
 
 const Register = ({ formik }) => {
   return (
     <>
+     <Box
+        className={`flex jcc aic form_image`}
+        sx={{
+          backgroundImage: `url(${registerImg.src})`,
+          position: "relative",
+        }}
+      >
+        <Box className={"overlay"}></Box>
+        <Head align={"center"} h={"h3"} title={"Join Us"} color={"#fff"} />
+      </Box>
       <Box className={`grid aic jcs g20 form_contain`}>
         <Logo title={true} color={"#333"} />
         <Box className={`grid jcs ass aic g20`}>
@@ -58,7 +69,10 @@ const Register = ({ formik }) => {
             </Link>
           </SecondaryButton>
         </Box>
-        <Divider />
+        <Box className={`grid jcs aic`}>
+          <Or/>
+          <Typography variant="h6" className="tac">Register with</Typography>
+        </Box>
         <Box className={`flex jcc aic g10`}>
           <SpecialIconButton>
             <FcGoogle />
@@ -70,16 +84,6 @@ const Register = ({ formik }) => {
             <LinkedIn />
           </SpecialIconButton>
         </Box>
-      </Box>
-      <Box
-        className={`flex jcc aic form_image`}
-        sx={{
-          backgroundImage: `url(${registerImg.src})`,
-          position: "relative",
-        }}
-      >
-        <Box className={"overlay"}></Box>
-        <Head align={"center"} h={"h2"} title={"Join Us"} color={"#fff"} />
       </Box>
     </>
   );

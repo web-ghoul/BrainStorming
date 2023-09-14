@@ -9,15 +9,12 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <Box
-      component={"footer"}
-      className={`${styles.footer}`}
-    >
+    <Box component={"footer"} className={`${styles.footer}`}>
       <Container className={`grid jcs aic g20 ${styles.footer_contain}`}>
         <Logo title={true} align={"center"} color="#fff" />
         <Box className={`flex aic jcsb g20 ${styles.footer_foot}`}>
           <Typography className={`fw500`} variant="h6" sx={{ color: "#fff" }}>
-            Copyright 2023 BrainStorming
+            © 2023 BrainStorming.  All Rights Reserved.
           </Typography>
           <Box className={`flex jcsb aic g30  ${styles.links}`}>
             <Link href={process.env.NEXT_PUBLIC_HOME_PAGE}>

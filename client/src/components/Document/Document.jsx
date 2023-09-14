@@ -36,51 +36,56 @@ const Document = ({
       }}
       className={`grid aic jcs g10 ${styles.image_box}`}
     >
-      <Box
-        sx={{
-          borderColor: (theme) =>
-            fileType === "pdf"
-              ? theme.palette.pdf
-              : fileType === "xlsx"
-              ? theme.palette.excel
-              : fileType === "pptx"
-              ? theme.palette.power_point
-              : theme.palette.word,
-          borderWidth: "2px",
-          borderStyle: "solid",
-          position: "relative",
-        }}
-        className={`flex jcfs aic g5 ${styles.file}`}
-        onClick={
-          !modal ? handleDataView : () => window.open(URL.createObjectURL(doc))
-        }
-      >
+      <Box className={`flex jcsb aic g20`}>
         <Box
-          className={`${overlay && "overlay"} ${overlay && styles.overlay}`}
-        />
-        {fileType === "pdf" ? (
-          <Image src={pdfImg} width={100} height={100} alt={"document"} />
-        ) : fileType === "xlsx" ? (
-          <Image src={excelImg} width={100} height={100} alt={"document"} />
-        ) : fileType === "pptx" ? (
-          <Image
-            src={powerPointImg}
-            width={100}
-            height={100}
-            alt={"document"}
+          sx={{
+            borderColor: (theme) =>
+              fileType === "pdf"
+                ? theme.palette.pdf
+                : fileType === "xlsx"
+                ? theme.palette.excel
+                : fileType === "pptx"
+                ? theme.palette.power_point
+                : theme.palette.word,
+            borderWidth: "2px",
+            borderStyle: "solid",
+            position: "relative",
+          }}
+          className={`flex jcfs aic g5 ${styles.file}`}
+          onClick={
+            !modal
+              ? handleDataView
+              : () => window.open(URL.createObjectURL(doc))
+          }
+        >
+          <Box
+            className={`${overlay && "overlay"} ${overlay && styles.overlay}`}
           />
-        ) : (
-          <Image src={wordImg} width={100} height={100} alt={"document"} />
-        )}
-        <Typography variant="h6">
-          {doc.name.length > 10
-            ? doc.name.slice(0, 10) + "." + fileType
-            : doc.name}
-        </Typography>
+          {fileType === "pdf" ? (
+            <Image src={pdfImg} width={100} height={100} alt={"document"} />
+          ) : fileType === "xlsx" ? (
+            <Image src={excelImg} width={100} height={100} alt={"document"} />
+          ) : fileType === "pptx" ? (
+            <Image
+              src={powerPointImg}
+              width={100}
+              height={100}
+              alt={"document"}
+            />
+          ) : (
+            <Image src={wordImg} width={100} height={100} alt={"document"} />
+          )}
+          <Typography variant="h6">
+            {doc.name.length > 10
+              ? doc.name.slice(0, 10) + "." + fileType
+              : doc.name}
+          </Typography>
+        </Box>
         {isShow ||
           (modal && (
             <IconButton onClick={() => window.open(URL.createObjectURL(doc))}>
               <Preview
+                className={`${styles.preview_icon}`}
                 sx={{
                   "&:hover": {
                     color: (theme) => theme.palette.primary.main,
@@ -111,6 +116,7 @@ const Document = ({
       className={`grid aic jcs ${styles.image_box}`}
     >
       <Box
+        onClick={handleDataShow}
         sx={{
           borderColor: (theme) =>
             fileType === "pdf"
@@ -124,32 +130,34 @@ const Document = ({
           borderStyle: "solid",
           position: "relative",
         }}
-        className={`flex jcfs aic g5 ${styles.file}`}
-        onClick={handleDataShow}
+        className={`flex jcsb aic g20`}
       >
-        <Box
-          className={`${overlay && "overlay"} ${overlay && styles.overlay}`}
-        />
-        {fileType === "pdf" ? (
-          <Image src={pdfImg} width={100} height={100} alt={"document"} />
-        ) : fileType === "xlsx" ? (
-          <Image src={excelImg} width={100} height={100} alt={"document"} />
-        ) : fileType === "pptx" ? (
-          <Image
-            src={powerPointImg}
-            width={100}
-            height={100}
-            alt={"document"}
+        <Box className={`flex jcfs aic g5 ${styles.file}`}>
+          <Box
+            className={`${overlay && "overlay"} ${overlay && styles.overlay}`}
           />
-        ) : (
-          <Image src={wordImg} width={100} height={100} alt={"document"} />
-        )}
-        <Typography variant="h6">
-          File-{i}.{fileType}
-        </Typography>
+          {fileType === "pdf" ? (
+            <Image src={pdfImg} width={100} height={100} alt={"document"} />
+          ) : fileType === "xlsx" ? (
+            <Image src={excelImg} width={100} height={100} alt={"document"} />
+          ) : fileType === "pptx" ? (
+            <Image
+              src={powerPointImg}
+              width={100}
+              height={100}
+              alt={"document"}
+            />
+          ) : (
+            <Image src={wordImg} width={100} height={100} alt={"document"} />
+          )}
+          <Typography variant="h6">
+            File-{i}.{fileType}
+          </Typography>
+        </Box>
         {isShow && (
           <IconButton onClick={() => window.open(doc)}>
             <Preview
+              className={`${styles.preview_icon}`}
               sx={{
                 "&:hover": {
                   color: (theme) => theme.palette.primary.main,

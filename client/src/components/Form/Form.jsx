@@ -11,7 +11,7 @@ import ForgotPassword from "./ForgotPassword/ForgotPassword";
 import axios from "axios";
 import { useContext } from "react";
 import { LoadingButtonContext } from "@/context/LoadingButtonContext";
-import { handleAlertToastify } from "../../app/reactToastify.js";
+import { handleAlertToastify } from "../../functions/reactToastify.js";
 import { redirect, useParams } from "next/navigation";
 import ChangeAvatar from "./ChangeAvatar/ChangeAvatar";
 import ChangeCover from "./ChangeCover/ChangeCover";
@@ -35,6 +35,7 @@ import DeleteAccount from "./DeleteAccount/DeleteAccount";
 import { MyThemeContext } from "@/context/MyThemeContext";
 import LeaveTeam from "./LeaveTeam/LeaveTeam";
 import UpdateSpark from "./UpdateSpark/UpdateSpark";
+import { getUserSparks } from "@/store/userSparksSlice";
 
 const Form = ({ type, setValue }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
@@ -372,6 +373,8 @@ const Form = ({ type, setValue }) => {
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
           handleResetData();
+          dispatch(getUserSparks({ token, user_id }));
+          dispatch(getSparks({ team_id: id, token }));
           resetForm();
           setValue(1);
         })
@@ -426,8 +429,9 @@ const Form = ({ type, setValue }) => {
         )
         .then((res) => {
           handleAlertToastify(res.data.message, "success");
-          dispatch(getSparks({ team_id: id, token: Cookies.get("token") }));
+          dispatch(getSparks({ team_id: id, token }));
           handleToggleUpdateSparkModal();
+          dispatch(getUserSparks({ token, user_id }));
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
@@ -455,6 +459,7 @@ const Form = ({ type, setValue }) => {
         handleAlertToastify(res.data.message, "success");
         dispatch(getUserData(user_id));
         handleToggleChangeAvatarModal();
+        dispatch(getUserSparks({ token, user_id }));
         setFile(null);
       })
       .catch((err) => {
@@ -528,6 +533,7 @@ const Form = ({ type, setValue }) => {
         handleAlertToastify(res.data.message, "success");
         dispatch(getSparks({ token, team_id: team._id }));
         handleToggleDeleteSparkModal();
+        dispatch(getUserSparks({ token, user_id }));
       })
       .catch((err) => {
         try {
@@ -582,6 +588,20 @@ const Form = ({ type, setValue }) => {
         }
       });
     setButtonLoading(false);
+  };
+
+  const handleGoogleAuth = async () => {
+    router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/google`);
+  };
+
+  const handleLinkedinAuth = async () => {
+    router.push(
+      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77pvrp0ctq9az2&redirect_uri=${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/linkedin/callback&scope=openid%20profile%20email`
+    );
+  };
+
+  const handleFacebookAuth = async () => {
+    router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/facebook`);
   };
 
   useEffect(() => {
@@ -645,9 +665,9 @@ const Form = ({ type, setValue }) => {
       }
     >
       {type === "login" ? (
-        <Login formik={loginFormik} />
+        <Login handleGoogleAuth={handleGoogleAuth} handleLinkedinAuth={handleLinkedinAuth} handleFacebookAuth={handleFacebookAuth} formik={loginFormik} />
       ) : type === "register" ? (
-        <Register formik={registerFormik} />
+        <Register handleGoogleAuth={handleGoogleAuth} handleLinkedinAuth={handleLinkedinAuth} handleFacebookAuth={handleFacebookAuth} formik={registerFormik} />
       ) : type === "add_new_team" ? (
         <AddNewTeam
           handleChangeFile={handleChangeFile}

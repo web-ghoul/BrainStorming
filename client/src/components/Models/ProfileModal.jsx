@@ -106,7 +106,10 @@ const ProfileModal = ({ img, type }) => {
         <Box
           className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
         >
-          <Img alt="cover" src={img} crossOrigin="anonymous" />
+          <Img
+            alt="cover"
+            src={img}
+          />
           {signed && isUser && (
             <MainIconButton
               onClick={() => {

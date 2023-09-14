@@ -12,7 +12,6 @@ export const getUserSparks = createAsyncThunk(
         },
       }
     );
-    console.log(res.data.data)
     return res.data.data;
   }
 );
