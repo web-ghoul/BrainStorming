@@ -32,8 +32,13 @@
   }
 }
 
-@media (640px >=width >=768px) {
+@media (640px >=width >=0px) {
   .footer {
     padding: 10px 0;
+  }
+
+  .footer_foot{
+    display: grid !important;
+    justify-content:center !important;
   }
 }

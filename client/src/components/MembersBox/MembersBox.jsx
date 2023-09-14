@@ -10,14 +10,11 @@ import Head from "../Head/Head";
 import Member from "./Member";
 import styles from "./MembersBox.module.css";
 import { useSelector } from "react-redux";
-import {
-  KeyboardArrowDownRounded,
-  KeyboardArrowUpRounded,
-} from "@mui/icons-material";
+import { ExpandMore } from "@mui/icons-material";
 const MembersBox = () => {
   const { team, isLoading } = useSelector((state) => state.team);
   const [expanded, setExpanded] = React.useState("panel1");
-  const handleChange = (panel) => (event, newExpanded) => {
+  const handleChange = (panel) => (_, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
   return (
@@ -31,6 +28,7 @@ const MembersBox = () => {
           className={`flex jcc aic ${styles.members_box_summary}`}
           aria-controls="panel1d-content"
           id="panel1d-header"
+          expandIcon={<ExpandMore />}
         >
           <Box className={`flex jcsb aic g30`}>
             <Head
@@ -38,11 +36,6 @@ const MembersBox = () => {
               align={"left"}
               h={"h5"}
             />
-            {expanded !== "panel1" ? (
-              <KeyboardArrowDownRounded />
-            ) : (
-              <KeyboardArrowUpRounded />
-            )}
           </Box>
         </AccordionSummary>
         <Divider />

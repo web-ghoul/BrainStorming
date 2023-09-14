@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 const Home = () => {
   const router = useRouter();
   const handleStartClick = () => {
-    console.log(`Navigating to: ${process.env.NEXT_PUBLIC_TEAMS_PAGE}`);
     router.push(`${process.env.NEXT_PUBLIC_TEAMS_PAGE}`);
   };
   

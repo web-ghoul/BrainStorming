@@ -25,12 +25,11 @@ import { SparkModalContext } from "@/context/SparkModalContext";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
-import { handleSparkDate } from "@/app/handleSparkDate";
+import { handleSparkDate } from "../../functions/handleSparkDate";
 
 const SparkHead = ({ data }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const { user_id } = useSelector((state) => state.auth);
-  console.log(data)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -47,7 +46,6 @@ const SparkHead = ({ data }) => {
     setUpdateIdea,
     setUpdateDescription,
   } = useContext(SparkModalContext);
-  const { team } = useSelector((state) => state.team);
   if (typeof document !== "undefined") {
     document.addEventListener("click", (event) => {
       if (
@@ -110,15 +108,16 @@ const SparkHead = ({ data }) => {
                 </Typography>
               </Popover>
             </Box>
-            {data.WrittenBy.Name === data.team.TeamLeader.Name ? (
-              <AdminPanelSettings />
+            {data.WrittenBy.Name === data.Team.TeamLeader.Name ? (
+              <AdminPanelSettings className={`${styles.user_icon}`} />
             ) : (
-              <Person />
+              <Person className={`${styles.user_icon}`} />
             )}
           </Box>
         </Box>
       </Box>
-      {(user_id === data.WrittenBy._id || user_id === data.team.TeamLeader._id) && (
+      {(user_id === data.WrittenBy._id ||
+        user_id === data.Team.TeamLeader._id) && (
         <IconButton
           id={`list_button_${data._id}`}
           onClick={() => setOpenList(!openList)}
@@ -126,6 +125,7 @@ const SparkHead = ({ data }) => {
           <MoreVertRounded
             id={`list_icon_${data._id}`}
             sx={{ color: (theme) => theme.palette.white }}
+            className={`${styles.icon_more}`}
           />
         </IconButton>
       )}

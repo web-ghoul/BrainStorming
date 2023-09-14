@@ -18,7 +18,6 @@ function App() {
 }
 export default App;")
 
-
 notes about backend:
 1- return ref for user who publish spark
 2- edit for parameter of create spark

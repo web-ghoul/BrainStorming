@@ -1,3 +1,14 @@
+.team_name {
+  left: 20px;
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 10px 10px 0px 0px;
+  background-color: var(--white);
+  box-shadow: var(--box_shadow);
+}
+
 .spark {
   border-radius: 10px;
   position: relative;
@@ -35,9 +46,6 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.spark_date svg {
-  font-size: 18px;
-}
 
 .spark_options {
   position: absolute;
@@ -65,6 +73,14 @@
 
 .loading_spark_data span:nth-child(2) {
   height: 200px;
+}
+
+.user_icon {
+  font-size: 22px;
+}
+
+.file_icon {
+  font-size: 25px;
 }
 
 @media (1200px >=width >=992px) {
@@ -97,6 +113,18 @@
 
   .loading_spark_data span:nth-child(2) {
     height: 180px;
+  }
+
+  .icon_more {
+    font-size: 25px;
+  }
+
+  .user_icon {
+    font-size: 20px;
+  }
+
+  .file_icon {
+    font-size: 22px;
   }
 }
 
@@ -135,6 +163,18 @@
   .loading_spark_data span:nth-child(2) {
     height: 160px;
   }
+
+  .icon_more {
+    font-size: 22px;
+  }
+
+  .user_icon {
+    font-size: 18px;
+  }
+
+  .file_icon {
+    font-size: 20px;
+  }
 }
 
 @media (768px > width >=640px) {
@@ -172,6 +212,18 @@
   .loading_spark_data span:nth-child(2) {
     height: 120px;
   }
+
+  .icon_more {
+    font-size: 20px;
+  }
+
+  .user_icon {
+    font-size: 16px;
+  }
+
+  .file_icon {
+    font-size: 18px;
+  }
 }
 
 @media (640px > width >=0px) {
@@ -193,7 +245,7 @@
     padding: 5px;
   }
 
-  .spark_date svg {
+  .spark_date {
     font-size: 10px;
   }
 
@@ -204,5 +256,17 @@
 
   .loading_spark_data span:nth-child(2) {
     height: 120px;
+  }
+
+  .icon_more {
+    font-size: 18px;
+  }
+
+  .user_icon {
+    font-size: 14px;
+  }
+
+  .file_icon {
+    font-size: 16px;
   }
 }

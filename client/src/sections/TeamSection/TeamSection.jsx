@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import "../../app/globals.css";
 import PropTypes from "prop-types";
 import { Tabs, Tab, Box, Container, Typography } from "@mui/material";
 import Head from "@/components/Head/Head";
@@ -69,7 +68,7 @@ const TeamSection = () => {
     handleSetTeamImage,
   } = useContext(TeamModalContext);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
   const dispatch = useDispatch();
@@ -77,7 +76,6 @@ const TeamSection = () => {
   const { team, isLoading } = useSelector((state) => state.team);
   const { user_id } = useSelector((state) => state.auth);
   const router = useRouter();
-  console.log(team);
   useEffect(() => {
     try {
       dispatch(getTeam({ team_id: id, token: Cookies.get("token") }));
@@ -86,7 +84,7 @@ const TeamSection = () => {
       handleAlertToastify("Can't Access This Page", "error");
     }
   }, []);
-  return isLoading ? (
+  return isLoading || !team ? (
     <LoadingTeamSection />
   ) : (
     <Box className={`grid jcs aic`}>
@@ -94,13 +92,13 @@ const TeamSection = () => {
         className={`grid jcc aife ${styles.room_head}`}
         sx={{ backgroundImage: `url(${team.Image})` }}
       >
-        <Head
-          title={team.Name}
-          teamName={true}
-          align="center"
-          color="#fff"
-          h="h2"
-        />
+          <Head
+            title={team.Name}
+            teamName={true}
+            align="center"
+            color="#fff"
+            h="h2"
+          />
         <Tabs
           value={value}
           centered

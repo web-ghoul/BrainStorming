@@ -1,6 +1,8 @@
-main{
+main {
   min-height: 100vh;
 }
+
+/*Start File Upload Package*/
 
 .sc-aXZVg,
 .guZdik {
@@ -44,6 +46,12 @@ main{
   font-size: 18px !important;
 }
 
+.guZdik {
+  min-width: 200px !important;
+}
+
+/*End File Upload Package*/
+/*End Carousel Package*/
 
 .carousel-root, .carousel-slider, .slider-wrapper, .slider-wrapper ul, .carousel-root .slide {
   height: 100%;
@@ -54,39 +62,43 @@ main{
 .carousel-root .slide div {
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 
 .carousel-root .slide img {
-  width: max-content !important;
-  height: inherit !important;
-  top:50%;
-  transform: translateY(-50%);
-  position: relative;
+  width: 100% !important;
+  height: auto !important;
 }
 
 .carousel-root .control-arrow {
   background-color: var(--main) !important;
 }
 
-/*File Upload*/
-.guZdik{
-  min-width: 200px !important;
+/*End Carousel Package*/
+
+/*Start Scrollbar*/
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: var(--white);
 }
 
-/*Scrollbar*/
-
-::-webkit-scrollbar
-{
-	width: 12px;
-	background-color: var(--white);
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px var(--main);
+  background-color: var(--main);
 }
 
-::-webkit-scrollbar-thumb
-{
-	-webkit-box-shadow: inset 0 0 6px var(--main);
-	background-color: var(--main);
+/*Start Scrollbar*/
+
+
+
+/*Start Error Page*/
+.error_contain img {
+  width: 500px;
+  height: auto;
 }
 
+/*End Error Page*/
 @media (max-width: 1200px) {
   .css-bbskgl-MuiFormLabel-root-MuiInputLabel-root {
     font-size: 16px;
@@ -103,6 +115,10 @@ main{
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     padding: 12px !important;
     font-size: 18px;
+  }
+
+  .css-r3bn9b-MuiListItem-root, .css-r3bn9b-MuiListItem-root>div {
+    padding: 8px !important;
   }
 }
 
@@ -122,6 +138,14 @@ main{
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     padding: 10px !important;
     font-size: 16px;
+  }
+
+  .MembersBox_members_box_summary__AWMzS {
+    padding: 8px !important;
+  }
+
+  .css-r3bn9b-MuiListItem-root, .css-r3bn9b-MuiListItem-root>div {
+    padding: 6px !important;
   }
 }
 
@@ -145,5 +169,26 @@ main{
   .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     padding: 8px !important;
     font-size: 14px;
+  }
+
+  .error_contain img {
+    width: 100%;
+  }
+
+  .MembersBox_members_box_summary__AWMzS {
+    padding: 5px !important;
+  }
+
+  .css-4fssdi-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 14px;
+  }
+
+  .css-13493l2-MuiInputBase-root-MuiInput-root {
+    font-size: 12px;
+    margin-top: 12px !important;
+  }
+
+  .css-r3bn9b-MuiListItem-root,.css-r3bn9b-MuiListItem-root > div {
+    padding: 4px !important;
   }
 }

@@ -24,15 +24,14 @@
         Sign in with Google
       </a>
     </div>
+    <div>
+      <a href="https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77pvrp0ctq9az2&redirect_uri=http://localhost:3000/api/auth/linkedin/callback&scope=openid%20profile%20email">
+        Sign in with LinkedIn
+      </a>
+    </div>
 
     <div>
-      <a
-        href="http://localhost:3000/api/facebook"
-        type="button"
-        class="login-with-google-btn"
-      >
-        Sign in with facebook
-      </a>
+      <a href="http://localhost:3000/api/login/facebook" class="button">Log In With Facebook</a>
     </div>
     <object
       data="../../../../webGhoul_CV.pdf"
@@ -42,22 +41,6 @@
     >
       <p>Download the PDF: <a href="../../../../webGhoul_CV.pdf">document.pdf</a>.</p>
     </object>
-    <!-- <h2>Upload Files Using the Upload Widget</h2>
-  <p>Perform a signed upload using the upload widget.</p>
-  <p>Click "Upload Files" to open the upload widget.</p>
-  <div><button id="upload_widget" class="submit">Upload Files</button></div>
-  <div><img id="uploaded" /></div>
-  <h3>Upload response:</h3>
-  <pre class="data" id="uwdata">
-  
-  </pre>
-
-  
-
-  cloudinary upload widget -->
-    <!-- <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script> -->
-
-    <!-- local upload instantiation -->
   </body>
   <script>
     const form = document.querySelector("form");

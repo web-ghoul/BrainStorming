@@ -26,7 +26,7 @@ import AudioGridBox from "@/components/GridBoxes/AudioGridBox/AudioGridBox";
 import { RedButton } from "@/MUIComponents/RedButton/RedButton";
 import { ProfileModalContext } from "@/context/ProfileModalContext";
 import Head from "@/components/Head/Head";
-import { handleAlertToastify } from "@/app/reactToastify";
+import { handleAlertToastify } from "../../../functions/reactToastify";
 
 const EditProfile = ({ formik }) => {
   const [bioEmojiShow, setBioEmojiShow] = useState(false);

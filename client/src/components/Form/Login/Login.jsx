@@ -10,9 +10,22 @@ import { FacebookRounded, LinkedIn } from "@mui/icons-material";
 import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { FcGoogle } from "react-icons/fc";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
-const Login = ({ formik }) => {
+import Or from "@/components/Or/Or";
+const Login = ({
+  handleGoogleAuth,
+  handleLinkedinAuth,
+  handleFacebookAuth,
+  formik,
+}) => {
   return (
     <>
+      <Box
+        className={`flex jcc aic form_image`}
+        sx={{ backgroundImage: `url(${loginImg.src})`, position: "relative" }}
+      >
+        <Box className={"overlay"}></Box>
+        <Head align={"center"} h={"h3"} title={"Welcome Back"} color={"#fff"} />
+      </Box>
       <Box className={`grid aic jcs g20 form_contain`}>
         <Logo title={true} color={"#333"} />
         <Box className={`grid jcs ass aic g20`}>
@@ -52,25 +65,27 @@ const Login = ({ formik }) => {
             </Link>
           </SecondaryButton>
         </Box>
-        <Divider />
+        <Box className={`grid jcs aic`}>
+          <Or />
+          <Typography variant="h6" className="tac">Log In with</Typography>
+        </Box>
         <Box className={`flex jcc aic g10`}>
-          <SpecialIconButton>
+          <SpecialIconButton onClick={handleGoogleAuth}>
             <FcGoogle />
           </SpecialIconButton>
-          <SpecialIconButton sx={{ color: (theme) => theme.palette.facebook }}>
+          <SpecialIconButton
+            onClick={handleFacebookAuth}
+            sx={{ color: (theme) => theme.palette.facebook }}
+          >
             <FacebookRounded />
           </SpecialIconButton>
-          <SpecialIconButton sx={{ color: (theme) => theme.palette.linkedin }}>
+          <SpecialIconButton
+            onClick={handleLinkedinAuth}
+            sx={{ color: (theme) => theme.palette.linkedin }}
+          >
             <LinkedIn />
           </SpecialIconButton>
         </Box>
-      </Box>
-      <Box
-        className={`flex jcc aic form_image`}
-        sx={{ backgroundImage: `url(${loginImg.src})`, position: "relative" }}
-      >
-        <Box className={"overlay"}></Box>
-        <Head align={"center"} h={"h2"} title={"Welcome Back"} color={"#fff"} />
       </Box>
     </>
   );

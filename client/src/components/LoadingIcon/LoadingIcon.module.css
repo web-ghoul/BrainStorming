@@ -11,3 +11,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+@media (max-width:992px) {
+  .loading_icon {
+    font-size: 30px !important;
+  }
+}
+
+
+@media (max-width:768px) {
+  .loading_icon {
+    font-size: 22px !important;
+  }
+}

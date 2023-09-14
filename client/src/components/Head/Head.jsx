@@ -1,26 +1,40 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Tooltip, Typography } from "@mui/material";
 import styles from "./Head.module.css";
 
-const Head = ({ title, teamName, align, h, color, special, specialColor }) => {
+const Head = ({
+  title,
+  align,
+  h,
+  color,
+  special,
+}) => {
   return (
     <Box
       className={`flex aic ${
-        align === "center" ? "jcc" : align === "left" ? "jcfs" : "jcfe"
+        align === "center" ? "jcc tac" : align === "left" ? "jcfs" : "jcfe"
       } ${styles.head} ${special && styles.head_special}`}
       sx={{
-        "&:after": { backgroundColor: specialColor },
-        "&:before": { backgroundColor: specialColor },
+        position:"relative"
       }}
     >
-      <Typography
-        sx={{ textAlign: { align }, color: color ? color : "#333" }}
-        variant={h}
-      >
-        {teamName && title && title.length > 20
-          ? title.slice(0, 20) + "..."
-          : title}
-      </Typography>
+      {title && title.length > 20 ? (
+        <Tooltip title={title} arrow>
+          <Typography
+            sx={{ textAlign: { align }, color: color ? color : "#333" }}
+            variant={h}
+          >
+            {title.slice(0, 20) + "..."}
+          </Typography>
+        </Tooltip>
+      ) : (
+        <Typography
+          sx={{ textAlign: { align }, color: color ? color : "#333" }}
+          variant={h}
+        >
+          {title}
+        </Typography>
+      )}
     </Box>
   );
 };

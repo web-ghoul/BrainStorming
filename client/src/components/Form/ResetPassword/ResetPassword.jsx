@@ -12,6 +12,21 @@ import LoadingButton from "@/components/LoadingButton/LoadingButton";
 const ResetPassword = ({ formik }) => {
   return (
     <>
+    <Box
+        className={`flex jcc aic form_image`}
+        sx={{
+          backgroundImage: `url(${resetPassword.src})`,
+          position: "relative",
+        }}
+      >
+        <Box className={"overlay"}></Box>
+        <Head
+          align={"center"}
+          h={"h2"}
+          title={"Reset Your Key"}
+          color={"#fff"}
+        />
+      </Box>
       <Box className={`grid aifs jcs g20 form_contain`}>
         <Logo title={true} color={"#333"} />
         <Box className={`grid jcs ass aic g10`}>
@@ -51,21 +66,6 @@ const ResetPassword = ({ formik }) => {
             </Link>
           </SecondaryButton>
         </Box>
-      </Box>
-      <Box
-        className={`flex jcc aic form_image`}
-        sx={{
-          backgroundImage: `url(${resetPassword.src})`,
-          position: "relative",
-        }}
-      >
-        <Box className={"overlay"}></Box>
-        <Head
-          align={"center"}
-          h={"h2"}
-          title={"Reset Your Key"}
-          color={"#fff"}
-        />
       </Box>
     </>
   );

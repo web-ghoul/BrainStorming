@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import "../../app/globals.css";
 import PropTypes from "prop-types";
 import { Tabs, Tab, Box, Container, Skeleton } from "@mui/material";
 import styles from "./TeamSection.module.css";

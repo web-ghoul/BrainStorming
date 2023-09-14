@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { useRef } from "react";
 import {
   SentimentSatisfiedRounded,
   AttachFileRounded,
@@ -86,7 +85,7 @@ const CreateSpark = ({ formik }) => {
               helperText={formik.touched.idea && formik.errors.idea}
             />
             <IconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
-              <SentimentSatisfiedRounded />
+              <SentimentSatisfiedRounded className={`smile_icon`} />
             </IconButton>
           </Box>
 
@@ -125,7 +124,7 @@ const CreateSpark = ({ formik }) => {
             <IconButton
               onClick={() => setBrainWaveEmojiShow(!brainWaveEmojiShow)}
             >
-              <SentimentSatisfiedRounded />
+              <SentimentSatisfiedRounded  className={`smile_icon`}  />
             </IconButton>
           </Box>
           {brainWaveEmojiShow && (
