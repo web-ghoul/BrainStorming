@@ -4837,7 +4837,7 @@ const googleRegister = (req, res, next) => {
       //   token: token,
       //   csrfToken: csrfToken,
       // });
-      res.redirect(`${process.env.CLIENT_URL}/${token}/${user._id}`)
+      res.redirect(`${process.env.CLIENT_URL}/auth/${token}/${user._id}`)
     } else {
       let user = new User({
         Name: name,
@@ -4869,7 +4869,7 @@ const googleRegister = (req, res, next) => {
           //   token: token,
           //   csrfToken: csrfToken,
           // });
-          res.redirect(`${process.env.CLIENT_URL}/${token}/${user._id}`)
+          res.redirect(`${process.env.CLIENT_URL}/auth/${token}/${user._id}`)
           
         })
         .catch((error) => {
@@ -4912,7 +4912,7 @@ const facebookRegister = (req, res, next) => {
       //   token: token,
       //   csrfToken: csrfToken,
       // });
-      res.redirect(`${process.env.CLIENT_URL}/${token}/${user._id}`)
+      res.redirect(`${process.env.CLIENT_URL}/auth/${token}/${user._id}`)
     } else {
       let user = new User({
         Name: name,
@@ -4944,7 +4944,7 @@ const facebookRegister = (req, res, next) => {
           //   token: token,
           //   csrfToken: csrfToken,
           // });
-          res.redirect(`${process.env.CLIENT_URL}/${token}/${user._id}`)
+          res.redirect(`${process.env.CLIENT_URL}/auth/${token}/${user._id}`)
         })
         .catch((error) => {
           console.log(error)
@@ -4989,7 +4989,7 @@ const linkedinRegister = (req, res, next) => {
       //   token: token,
       //   csrfToken: csrfToken,
       // });
-      res.redirect(`${process.env.CLIENT_URL}/${token}/${user._id}`)
+      res.redirect(`${process.env.CLIENT_URL}/auth/${token}/${user._id}`)
     } else {
       let user = new User({
         Name: name,
@@ -5024,7 +5024,7 @@ const linkedinRegister = (req, res, next) => {
           //   token: token,
           //   csrfToken: csrfToken,
           // });
-          res.redirect(`${process.env.CLIENT_URL}/${token}/${user._id}`)
+          res.redirect(`${process.env.CLIENT_URL}/auth/${token}/${user._id}`)
         })
         .catch((error) => {
           console.log(error)
