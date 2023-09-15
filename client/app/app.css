@@ -98,9 +98,13 @@ main {
   height: auto;
 }
 
-.css-1ontqvh{
+.css-1ontqvh.Spark_spark_options__yr3G8 {
   position: absolute !important;
 }
+
+
+
+
 
 /*End Error Page*/
 @media (max-width: 1200px) {
@@ -192,7 +196,7 @@ main {
     margin-top: 12px !important;
   }
 
-  .css-r3bn9b-MuiListItem-root,.css-r3bn9b-MuiListItem-root > div {
+  .css-r3bn9b-MuiListItem-root, .css-r3bn9b-MuiListItem-root>div {
     padding: 4px !important;
   }
 }
