@@ -80,22 +80,30 @@ const Register = ({
             Register with
           </Typography>
         </Box>
-        <Box className={`flex jcc aic g10`}>
-          <SpecialIconButton onClick={handleGoogleAuth}>
+        <Box className={`grid jcs aic g20`}>
+          <AuthButton
+            className={`flex jcfs aic g10`}
+            onClick={handleGoogleAuth}
+          >
             <FcGoogle />
-          </SpecialIconButton>
-          <SpecialIconButton
+            <Typography variant="h6">Register with Google</Typography>
+          </AuthButton>
+          <AuthButton
             onClick={handleFacebookAuth}
+            className={`flex jcfs aic g10`}
             sx={{ color: (theme) => theme.palette.facebook }}
           >
             <FacebookRounded />
-          </SpecialIconButton>
-          <SpecialIconButton
+            <Typography variant="h6">Register with Facebook</Typography>
+          </AuthButton>
+          <AuthButton
             onClick={handleLinkedinAuth}
+            className={`flex jcfs aic g10`}
             sx={{ color: (theme) => theme.palette.linkedin }}
           >
             <LinkedIn />
-          </SpecialIconButton>
+            <Typography variant="h6">Register with Linkedin</Typography>
+          </AuthButton>
         </Box>
       </Box>
     </>

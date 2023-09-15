@@ -48,7 +48,7 @@
 
 
 .spark_options {
-  position: absolute;
+  position: absolute !important;
   right: 0;
   top: 60px;
   background-color: var(--white);
