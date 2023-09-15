@@ -15,7 +15,7 @@ const AuthPage = () => {
     Cookies.set("token",token)
     Cookies.set("user_id",user_id)
     dispatch(getAuthData({token,user_id}))
-    router.push("/")
+    // router.push("/")
   },[dispatch])
   return <AuthSection />;
 };

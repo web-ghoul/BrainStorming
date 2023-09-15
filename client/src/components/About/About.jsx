@@ -15,13 +15,15 @@ const About = () => {
       role: "Frontend Developer",
       links: {
         gmail: "",
-        whatsapp: "",
+        whatsapp:
+          "https://api.whatsapp.com/send/?phone=%2B201009344881&text&type=phone_number&app_absent=0",
+        github: "https://github.com/web-ghoul",
         resume: "",
         linkedin: "https://www.linkedin.com/in/mahmoud-salama-23b627211/",
         facebook: "https://www.facebook.com/mahmoud.gogoo.5/",
       },
-        img: webGhoulImg,
-        img1: next,
+      img: webGhoulImg,
+      img1: next,
     },
     {
       name: "Amr Khaled",
@@ -29,13 +31,15 @@ const About = () => {
       role: "Backend Developer",
       links: {
         gmail: "",
-        whatsapp: "",
+        whatsapp:
+          "https://api.whatsapp.com/send/?phone=%2B201013714763&text&type=phone_number&app_absent=0",
+        github: "https://github.com/amr006",
         resume: "",
         linkedin: "https://www.linkedin.com/in/amr-khaled-mohamed/",
         facebook: "https://www.facebook.com/profile.php?id=100006620191591",
       },
       img: amrImg,
-      img1:node
+      img1: node,
     },
   ];
   return (
