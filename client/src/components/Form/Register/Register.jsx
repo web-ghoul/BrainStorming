@@ -11,6 +11,7 @@ import LoadingButton from "@/components/LoadingButton/LoadingButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 import { FcGoogle } from "react-icons/fc";
 import Or from "@/components/Or/Or";
+import { AuthButton } from "@/MUIComponents/AuthButton/AuthButton";
 
 const Register = ({
   handleGoogleAuth,
