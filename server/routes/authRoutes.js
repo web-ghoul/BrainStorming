@@ -85,7 +85,7 @@ router.get('/oauth2/redirect/facebook',
 
 const CLIENT_ID = process.env.LINKEDIN_API_KEY ;
 const CLIENT_SECRET = process.env.LINKEDIN_SECRET_KEY;
-const REDIRECT_URI = "http://localhost:3000/api/auth/linkedin/callback";
+const REDIRECT_URI = "https://brainstorm-server.onrender.com/api/auth/linkedin/callback";
 
 router.get('/auth/linkedin/callback', async (req, res) => {
   const { code } = req.query;

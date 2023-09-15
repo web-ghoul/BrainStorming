@@ -42,6 +42,7 @@ const corsOptions = {
     "https://brainstorming-omega.vercel.app",
     "http://localhost:4000",
     "http://127.0.0.1:5500",
+    "https://brainstorming-ecru.vercel.app"
 
     // your origins here
   ],
@@ -107,6 +108,7 @@ app.use(
           "http://localhost:4000",
           "http://127.0.0.1:5500",
           "https://brainstorming-omega.vercel.app",
+          "https://brainstorming-ecru.vercel.app",
         ],
       },
     },
