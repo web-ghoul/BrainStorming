@@ -234,7 +234,7 @@ const Form = ({ type, setValue }) => {
       setButtonLoading(false);
     },
   });
-
+  
   const registerFormik = useFormik({
     initialValues: registerInitialValues,
     validationSchema: registerValidationSchema,
@@ -591,17 +591,17 @@ const Form = ({ type, setValue }) => {
   };
 
   const handleGoogleAuth = async () => {
-    router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/google`);
+    router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/google`);
   };
 
   const handleLinkedinAuth = async () => {
     router.push(
-      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77pvrp0ctq9az2&redirect_uri=${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/linkedin/callback&scope=openid%20profile%20email`
+      `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=77pvrp0ctq9az2&redirect_uri=${process.env.NEXT_PUBLIC_SERVER_URL}/auth/linkedin/callback&scope=openid%20profile%20email`
     );
   };
 
   const handleFacebookAuth = async () => {
-    router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/facebook`);
+    router.push(`${process.env.NEXT_PUBLIC_SERVER_URL}/login/facebook`);
   };
 
   useEffect(() => {
@@ -665,9 +665,19 @@ const Form = ({ type, setValue }) => {
       }
     >
       {type === "login" ? (
-        <Login handleGoogleAuth={handleGoogleAuth} handleLinkedinAuth={handleLinkedinAuth} handleFacebookAuth={handleFacebookAuth} formik={loginFormik} />
+        <Login
+          handleGoogleAuth={handleGoogleAuth}
+          handleLinkedinAuth={handleLinkedinAuth}
+          handleFacebookAuth={handleFacebookAuth}
+          formik={loginFormik}
+        />
       ) : type === "register" ? (
-        <Register handleGoogleAuth={handleGoogleAuth} handleLinkedinAuth={handleLinkedinAuth} handleFacebookAuth={handleFacebookAuth} formik={registerFormik} />
+        <Register
+          handleGoogleAuth={handleGoogleAuth}
+          handleLinkedinAuth={handleLinkedinAuth}
+          handleFacebookAuth={handleFacebookAuth}
+          formik={registerFormik}
+        />
       ) : type === "add_new_team" ? (
         <AddNewTeam
           handleChangeFile={handleChangeFile}

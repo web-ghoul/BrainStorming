@@ -14,9 +14,11 @@ const HomeSection = () => {
     try {
       const token = Cookies.get("token");
       const user_id = Cookies.get("user_id");
-      dispatch(getUserSparks({ token, user_id }));
+      if (token && user_id) {
+        dispatch(getUserSparks({ token, user_id }));
+      }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }, [dispatch]);
   return signed && userSparks && userSparks.length > 0 ? (

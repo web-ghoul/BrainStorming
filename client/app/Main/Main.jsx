@@ -30,18 +30,19 @@ const Main = ({ children }) => {
       const token = Cookies.get("token");
       const user_id = Cookies.get("user_id");
       dispatch(getAuthData({ token, user_id }));
-      dispatch(getUserSparks({ token,user_id }));
+      if (token && user_id) {
+        dispatch(getUserSparks({ token, user_id }));
+      }
       if (user_id) {
         dispatch(getUserData(user_id));
       }
-      if(id){
-        dispatch(getTeam({team_id:id,token}))
+      if (id) {
+        dispatch(getTeam({ team_id: id, token }));
       }
     } catch (err) {
       console.log(err);
     }
-    
-  }, [Cookies, dispatch,id]);
+  }, [Cookies, dispatch, id]);
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||
     pathname === process.env.NEXT_PUBLIC_LOGIN_PAGE ||
@@ -62,7 +63,9 @@ const Main = ({ children }) => {
     <PageBox
       sx={{
         backgroundColor: (theme) =>
-          theme.palette.mode === "light" ? theme.palette.white : theme.palette.black,
+          theme.palette.mode === "light"
+            ? theme.palette.white
+            : theme.palette.black,
       }}
       component={"main"}
     >

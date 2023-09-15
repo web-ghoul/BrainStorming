@@ -12,10 +12,15 @@ import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIcon
 import { FcGoogle } from "react-icons/fc";
 import Or from "@/components/Or/Or";
 
-const Register = ({ formik }) => {
+const Register = ({
+  handleGoogleAuth,
+  handleLinkedinAuth,
+  handleFacebookAuth,
+  formik,
+}) => {
   return (
     <>
-     <Box
+      <Box
         className={`flex jcc aic form_image`}
         sx={{
           backgroundImage: `url(${registerImg.src})`,
@@ -70,17 +75,25 @@ const Register = ({ formik }) => {
           </SecondaryButton>
         </Box>
         <Box className={`grid jcs aic`}>
-          <Or/>
-          <Typography variant="h6" className="tac">Register with</Typography>
+          <Or />
+          <Typography variant="h6" className="tac">
+            Register with
+          </Typography>
         </Box>
         <Box className={`flex jcc aic g10`}>
-          <SpecialIconButton>
+          <SpecialIconButton onClick={handleGoogleAuth}>
             <FcGoogle />
           </SpecialIconButton>
-          <SpecialIconButton sx={{ color: (theme) => theme.palette.facebook }}>
+          {/* <SpecialIconButton
+            onClick={handleFacebookAuth}
+            sx={{ color: (theme) => theme.palette.facebook }}
+          >
             <FacebookRounded />
-          </SpecialIconButton>
-          <SpecialIconButton sx={{ color: (theme) => theme.palette.linkedin }}>
+          </SpecialIconButton> */}
+          <SpecialIconButton
+            onClick={handleLinkedinAuth}
+            sx={{ color: (theme) => theme.palette.linkedin }}
+          >
             <LinkedIn />
           </SpecialIconButton>
         </Box>
