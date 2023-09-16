@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Grow, Typography } from "@mui/material";
 import styles from "./TeamBox.module.css";
 import Image from "next/image";
 import { MainButton } from "@/MUIComponents/MainButton/MainButton";
@@ -39,54 +39,56 @@ const TeamBox = ({ data }) => {
     setTeamId(data._id);
   };
   return (
-    <Box className={`grid jcs aic ${styles.room}`}>
-      <Box
-        className={`flex jcc aic ${styles.room_image_box}`}
-        sx={{
-          backgroundColor: (theme) => theme.palette.white,
-        }}
-      >
-        <Image width={200} height={200} alt="room" src={data.Image} />
-      </Box>
-      <Box className={`grid jcs aic g20 ${styles.room_data}`}>
-        <Box className={`grid jcc aic`}>
-          <Head
-            title={data.Name}
-            teamName={true}
-            align="center"
-            color="#333"
-            h="h5"
-          />
+    <Grow in={true}>
+      <Box className={`grid jcs aic ${styles.room}`}>
+        <Box
+          className={`flex jcc aic ${styles.room_image_box}`}
+          sx={{
+            backgroundColor: (theme) => theme.palette.white,
+          }}
+        >
+          <Image width={200} height={200} alt="room" src={data.Image} />
         </Box>
-        <Box className={`grid jcc aic ${styles.room_button}`}>
-          {data.Members.includes(user_id) ? (
-            <MainButton
-              component={motion.button}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 1 },
-              }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleEnterTeam}
-            >
-              Enter
-            </MainButton>
-          ) : (
-            <MainButton
-              component={motion.button}
-              whileHover={{
-                scale: 1.05,
-                transition: { duration: 1 },
-              }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handleJoinTeam}
-            >
-              Join
-            </MainButton>
-          )}
+        <Box className={`grid jcs aic g20 ${styles.room_data}`}>
+          <Box className={`grid jcc aic`}>
+            <Head
+              title={data.Name}
+              teamName={true}
+              align="center"
+              color="#333"
+              h="h5"
+            />
+          </Box>
+          <Box className={`grid jcc aic ${styles.room_button}`}>
+            {data.Members.includes(user_id) ? (
+              <MainButton
+                component={motion.button}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 1 },
+                }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleEnterTeam}
+              >
+                Enter
+              </MainButton>
+            ) : (
+              <MainButton
+                component={motion.button}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 1 },
+                }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleJoinTeam}
+              >
+                Join
+              </MainButton>
+            )}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Grow>
   );
 };
 

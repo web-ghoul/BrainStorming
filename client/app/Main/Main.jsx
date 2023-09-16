@@ -19,6 +19,7 @@ import { getAuthData } from "@/store/authSlice";
 import SparkModal from "@/components/Models/SparkModal";
 import { getUserSparks } from "@/store/userSparksSlice";
 import { getTeam } from "@/store/teamSlice";
+import { MyBox } from "@/MUIComponents/MyBox/MyBox";
 
 const Main = ({ children }) => {
   const pathname = usePathname();
@@ -51,11 +52,11 @@ const Main = ({ children }) => {
     pathname === `/verify-account/${id}/${unique}`
   ) {
     return (
-      <PageBox component={"main"}>
+      <MyBox component={"main"} className={`flex jcc aic`}>
         <ToastContainer />
         <BackLoading />
         {children}
-      </PageBox>
+      </MyBox>
     );
   }
 

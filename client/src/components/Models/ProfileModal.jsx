@@ -32,6 +32,7 @@ const ProfileModal = ({ img, type }) => {
       onClose={handleToggleChangeAvatarModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type="change_avatar" />
@@ -43,6 +44,7 @@ const ProfileModal = ({ img, type }) => {
       onClose={handleToggleChangeProfileCoverModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type="change_cover" />
@@ -54,6 +56,7 @@ const ProfileModal = ({ img, type }) => {
       onClose={handleToggleEditProfileModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type="edit_profile" />
@@ -65,6 +68,7 @@ const ProfileModal = ({ img, type }) => {
       onClose={handleToggleViewAvatarModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box
         className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
@@ -90,6 +94,7 @@ const ProfileModal = ({ img, type }) => {
       onClose={handleToggleShowDeleteAccount}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
         <Form type={type} />
@@ -102,14 +107,12 @@ const ProfileModal = ({ img, type }) => {
         onClose={handleToggleViewCoverModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className={`flex jcc aic`}
       >
         <Box
           className={`grid jcs aic g30 ${styles.modal_box} ${styles.avatar_box}`}
         >
-          <Img
-            alt="cover"
-            src={img}
-          />
+          <Img alt="cover" src={img} />
           {signed && isUser && (
             <MainIconButton
               onClick={() => {

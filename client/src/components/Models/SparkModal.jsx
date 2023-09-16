@@ -57,6 +57,7 @@ const SparkModal = ({ type }) => {
       onClose={handleToggleChooseFiles}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box
         className={`grid jcs aic g10 ${styles.modal_box} ${styles.avatar_box}`}
@@ -94,10 +95,9 @@ const SparkModal = ({ type }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       open={openDataViewer}
+      className={`flex jcc aic`}
     >
-      <Box
-        className={`grid jcs aifs g30 ${styles.chosen_data_viewer_box}`}
-      >
+      <Box className={`grid jcs aifs g30 ${styles.chosen_data_viewer_box}`}>
         {dataType === "images" ? (
           <>
             <Head
@@ -187,6 +187,7 @@ const SparkModal = ({ type }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       open={openDataShow}
+      className={`flex jcc aic`}
     >
       <Box
         className={`grid jcs aifs g30 ${
@@ -261,6 +262,7 @@ const SparkModal = ({ type }) => {
         onClose={handleToggleUpdateSparkModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className={`flex jcc aic`}
       >
         <Box className={`grid jcs aic g10 `}>
           <Form type={type} />
