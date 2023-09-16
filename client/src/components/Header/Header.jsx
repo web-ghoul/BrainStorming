@@ -20,6 +20,7 @@ import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIcon
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
@@ -87,6 +88,12 @@ const Header = () => {
                   <SpecialIconButton
                     data-testid={"user_button"}
                     sx={{ color: (theme) => theme.palette.primary.main }}
+                    component={motion.button}
+                    whileHover={{
+                      scale: 1.05,
+                      transition: { duration: 1 },
+                    }}
+                    whileTap={{ scale: 0.9 }}
                   >
                     <AccountCircle />
                   </SpecialIconButton>
@@ -94,19 +101,41 @@ const Header = () => {
                 <SecondaryButton
                   onClick={handleLogOut}
                   data-testid={"auth_button"}
+                  component={motion.button}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 1 },
+                  }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   Log Out
                 </SecondaryButton>
               </>
             ) : (
               <>
-                <SecondaryButton data-testid={"auth_button"}>
+                <SecondaryButton
+                  component={motion.button}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 1 },
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  data-testid={"auth_button"}
+                >
                   <Link href={`${process.env.NEXT_PUBLIC_LOGIN_PAGE}`}>
                     Login
                   </Link>
                 </SecondaryButton>
 
-                <SecondaryButton data-testid={"auth_button"}>
+                <SecondaryButton
+                  component={motion.button}
+                  whileHover={{
+                    scale: 1.05,
+                    transition: { duration: 1 },
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  data-testid={"auth_button"}
+                >
                   <Link href={`${process.env.NEXT_PUBLIC_REGISTER_PAGE}`}>
                     Register
                   </Link>

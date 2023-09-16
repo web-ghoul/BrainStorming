@@ -8,39 +8,60 @@ import {
   ListItemButton,
   ListItemText,
   Drawer,
-  IconButton,
   Box,
   Typography,
   Modal,
 } from "@mui/material";
 import {
   Groups,
-  ChevronRight,
   Home,
+  HowToRegRounded,
   Info,
-  AccountCircle,
   Login,
   Logout,
 } from "@mui/icons-material";
 import { DrawerContext } from "@/context/DrawerContext";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
 import { SpecialIconButtonWithText } from "@/MUIComponents/SpecialIconButtonWithText/SpecialIconButtonWithText";
 import Logo from "../Logo/Logo";
 import { logOut } from "@/store/authSlice";
 import styles from "./Sidebar.module.css";
-import ModeToggle from "../ModeToggle/ModeToggle";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const { toggleDrawer, openDrawer } = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
   const { userData } = useSelector((state) => state.user);
-  const router = useRouter();
   const dispatch = useDispatch();
+  const router = useRouter();
   const handleLogOut = () => {
     router.push("/");
     dispatch(logOut());
   };
+
+  //Animation
+  const list = {
+    visible: {
+      opacity: 1,
+      transition: {
+        when: "beforeChildren",
+        staggerChildren: 1,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      transition: {
+        when: "afterChildren",
+      },
+    },
+  };
+  const item = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: -500 },
+  };
+  //Animation
+
   return (
     <Modal
       open={openDrawer}
@@ -77,8 +98,13 @@ const Sidebar = () => {
 
         <Divider />
 
-        <List>
-          <ListItem key={"Home"} disablePadding>
+        <List
+          component={motion.ul}
+          initial="hidden"
+          animate="visible"
+          variants={list}
+        >
+          <ListItem variants={item} key={"Home"} disablePadding>
             <ListItemButton
               onClick={() => {
                 router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
@@ -92,7 +118,7 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem>
 
-          <ListItem key={"Teams"} disablePadding>
+          <ListItem variants={item} key={"Teams"} disablePadding>
             <ListItemButton
               onClick={() => {
                 router.push(process.env.NEXT_PUBLIC_TEAMS_PAGE);
@@ -106,7 +132,7 @@ const Sidebar = () => {
             </ListItemButton>
           </ListItem>
 
-          <ListItem key={"About"} disablePadding>
+          <ListItem variants={item} key={"About"} disablePadding>
             <ListItemButton
               onClick={() => {
                 router.push(process.env.NEXT_PUBLIC_ABOUT_PAGE);
@@ -121,7 +147,7 @@ const Sidebar = () => {
           </ListItem>
 
           {signed ? (
-            <ListItem key={"Log Out"} disablePadding>
+            <ListItem variants={item} key={"Log Out"} disablePadding>
               <ListItemButton
                 onClick={() => {
                   handleLogOut();
@@ -138,7 +164,7 @@ const Sidebar = () => {
             </ListItem>
           ) : (
             <>
-              <ListItem key={"Login"} disablePadding>
+              <ListItem variants={item} key={"Login"} disablePadding>
                 <ListItemButton
                   onClick={() => {
                     router.push(process.env.NEXT_PUBLIC_LOGIN_PAGE);
@@ -153,7 +179,7 @@ const Sidebar = () => {
                   <ListItemText primary={"Login"} />
                 </ListItemButton>
               </ListItem>
-              <ListItem key={"Register"} disablePadding>
+              <ListItem variants={item} key={"Register"} disablePadding>
                 <ListItemButton
                   onClick={() => {
                     router.push(process.env.NEXT_PUBLIC_REGISTER_PAGE);
@@ -161,7 +187,7 @@ const Sidebar = () => {
                   }}
                 >
                   <ListItemIcon>
-                    <Info
+                    <HowToRegRounded
                       sx={{ color: (theme) => theme.palette.primary.main }}
                     />
                   </ListItemIcon>

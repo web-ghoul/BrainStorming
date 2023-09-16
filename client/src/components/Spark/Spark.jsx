@@ -16,11 +16,17 @@ import { useContext } from "react";
 import { MyThemeContext } from "@/context/MyThemeContext";
 import AudioGridBox from "../GridBoxes/AudioGridBox/AudioGridBox";
 import TeamName from "./TeamName";
+import { motion } from "framer-motion";
 
 const Spark = ({ data, teamShow }) => {
   const { mode } = useContext(MyThemeContext);
   return (
-    <Box className={`grid jcs aic`}>
+    <Box
+      component={motion.div}
+      animate={{x:[0,0], y: [100, 0] }}
+      transition={{ ease: "easeInOut", duration: .5 }}
+      className={`grid jcs aic`}
+    >
       {teamShow && <TeamName data={data} />}
       <Box className={`grid jcs aic g10 ${styles.spark}`}>
         <SparkHead data={data} />

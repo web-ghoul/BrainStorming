@@ -10,6 +10,7 @@ import { LoadingButtonContext } from "@/context/LoadingButtonContext";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Head from "../Head/Head";
+import { motion } from "framer-motion";
 
 const TeamBox = ({ data }) => {
   const { handleToggleJoinTeamModal, setTeamId } = useContext(TeamModalContext);
@@ -59,9 +60,29 @@ const TeamBox = ({ data }) => {
         </Box>
         <Box className={`grid jcc aic ${styles.room_button}`}>
           {data.Members.includes(user_id) ? (
-            <MainButton onClick={handleEnterTeam}>Enter</MainButton>
+            <MainButton
+              component={motion.button}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 1 },
+              }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleEnterTeam}
+            >
+              Enter
+            </MainButton>
           ) : (
-            <MainButton onClick={handleJoinTeam}>Join</MainButton>
+            <MainButton
+              component={motion.button}
+              whileHover={{
+                scale: 1.05,
+                transition: { duration: 1 },
+              }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleJoinTeam}
+            >
+              Join
+            </MainButton>
           )}
         </Box>
       </Box>
