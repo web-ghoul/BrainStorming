@@ -6,14 +6,12 @@ import Link from "next/link";
 
 const Logo = ({ title, color, align }) => {
   return (
-    <Link
-      className={`${styles.logo} flex ${
-        align && align === "center" ? "jcc" : "jcfs"
-      } aic g10 ${styles.logo}`}
-      href={`${process.env.NEXT_PUBLIC_HOME_PAGE}`}
-    >
-      <IconButton
-        data-testid={"logo_button"}
+    <IconButton className={`${styles.logo}`}>
+      <Link
+        className={`flex ${
+          align && align === "center" ? "jcc" : "jcfs"
+        } aic g10 ${styles.logo}`}
+        href={`${process.env.NEXT_PUBLIC_HOME_PAGE}`}
       >
         <EmojiObjects
           sx={{
@@ -23,15 +21,15 @@ const Logo = ({ title, color, align }) => {
                 : theme.palette.white,
           }}
           className={`${styles.logo_icon}`}
-          data-testid="logo_icon"
+          data-testid={"logo_icon"}
         />
         {title && (
-          <Typography  variant="h6" sx={{ color: color }} className={`fw700`}>
+          <Typography variant="h6" sx={{ color: color }} className={`fw700`}>
             BrainStorming
           </Typography>
         )}
-      </IconButton>
-    </Link>
+      </Link>
+    </IconButton>
   );
 };
 

@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import Logo from "@/components/Logo/Logo";
 const theme = createTheme();
 
-describe.skip("Logo Component", () => {
+describe("Logo Component", () => {
   it("Logo Icon", () => {
     render(
       <ThemeProvider theme={theme}>
