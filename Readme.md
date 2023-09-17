@@ -18,9 +18,6 @@ Welcome to **BrainStorming**, a collaborative platform designed to supercharge y
     - [Sharing Project Ideas](#sharing-project-ideas)
     - [User Profiles](#user-profiles)
   - [Team Leader Privileges](#team-leader-privileges)
-  - [Emoji Support](#emoji-support)
-  - [Design](#design)
-  - [Contributing](#contributing)
   - [License](#license)
 
 ## 🔥 Introduction
@@ -76,13 +73,13 @@ BrainStorming offers an array of powerful features:
 3. Write a detailed description of your project idea.
 4. Click "Post."
 
-### User Profiles
+### 👱‍♂️ User Profiles
 
 1. Access your profile settings.
 2. Customize your avatar, profile cover, bio, and other details.
 3. Click "Save Changes."
 
-## Team Leader Privileges
+## 🔐 Team Leader Privileges
 
 Team leaders have additional privileges:
 
@@ -90,26 +87,8 @@ Team leaders have additional privileges:
 - Change the team cover to suit your project.
 - Manage team membership and invitations.
 
-## Emoji Support
-
-Express yourself with emojis! BrainStorming fully supports emojis in posts, comments, and user profiles. 🎉
-
-## Design
-
-We've crafted BrainStorming with a clean and user-friendly design to enhance your experience. We believe in making teamwork enjoyable!
-
-## Contributing
-
-We welcome contributions from the community to enhance BrainStorming's features and user experience. To contribute, please follow these steps:
-1. Fork the repository.
-2. Create a new branch.
-3. Make your improvements or additions.
-4. Submit a pull request with a detailed description of your changes.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE.md).
-
----
 
 Thank you for choosing BrainStorming. We hope your graduation project journey is filled with creativity, collaboration, and success. If you have any questions or need assistance, please don't hesitate to contact our support team at [support@brainstorming.com](mailto:support@brainstorming.com). Happy brainstorming! 🚀
