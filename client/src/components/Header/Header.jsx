@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   AppBar,
   Container,
@@ -14,7 +14,6 @@ import styles from "./Header.module.css";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
 import { DrawerContext } from "@/context/DrawerContext";
-import ModeToggle from "../ModeToggle/ModeToggle";
 import { SecondaryButton } from "@/MUIComponents/SecondaryButton/SecondaryButton";
 import { SpecialIconButton } from "@/MUIComponents/SpecialIconButton/SpecialIconButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +23,7 @@ import { motion } from "framer-motion";
 
 const Header = () => {
   const smallSize = useMediaQuery("(max-width:768px)");
-  const drawerContext = useContext(DrawerContext);
+  const {toggleDrawer} = useContext(DrawerContext);
   const { signed, user_id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -46,8 +45,9 @@ const Header = () => {
         <Logo title={true} color={"#fff"} />
         {smallSize ? (
           <SpecialIconButton
-            onClick={drawerContext.toggleDrawer}
+            onClick={toggleDrawer}
             sx={{ color: (theme) => theme.palette.primary.main }}
+            data-testid={"menu_button"}
           >
             <Menu />
           </SpecialIconButton>

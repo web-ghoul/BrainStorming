@@ -17,8 +17,6 @@ const Home = () => {
 
   return (
     <Container
-      component={motion.div}
-      layout
       className={`grid jcs aic tac ${styles.home}`}
     >
       <Box className={`grid jcfs aic g10 ${styles.text}`}>
@@ -35,21 +33,11 @@ const Home = () => {
           onClick={handleStartClick}
           sx={{ width: "fit-content" }}
           data-testid={"start_button"}
-          component={motion.button}
         >
           Start
         </MainButton>
       </Box>
       <Box
-        component={motion.div}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        whileHover={{
-          scale: 1.05,
-          transition: { duration: 1 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        viewport={{ once: true }}
         className={`flex jcfe aic ${styles.image_box}`}
       >
         <Image alt="home_background" src={backImg} />

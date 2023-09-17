@@ -45,9 +45,9 @@ const TeamBox = ({ data }) => {
           className={`flex jcc aic ${styles.room_image_box}`}
           sx={{
             backgroundColor: (theme) => theme.palette.white,
+            backgroundImage:`url(${data.Image})`
           }}
         >
-          <Image width={200} height={200} alt="room" src={data.Image} />
         </Box>
         <Box className={`grid jcs aic g20 ${styles.room_data}`}>
           <Box className={`grid jcc aic`}>
