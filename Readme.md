@@ -1,6 +1,6 @@
 # BrainStorming 🧠💡
 
-![BrainStorming Logo]([link_to_your_logo.png](https://res.cloudinary.com/dz7nwcejb/image/upload/v1694634343/images/baonaocylfosucwqwngi.png))
+![BrainStorming Logo](https://res.cloudinary.com/dz7nwcejb/image/upload/v1694634343/images/baonaocylfosucwqwngi.png)
 
 Welcome to **BrainStorming**, a collaborative platform designed to supercharge your graduation project teamwork and idea sharing experience. 🚀
 
