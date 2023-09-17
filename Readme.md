@@ -1,6 +1,5 @@
 # 💡 BrainStorming 🧠
 
-
 Welcome to **BrainStorming**, a collaborative platform designed to supercharge your graduation project teamwork and idea sharing experience. 🚀
 
 ## Table of Contents
@@ -14,11 +13,9 @@ Welcome to **BrainStorming**, a collaborative platform designed to supercharge y
   - [😎 Features](#-features)
   - [💯 Usage](#-usage)
     - [⚽ Creating a Team](#-creating-a-team)
-    - [🎟️ Inviting Members](#️-inviting-members)
     - [🎯 Sharing Project Ideas](#-sharing-project-ideas)
     - [👱‍♂️ User Profiles](#️-user-profiles)
   - [🔐 Team Leader Privileges](#-team-leader-privileges)
-  - [License](#license)
 
 ## 🔥 Introduction
 
@@ -44,7 +41,6 @@ To get the most out of BrainStorming, you'll need:
 BrainStorming offers an array of powerful features:
 
 - **Team Creation:** Form your project team and become the team leader.
-- **Member Invitation:** Invite project partners via email to join your team.
 - **Project Idea Sharing:** Post, share, and discuss project ideas within your team.
 - **User Profiles:** Customize your profile with avatars, profile covers, bio, and more.
 - **Team Leader Privileges:** Team leaders can edit/delete posts, change team covers, and more.
@@ -59,19 +55,13 @@ BrainStorming offers an array of powerful features:
 3. Provide a team name and description.
 4. Click "Create Team."
 
-### 🎟️ Inviting Members
-
-1. Navigate to your team's page.
-2. Click on the "Invite Members" button.
-3. Enter email addresses of the members you want to invite.
-4. Click "Send Invitations."
-
 ### 🎯 Sharing Project Ideas
 
 1. Visit your team's page.
 2. Click on the "Create Post" button.
 3. Write a detailed description of your project idea.
-4. Click "Post."
+4. Attach records, images, documents, and audios as needed.
+5. Click "Post."
 
 ### 👱‍♂️ User Profiles
 
@@ -86,9 +76,5 @@ Team leaders have additional privileges:
 - Edit and delete any post within the team.
 - Change the team cover to suit your project.
 - Manage team membership and invitations.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE.md).
 
 Thank you for choosing BrainStorming. We hope your graduation project journey is filled with creativity, collaboration, and success. If you have any questions or need assistance, please don't hesitate to contact our support team at [support@brainstorming.com](mailto:support@brainstorming.com). Happy brainstorming! 🚀
