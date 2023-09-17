@@ -32,7 +32,7 @@ To get the most out of BrainStorming, you'll need:
 
 ### 🥳 Installation
 
-1. Visit the BrainStorming website at [https://brainstorming-ecru.vercel.app/](https://www.brainstorming.com).
+1. Visit the BrainStorming website at [https://brainstorming-ecru.vercel.app/](https://brainstorming-ecru.vercel.app/).
 2. Sign up for an account or log in if you already have one.
 3. Follow the on-screen instructions to set up your profile.
 
