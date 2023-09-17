@@ -8,7 +8,7 @@ Welcome to **BrainStorming**, a collaborative platform designed to supercharge y
   - [Table of Contents](#table-of-contents)
   - [🔥 Introduction](#-introduction)
   - [✨ Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
+    - [🎯 Prerequisites](#-prerequisites)
     - [🥳 Installation](#-installation)
   - [😎 Features](#-features)
   - [💯 Usage](#-usage)
@@ -23,7 +23,7 @@ Welcome to **BrainStorming**, a collaborative platform designed to supercharge y
 
 ## ✨ Getting Started
 
-### Prerequisites
+### 🎯 Prerequisites
 
 To get the most out of BrainStorming, you'll need:
 
@@ -77,4 +77,4 @@ Team leaders have additional privileges:
 - Change the team cover to suit your project.
 - Manage team membership and invitations.
 
-Thank you for choosing BrainStorming. We hope your graduation project journey is filled with creativity, collaboration, and success. If you have any questions or need assistance, please don't hesitate to contact our support team at [support@brainstorming.com](mailto:support@brainstorming.com). Happy brainstorming! 🚀
+Thank you for choosing BrainStorming. We hope your graduation project journey is filled with creativity, collaboration, and success. If you have any questions or need assistance, please don't hesitate to contact our support team at [brainstormsupp@gmail.com] Happy brainstorming! 🚀
