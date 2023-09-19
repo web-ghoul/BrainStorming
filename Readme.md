@@ -45,7 +45,8 @@ BrainStorming offers an array of powerful features:
 - **User Profiles:** Customize your profile with avatars, profile covers, bio, and more.
 - **Team Leader Privileges:** Team leaders can edit/delete posts, change team covers, and more.
 - **User Management:** Leave teams or delete your account easily.
-
+- **User Authentication:** Alternatively, you can log in quickly using Google, LinkedIn, or Facebook.
+- 
 ## 💯 Usage
 
 ### ⚽ Creating a Team
