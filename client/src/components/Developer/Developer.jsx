@@ -10,8 +10,10 @@ import {
   WhatsApp,
 } from "@mui/icons-material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Developer = ({ dev }) => {
+  const router = useRouter()
   return (
     <Box className={`flex jcsb aic g30 ${styles.dev}`}>
       <Box className={`flex jcfs aic g10 ${styles.dev_box}`}>

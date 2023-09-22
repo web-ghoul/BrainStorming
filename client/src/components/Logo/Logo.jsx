@@ -21,6 +21,7 @@ const Logo = ({ title, color, align }) => {
                 : theme.palette.white,
           }}
           className={`${styles.logo_icon}`}
+          data-testid={"logo_icon"}
         />
         {title && (
           <Typography variant="h6" sx={{ color: color }} className={`fw700`}>

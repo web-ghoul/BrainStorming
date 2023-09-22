@@ -7,15 +7,18 @@ import backImg from "../../../public/images/team8.svg";
 import shapeImg from "../../../public/images/shape.png";
 import styles from "./Home.module.css";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const router = useRouter();
   const handleStartClick = () => {
     router.push(`${process.env.NEXT_PUBLIC_TEAMS_PAGE}`);
   };
-  
+
   return (
-    <Container className={`grid jcs aic tac ${styles.home}`}>
+    <Container
+      className={`grid jcs aic tac ${styles.home}`}
+    >
       <Box className={`grid jcfs aic g10 ${styles.text}`}>
         <Box className={`flex jcfs aic ${styles.shape_box}`}>
           <Image alt="home_Image_shape" src={shapeImg} />
@@ -34,7 +37,9 @@ const Home = () => {
           Start
         </MainButton>
       </Box>
-      <Box className={`flex jcfe aic ${styles.image_box}`}>
+      <Box
+        className={`flex jcfe aic ${styles.image_box}`}
+      >
         <Image alt="home_background" src={backImg} />
       </Box>
     </Container>

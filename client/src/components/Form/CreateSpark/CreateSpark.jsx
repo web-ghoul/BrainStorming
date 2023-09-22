@@ -2,7 +2,6 @@
 import React from "react";
 import { useState } from "react";
 import {
-  SentimentSatisfiedRounded,
   AttachFileRounded,
   DeleteRounded,
   ImageRounded,
@@ -10,9 +9,6 @@ import {
   VideoLibraryRounded,
   AudiotrackRounded,
 } from "@mui/icons-material";
-
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
 import ImagesGridBox from "@/components/GridBoxes/ImagesGridBox/ImagesGridBox";
@@ -24,17 +20,11 @@ import AudioGridBox from "@/components/GridBoxes/AudioGridBox/AudioGridBox";
 import DocsGridBox from "@/components/GridBoxes/DocsGridBox/DocsGridBox";
 
 const CreateSpark = ({ formik }) => {
-  const [dropEmojiShow, setDropEmojiShow] = useState(false);
-  const [brainWaveEmojiShow, setBrainWaveEmojiShow] = useState(false);
-  const [dropWithEmoji, setDropWithEmoji] = useState(false);
-  const [brainWaveWithEmoji, setBrainWaveWithEmoji] = useState(false);
   const {
-    handleFiles,
     handleToggleChooseFiles,
     imageFiles,
     audioFiles,
     docFiles,
-    setAudioFiles,
     setRecord,
   } = useContext(SparkModalContext);
   const [recordExist, setRecordExist] = useState(false);
@@ -84,22 +74,7 @@ const CreateSpark = ({ formik }) => {
               error={formik.touched.idea && Boolean(formik.errors.idea)}
               helperText={formik.touched.idea && formik.errors.idea}
             />
-            <IconButton onClick={() => setDropEmojiShow(!dropEmojiShow)}>
-              <SentimentSatisfiedRounded className={`smile_icon`} />
-            </IconButton>
           </Box>
-
-          {dropEmojiShow && (
-            <Picker
-              onClickOutside={() => setDropEmojiShow(!dropEmojiShow)}
-              theme={"light"}
-              data={data}
-              onEmojiSelect={(e) => {
-                setDropWithEmoji(!dropWithEmoji);
-                formik.values.idea += e.native;
-              }}
-            />
-          )}
         </Box>
         <Box>
           <Box className={`flex jcs aifs g5`}>
@@ -121,23 +96,7 @@ const CreateSpark = ({ formik }) => {
                 formik.touched.description && formik.errors.description
               }
             />
-            <IconButton
-              onClick={() => setBrainWaveEmojiShow(!brainWaveEmojiShow)}
-            >
-              <SentimentSatisfiedRounded  className={`smile_icon`}  />
-            </IconButton>
           </Box>
-          {brainWaveEmojiShow && (
-            <Picker
-              onClickOutside={() => setBrainWaveEmojiShow(false)}
-              theme={"light"}
-              data={data}
-              onEmojiSelect={(e) => {
-                setBrainWaveWithEmoji(!brainWaveWithEmoji);
-                formik.values.description += e.native;
-              }}
-            />
-          )}
         </Box>
       </Box>
 

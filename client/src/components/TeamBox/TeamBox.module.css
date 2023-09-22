@@ -10,6 +10,9 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .room_image_box img {

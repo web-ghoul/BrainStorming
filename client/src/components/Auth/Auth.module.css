@@ -1,4 +1,5 @@
 .auth_contain img{
-    width: 40%;
+    width: 50%;
     height: auto;
+    position: relative;
 }

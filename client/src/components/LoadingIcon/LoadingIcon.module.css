@@ -4,6 +4,7 @@
   animation-fill-mode: both;
   animation-iteration-count: infinite;
   font-size: 35px !important;
+  position: relative;
 }
 
 @keyframes rotate {

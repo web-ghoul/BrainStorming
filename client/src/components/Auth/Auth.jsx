@@ -11,7 +11,7 @@ const Auth = () => {
   return (
     <MyBox>
       <Container className={`grid jcs aic g30 ${styles.auth_contain}`}>
-        <Image src={authImg} alt={"authentication"} />
+        <Image src={authImg} alt={"authentication"} className={`center_x`} />
         <LoadingIcon color={theme.palette.primary.main} />
       </Container>
     </MyBox>

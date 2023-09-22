@@ -234,7 +234,7 @@ const Form = ({ type, setValue }) => {
       setButtonLoading(false);
     },
   });
-  
+
   const registerFormik = useFormik({
     initialValues: registerInitialValues,
     validationSchema: registerValidationSchema,
@@ -649,7 +649,13 @@ const Form = ({ type, setValue }) => {
           type === "edit_profile" ||
           type === "update_spark") &&
         "team_form"
-      } ${type === "edit_profile" && "g30 edit_profile_box"} ${
+      } ${
+        (type === "login" ||
+          type === "register" ||
+          type === "forgot_password" ||
+          type === "reset_password") &&
+        "auth_form"
+      }  ${type === "edit_profile" && "g30 edit_profile_box"} ${
         (type === "change_cover" ||
           type === "change_team_image" ||
           type === "change_avatar" ||

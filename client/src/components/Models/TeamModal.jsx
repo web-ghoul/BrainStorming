@@ -30,6 +30,7 @@ const TeamModal = ({ type }) => {
       onClose={handleToggleAddNewTeamModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10`}>
         <Form type="add_new_team" />
@@ -41,6 +42,7 @@ const TeamModal = ({ type }) => {
       onClose={handleToggleJoinTeamModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10 `}>
         <Form type="join_team" />
@@ -52,6 +54,7 @@ const TeamModal = ({ type }) => {
       onClose={handleToggleChangeTeamImageModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box className={`grid jcs aic g10 `}>
         <Form type="change_team_image" />
@@ -63,6 +66,7 @@ const TeamModal = ({ type }) => {
       onClose={handleToggleViewTeamImageModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      className={`flex jcc aic`}
     >
       <Box
         className={`grid jcs aic g30 ${styles.view_team_image_box}  ${styles.modal_box} ${styles.avatar_box}`}
@@ -94,6 +98,7 @@ const TeamModal = ({ type }) => {
         onClose={handleToggleLeaveTeamModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        className={`flex jcc aic`}
       >
         <Box className={`grid jcs aic g10 ${styles.modal_box}`}>
           <Form type={type} />
