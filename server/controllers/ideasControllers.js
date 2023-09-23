@@ -90,6 +90,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     .then((result) => {
       res.status(200).json({
         message: "Idea Added Successfully",
+        data : result ,
       });
       
     })
