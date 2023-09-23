@@ -35,7 +35,6 @@ import DeleteAccount from "./DeleteAccount/DeleteAccount";
 import LeaveTeam from "./LeaveTeam/LeaveTeam";
 import UpdateSpark from "./UpdateSpark/UpdateSpark";
 import { getUserSparks } from "@/store/userSparksSlice";
-
 const Form = ({ type, setValue }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
   const {
@@ -68,7 +67,7 @@ const Form = ({ type, setValue }) => {
   const router = useRouter();
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
-  const { token, user_id } = useSelector((state) => state.auth);
+  const { token, user_id ,socket } = useSelector((state) => state.auth);
   const { team } = useSelector((state) => state.team);
 
   const handleResetPassword = async () => {
@@ -217,7 +216,8 @@ const Form = ({ type, setValue }) => {
       setButtonLoading(true);
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
-        .then((res) => {
+        .then(async(res) => {
+
           router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
           Cookies.set("token", res.data.token);
           Cookies.set("user_id", res.data.userId);
@@ -368,8 +368,8 @@ const Form = ({ type, setValue }) => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((res) => {
-          console.log(res)
+        .then(async(res) => {
+          await socket.emit("send_message",{spark:res.data.data,team:team.Name})
           handleAlertToastify(res.data.message, "success");
           handleResetData();
           dispatch(getUserSparks({ token, user_id }));

@@ -15,8 +15,9 @@ import { motion } from "framer-motion";
 const TeamBox = ({ data }) => {
   const { handleToggleJoinTeamModal, setTeamId } = useContext(TeamModalContext);
   const { setButtonLoading } = useContext(LoadingButtonContext);
-  const { user_id, token } = useSelector((state) => state.auth);
+  const { user_id,socket, token } = useSelector((state) => state.auth);
   const router = useRouter();
+  
   const handleEnterTeam = async () => {
     setButtonLoading(true);
     await axios
@@ -25,7 +26,8 @@ const TeamBox = ({ data }) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => {
+      .then(async(res) => {
+        await socket.emit("join_room",data.Name)
         router.push(`/teams/${data._id}`);
       })
       .catch((err) => {

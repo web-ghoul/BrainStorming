@@ -18,6 +18,12 @@ const initialState = {
 export const sparksSlice = createSlice({
   name: "sparks",
   initialState,
+  reducers:{
+    addSpark:(state,action)=>{
+      console.log(actions)
+      state.sparks.unshift(action.payload)
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(getSparks.fulfilled, (state, action) => {
       state.sparks = action.payload;
@@ -26,4 +32,5 @@ export const sparksSlice = createSlice({
   },
 });
 
+export const {addSpark} = sparksSlice.actions
 export default sparksSlice.reducer;
