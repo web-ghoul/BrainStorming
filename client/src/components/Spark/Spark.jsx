@@ -13,13 +13,11 @@ import {
   VideoLibraryRounded,
 } from "@mui/icons-material";
 import { useContext } from "react";
-import { MyThemeContext } from "@/context/MyThemeContext";
 import AudioGridBox from "../GridBoxes/AudioGridBox/AudioGridBox";
 import TeamName from "./TeamName";
 import { Slide } from "@mui/material";
 
 const Spark = ({ data, teamShow }) => {
-  const { mode } = useContext(MyThemeContext);
   return (
     <Slide direction="up" in={true} mountOnEnter unmountOnExit>
       <Box className={`grid jcs aic`}>
@@ -32,7 +30,7 @@ const Spark = ({ data, teamShow }) => {
                 h={"h5"}
                 align="left"
                 title={data.Idea}
-                color={mode === "dark" ? "#fff" : "#000"}
+                color={"#000"}
               />
               <Typography variant="h6" className={`fw500`}>
                 {data.Description}

@@ -11,10 +11,11 @@ const Head = ({ title, align, h, color, special }) => {
       sx={{
         position: "relative",
       }}
+      data-testid="title"
     >
       {title && title.length > 20 ? (
         <Tooltip title={title} arrow>
-          <Typography
+          <Typography 
             sx={{ textAlign: { align }, color: color ? color : "#333" }}
             variant={h}
           >
@@ -25,6 +26,7 @@ const Head = ({ title, align, h, color, special }) => {
         <Typography
           sx={{ textAlign: { align }, color: color ? color : "#333" }}
           variant={h}
+          data-testid="title_paragraph"
         >
           {title}
         </Typography>

@@ -33,9 +33,6 @@ const Header = () => {
   };
   return (
     <AppBar
-      sx={{
-        backgroundColor: (theme) => theme.palette.primary.main,
-      }}
       className={`${styles.header}`}
     >
       <Container

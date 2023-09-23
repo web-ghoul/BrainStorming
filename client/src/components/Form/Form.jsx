@@ -32,14 +32,12 @@ import { getTeam } from "@/store/teamSlice";
 import DeleteSpark from "./DeleteSpark/DeleteSpark";
 import { getSparks } from "@/store/sparksSlice";
 import DeleteAccount from "./DeleteAccount/DeleteAccount";
-import { MyThemeContext } from "@/context/MyThemeContext";
 import LeaveTeam from "./LeaveTeam/LeaveTeam";
 import UpdateSpark from "./UpdateSpark/UpdateSpark";
 import { getUserSparks } from "@/store/userSparksSlice";
 
 const Form = ({ type, setValue }) => {
   const { setButtonLoading } = useContext(LoadingButtonContext);
-  const { mode } = useContext(MyThemeContext);
   const {
     teamId,
     handleToggleJoinTeamModal,
@@ -371,6 +369,7 @@ const Form = ({ type, setValue }) => {
           },
         })
         .then((res) => {
+          console.log(res)
           handleAlertToastify(res.data.message, "success");
           handleResetData();
           dispatch(getUserSparks({ token, user_id }));
@@ -664,11 +663,7 @@ const Form = ({ type, setValue }) => {
           type === "leave_team") &&
         "profile_form g30"
       } ${type === "create_spark" && "g30 spark_form border_none"}`}
-      style={
-        mode === "light"
-          ? { backgroundColor: "#fff" }
-          : { backgroundColor: "#000", border: "2px solid #037ef3" }
-      }
+      style={{ backgroundColor: "#fff" }}
     >
       {type === "login" ? (
         <Login
