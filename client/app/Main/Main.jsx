@@ -4,7 +4,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import TeamModal from "@/components/Models/TeamModal";
 import FloatActionButtons from "@/components/FloatActionButtons/FloatActionButtons";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { PageBox } from "@/MUIComponents/PageBox/PageBox";
 import BackLoading from "@/components/BackLoading/BackLoading";
 import { ToastContainer } from "react-toastify";

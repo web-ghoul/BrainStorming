@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 import { useSelector } from "react-redux";
 import Spark from "../Spark/Spark";
 import LoadingDashboard from "./LoadingDashboard";

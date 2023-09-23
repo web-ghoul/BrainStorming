@@ -13,18 +13,11 @@ import { Box, IconButton, Modal, Typography } from "@mui/material";
 import { RedIconButton } from "@/MUIComponents/RedIconButton/RedIconButton";
 import { Close, DeleteRounded, Preview } from "@mui/icons-material";
 import SpecialImage from "../SpecialImage/SpecialImage";
-import Image from "next/image";
-import pdfImg from "../../../public/images/pdf.png";
-import powerPointImg from "../../../public/images/pptx.png";
-import excelImg from "../../../public/images/xlsx.png";
-import wordImg from "../../../public/images/doc.png";
-import { MyThemeContext } from "@/context/MyThemeContext";
 import { MainIconButton } from "@/MUIComponents/MainIconButton/MainIconButton";
 import { Carousel } from "react-responsive-carousel";
 import Document from "../Document/Document";
 
 const SparkModal = ({ type }) => {
-  const { mode } = useContext(MyThemeContext);
   const {
     chooseFiles,
     handleToggleChooseFiles,
@@ -63,7 +56,7 @@ const SparkModal = ({ type }) => {
         className={`grid jcs aic g10 ${styles.modal_box} ${styles.avatar_box}`}
       >
         <Head
-          color={mode === "dark" ? "#fff" : "#000"}
+          color={ "#000"}
           align={"center"}
           h={"h4"}
           title={"Choose Files And Images"}
@@ -102,7 +95,7 @@ const SparkModal = ({ type }) => {
           <>
             <Head
               align={"center"}
-              color={mode === "dark" ? "#fff" : "#000"}
+              color={ "#000"}
               h={"h3"}
               title={"Chosen Images"}
             />
@@ -128,7 +121,7 @@ const SparkModal = ({ type }) => {
             <Head
               align={"center"}
               h={"h4"}
-              color={mode === "dark" ? "#fff" : "#000"}
+              color={"#000"}
               title={"Chosen Documents"}
             />
             <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
@@ -152,7 +145,7 @@ const SparkModal = ({ type }) => {
         ) : (
           <>
             <Head
-              color={mode === "dark" ? "#fff" : "#000"}
+              color={"#000"}
               align={"center"}
               h={"h3"}
               title={"Chosen Audios"}
@@ -199,7 +192,7 @@ const SparkModal = ({ type }) => {
         {dataType === "docs" ? (
           <>
             <Head
-              color={mode === "dark" ? "#fff" : "#000"}
+              color={"#000"}
               align={"center"}
               h={"h4"}
               title={"Documents"}
@@ -222,7 +215,7 @@ const SparkModal = ({ type }) => {
         ) : dataType === "audios" ? (
           <>
             <Head
-              color={mode === "dark" ? "#fff" : "#000"}
+              color={"#000"}
               align={"center"}
               h={"h3"}
               title={"Chosen Audios"}
