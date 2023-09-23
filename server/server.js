@@ -229,7 +229,7 @@ mongoose
       );
       let val = "Amr006";
     });
-    io = socket(server);
+    var io = socket(server);
 
     io.on("connection", (socket) => {
       console.log(socket.id);
