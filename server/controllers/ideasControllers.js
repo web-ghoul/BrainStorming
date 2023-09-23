@@ -21,8 +21,8 @@ const postIdeas = asyncHandler(async (req, res, next) => {
       message : "You are not authorized"
     })
   }
-  console.log(req.files.files);
-  console.log(idea);
+//  console.log(req.files.files);
+//  console.log(idea);
   if (!idea) {
     return res.status(400).json({
       message: "Please fill Brainwave",
@@ -44,8 +44,8 @@ const postIdeas = asyncHandler(async (req, res, next) => {
         message: "Error while uploading files and images !",
       });
     }
-    console.log("here to delete")
-    console.log(arrayOfUrls)
+    //console.log("here to delete")
+    //console.log(arrayOfUrls)
     var imagesArray = [];
     var filesArray = [];
     var audiosArray = [];
@@ -61,11 +61,11 @@ const postIdeas = asyncHandler(async (req, res, next) => {
       
   }
   var audio = "";
-  console.log(req.files.record)
+//  console.log(req.files.record)
   if(req.files && req.files.record && req.files.record.length > 0)
   {
     try {
-      console.log(req.files.record)
+//console.log(req.files.record)
       urlOfImage = await uploadImage(req.files.record[0], "record");
     } catch (err) {
       return res.status(500).json({
@@ -85,7 +85,7 @@ const postIdeas = asyncHandler(async (req, res, next) => {
     Team: team,
     WrittenBy: req.userId,
   });
-  console.log(newIdea)
+//  console.log(newIdea)
   await newIdea
     .save()
     .then((result) => {
@@ -165,7 +165,7 @@ const updateIdea = asyncHandler(async (req, res, next) => {
   const { idea, description } = req.body;
 
   const data = await Ideas.findOne({ _id: req.params.id }).populate("WrittenBy") ;
-  console.log(data)
+//  console.log(data)
   if (data && data.WrittenBy._id == req.userId) {
     data.Idea = idea;
     data.Description = description;

@@ -94,7 +94,7 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 //app.use(morgan('combined', { stream: accessLogStream }))
-app.use(morgan("combined"));
+//app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
@@ -232,15 +232,19 @@ mongoose
     var io = socket(server);
 
     io.on("connection", (socket) => {
+      console.log("helllllllllllooooooooooooooooooooooooooooo socket connection")
       console.log(socket.id);
 
       socket.on("join_room", (data) => {
         socket.join(data);
+        console.log("helllllllllllooooooooooooooooooooooooooooo join room")
+
         console.log("User Joined Room: " + data);
       });
 
       socket.on("send_message", (data) => {
-        console.log(data);
+        console.log("helllllllllllooooooooooooooooooooooooooooo send message")
+        console.log({data});
         socket.to(data.team).emit("receive_message", data.spark);
       });
 
