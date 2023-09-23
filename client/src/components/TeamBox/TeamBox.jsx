@@ -11,27 +11,33 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Head from "../Head/Head";
 import { motion } from "framer-motion";
+import { socket } from "../../../app/Main/Main";
 
 const TeamBox = ({ data }) => {
   const { handleToggleJoinTeamModal, setTeamId } = useContext(TeamModalContext);
   const { setButtonLoading } = useContext(LoadingButtonContext);
-  const { user_id,socket, token } = useSelector((state) => state.auth);
+  const { user_id, token } = useSelector((state) => state.auth);
   const router = useRouter();
+  console.log(data)
   
-  const handleEnterTeam = async () => {
+  const handleEnterTeam = async (d) => {
     setButtonLoading(true);
     await axios
-      .get(process.env.NEXT_PUBLIC_SERVER_URL + `/EnterTeam/${data._id}`, {
+      .get(process.env.NEXT_PUBLIC_SERVER_URL + `/EnterTeam/${d._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(async(res) => {
-        await socket.emit("join_room",data.Name)
-        router.push(`/teams/${data._id}`);
+      .then(async() => {
+        router.push(`/teams/${d._id}`);
+        await socket.emit("join_room",d.Name)
       })
       .catch((err) => {
-        handleAlertToastify(err.response.data.message, "error");
+        try{
+          handleAlertToastify(err.response.data.message, "error");
+        }catch(error){
+          handleAlertToastify(error, "error");
+        }
       });
     setButtonLoading(false);
   };
@@ -70,7 +76,7 @@ const TeamBox = ({ data }) => {
                   transition: { duration: 1 },
                 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={handleEnterTeam}
+                onClick={()=>handleEnterTeam(data)}
               >
                 Enter
               </MainButton>

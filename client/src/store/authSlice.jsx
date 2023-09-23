@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import io from "socket.io-client"
+
 
 const initialState = {
   signed: false,
   user_id: null,
   token: null,
-  socket:null
 };
 
 export const authSlice = createSlice({
@@ -16,7 +15,6 @@ export const authSlice = createSlice({
     getAuthData: (state, action) => {
       state.user_id = action.payload.user_id;
       state.token = action.payload.token;
-      state.socket = io("http://localhost:3000");
       if (state.user_id && state.token) {
         state.signed = true;
       }

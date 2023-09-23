@@ -21,6 +21,10 @@ import { getUserSparks } from "@/store/userSparksSlice";
 import { getTeam } from "@/store/teamSlice";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
 
+import io from "socket.io-client";
+
+export const socket = io("http://localhost:3000");
+
 const Main = ({ children }) => {
   const pathname = usePathname();
   const dispatch = useDispatch();
