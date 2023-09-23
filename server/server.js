@@ -19,6 +19,7 @@ const passport = require("passport");
 const rateLimit = require("express-rate-limit");
 var hpp = require("hpp");
 const mongoSanitize = require("express-mongo-sanitize");
+const socket = require("socket.io");
 
 const uploadImage = require("./utils/uploadImage");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
@@ -180,6 +181,10 @@ app.post("/uploadMultipleImages", upload.array("files"), (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
+
+
+
+
 app.get("/", (req, res, next) => {
   // Imagine you're serving a secret treasure map to your users!
   const treasureMap = {
@@ -215,7 +220,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((result) => {
-    app.listen(Port, () => {
+    var server = app.listen(Port, () => {
       console.log(`App listening at http://${ip}:${Port}`);
       console.log(
         "Database Connected : ",
@@ -223,6 +228,25 @@ mongoose
         result.connection.name,
       );
       let val = "Amr006";
+    });
+    io = socket(server);
+
+    io.on("connection", (socket) => {
+      console.log(socket.id);
+
+      socket.on("join_room", (data) => {
+        socket.join(data);
+        console.log("User Joined Room: " + data);
+      });
+
+      socket.on("send_message", (data) => {
+        console.log(data);
+        socket.to(data.team).emit("receive_message", data.spark);
+      });
+
+      socket.on("disconnect", () => {
+        console.log("USER DISCONNECTED");
+      });
     });
   })
   .catch((err) => {
