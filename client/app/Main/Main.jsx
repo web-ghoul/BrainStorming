@@ -20,10 +20,9 @@ import SparkModal from "@/components/Models/SparkModal";
 import { getUserSparks } from "@/store/userSparksSlice";
 import { getTeam } from "@/store/teamSlice";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
+import { io } from "socket.io-client";
 
-import io from "socket.io-client";
-
-export const socket = io("http://localhost:3000");
+export const socket = io.connect("localhost:3000");
 
 const Main = ({ children }) => {
   const pathname = usePathname();
@@ -35,6 +34,10 @@ const Main = ({ children }) => {
       const token = Cookies.get("token");
       const user_id = Cookies.get("user_id");
       dispatch(getAuthData({ token, user_id }));
+      function socketConnected() {
+        console.log("Connected to the server");
+      }
+      socket.on("connect", socketConnected);
       if (token && user_id) {
         dispatch(getUserSparks({ token, user_id }));
       }
@@ -47,6 +50,9 @@ const Main = ({ children }) => {
     } catch (err) {
       console.log(err);
     }
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, [Cookies, dispatch, id]);
   if (
     pathname === process.env.NEXT_PUBLIC_REGISTER_PAGE ||

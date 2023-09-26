@@ -19,7 +19,8 @@ const passport = require("passport");
 const rateLimit = require("express-rate-limit");
 var hpp = require("hpp");
 const mongoSanitize = require("express-mongo-sanitize");
-const socket = require("socket.io");
+const { Server } = require("socket.io");
+const http = require("http");
 
 const uploadImage = require("./utils/uploadImage");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
@@ -30,9 +31,10 @@ const Routes = require("./routes/authRoutes");
 const GoogleStrategy = require("./utils/google-auth");
 const FacebookStrategy = require("./utils/facebook-auth");
 
+const server = http.createServer(app);
 
 // Use the express.static middleware to serve static files from the public folder
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + "/public"));
 // logger.error("hello error")
 // logger.debug("heelo debug")
 // logger.warn("hello warn")
@@ -43,7 +45,7 @@ const corsOptions = {
     "https://brainstorming-omega.vercel.app",
     "http://localhost:4000",
     "http://127.0.0.1:5500",
-    "https://brainstorming-ecru.vercel.app"
+    "https://brainstorming-ecru.vercel.app",
 
     // your origins here
   ],
@@ -113,7 +115,7 @@ app.use(
         ],
       },
     },
-  }),
+  })
 );
 app.use(xss());
 app.use(cors(corsOptions));
@@ -133,7 +135,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     maxAge: 24 * 60 * 60 * 100,
-  }),
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -181,10 +183,6 @@ app.post("/uploadMultipleImages", upload.array("files"), (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
-
-
-
-
 app.get("/", (req, res, next) => {
   // Imagine you're serving a secret treasure map to your users!
   const treasureMap = {
@@ -213,48 +211,41 @@ app.use("/api", Routes);
 
 app.use(notFound);
 app.use(errorHandler);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:4000",
+    methods: ["GET", "POST"],
+  },
+});
+io.on("connection", (socket) => {
+  console.log("helllllllllllooooooooooooooooooooooooooooo socket connection");
+  console.log(socket.id);
 
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log("helllllllllllooooooooooooooooooooooooooooo join room");
+    console.log("User Joined Room: " + data);
+  });
+
+  socket.on("send_message", (data) => {
+    console.log("helllllllllllooooooooooooooooooooooooooooo send message");
+    console.log({ data });
+    socket.to(data.team).emit("receive_message", data.spark);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("USER DISCONNECTED");
+  });
+});
 mongoose
   .connect(process.env.DB_CONN, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((result) => {
-    var server = app.listen(Port, () => {
+  .then(() => {
+    server.listen(Port, () => {
       console.log(`App listening at http://${ip}:${Port}`);
-      console.log(
-        "Database Connected : ",
-        result.connection.host,
-        result.connection.name,
-      );
-      let val = "Amr006";
     });
-    var io = socket(server);
-
-    io.on("connection", (socket) => {
-      console.log("helllllllllllooooooooooooooooooooooooooooo socket connection")
-      console.log(socket.id);
-
-      socket.on("join_room", (data) => {
-        socket.join(data);
-        console.log("helllllllllllooooooooooooooooooooooooooooo join room")
-
-        console.log("User Joined Room: " + data);
-      });
-
-      socket.on("send_message", (data) => {
-        console.log("helllllllllllooooooooooooooooooooooooooooo send message")
-        console.log({data});
-        socket.to(data.team).emit("receive_message", data.spark);
-      });
-
-      socket.on("disconnect", () => {
-        console.log("USER DISCONNECTED");
-      });
-    });
-  })
-  .catch((err) => {
-    console.log(err);
   });
 
 //last to catch any wrong url ( needs cool 404 page :) )

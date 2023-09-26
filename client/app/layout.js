@@ -16,6 +16,7 @@ import { ChosenDataViewProvider } from "@/context/ChosenDataViewContext";
 import { ThemeProvider, createTheme } from "@mui/material";
 
 export default function RootLayout({ children }) {
+
   const theme = createTheme({
     palette: {
       primary: {

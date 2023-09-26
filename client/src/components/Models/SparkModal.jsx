@@ -56,10 +56,11 @@ const SparkModal = ({ type }) => {
         className={`grid jcs aic g10 ${styles.modal_box} ${styles.avatar_box}`}
       >
         <Head
-          color={ "#000"}
+          color={"#000"}
           align={"center"}
           h={"h4"}
           title={"Choose Files And Images"}
+          nowrap={true}
         />
         <FileUploader
           multiple={true}
@@ -95,9 +96,10 @@ const SparkModal = ({ type }) => {
           <>
             <Head
               align={"center"}
-              color={ "#000"}
+              color={"#000"}
               h={"h3"}
               title={"Chosen Images"}
+              nowrap={true}
             />
             <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
               {imageFiles.map((d, i) => (
@@ -123,6 +125,7 @@ const SparkModal = ({ type }) => {
               h={"h4"}
               color={"#000"}
               title={"Chosen Documents"}
+              nowrap={true}
             />
             <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
               {docFiles.map((doc, i) => {
@@ -149,6 +152,7 @@ const SparkModal = ({ type }) => {
               align={"center"}
               h={"h3"}
               title={"Chosen Audios"}
+              nowrap={true}
             />
             <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
               {audioFiles.map((d, i) => (
@@ -196,6 +200,7 @@ const SparkModal = ({ type }) => {
               align={"center"}
               h={"h4"}
               title={"Documents"}
+              nowrap={true}
             />
             <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
               {showDocFiles.map((doc, i) => {
@@ -203,6 +208,7 @@ const SparkModal = ({ type }) => {
                 return (
                   <Document
                     doc={doc}
+                    key={i}
                     fileType={fileType}
                     i={i}
                     isShow={true}
@@ -219,6 +225,7 @@ const SparkModal = ({ type }) => {
               align={"center"}
               h={"h3"}
               title={"Chosen Audios"}
+              nowrap={true}
             />
             <Box className={`grid jcs aifs g20 ${styles.data_viewer}`}>
               {showAudioFiles.map((d, i) => (
@@ -238,7 +245,11 @@ const SparkModal = ({ type }) => {
               <MainIconButton onClick={toggleDataShow}>
                 <Close />
               </MainIconButton>
-              <Carousel selectedItem={true} infiniteLoop={true}>
+              <Carousel
+                showThumbs={false}
+                selectedItem={true}
+                infiniteLoop={true}
+              >
                 {showImageFiles.map((img, i) => (
                   <SpecialImage key={i} img={img} slider={true} />
                 ))}

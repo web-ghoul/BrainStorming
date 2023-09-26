@@ -68,7 +68,7 @@ const Form = ({ type, setValue }) => {
   const router = useRouter();
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
-  const { token, user_id  } = useSelector((state) => state.auth);
+  const { token, user_id } = useSelector((state) => state.auth);
   const { team } = useSelector((state) => state.team);
 
   const handleResetPassword = async () => {
@@ -217,7 +217,7 @@ const Form = ({ type, setValue }) => {
       setButtonLoading(true);
       await axios
         .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
-        .then(async(res) => {
+        .then(async (res) => {
           router.push(process.env.NEXT_PUBLIC_HOME_PAGE);
           Cookies.set("token", res.data.token);
           Cookies.set("user_id", res.data.userId);
@@ -368,14 +368,17 @@ const Form = ({ type, setValue }) => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then(async(res) => {
-          await socket.emit("send_message",{spark:res.data.data,team:team.Name})
+        .then((res) => {
           handleAlertToastify(res.data.message, "success");
           handleResetData();
           dispatch(getUserSparks({ token, user_id }));
           dispatch(getSparks({ team_id: id, token }));
           resetForm();
           setValue(1);
+          socket.emit("send_message", {
+            spark: res.data.data,
+            team: team.Name,
+          });
         })
         .catch((err) => {
           handleAlertToastify(err.response.data.message, "error");
