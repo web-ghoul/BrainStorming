@@ -8,9 +8,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 const HomeSection = () => {
   const { signed } = useSelector((state) => state.auth);
-  const { userSparks } = useSelector((state) => state.user_sparks);
+  const { userSparks, isLoading } = useSelector((state) => state.user_sparks);
   const dispatch = useDispatch();
   useEffect(() => {
+    if (!isLoading) {
+      const token = Cookies.get("token");
+      const user_id = Cookies.get("user_id");
+      socket.on("receive_message", (data) => {
+        dispatch(getUserSparks({ token, user_id }));
+      });
+    }
     try {
       const token = Cookies.get("token");
       const user_id = Cookies.get("user_id");
@@ -20,7 +27,7 @@ const HomeSection = () => {
     } catch (err) {
       console.log(err);
     }
-  }, [dispatch]);
+  }, [dispatch, isLoading]);
   return signed && userSparks && userSparks.length > 0 ? (
     <Dashboard />
   ) : (

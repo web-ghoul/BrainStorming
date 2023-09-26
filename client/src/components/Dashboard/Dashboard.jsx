@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Spark from "../Spark/Spark";
 import LoadingDashboard from "./LoadingDashboard";
 import { MyBox } from "@/MUIComponents/MyBox/MyBox";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const { userSparks, isLoading } = useSelector((state) => state.user_sparks);

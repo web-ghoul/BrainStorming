@@ -213,7 +213,7 @@ app.use(notFound);
 app.use(errorHandler);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:4000",
+    origin: ["http://localhost:4000","https://brainstorming-ecru.vercel.app/"],
     methods: ["GET", "POST"],
   },
 });
