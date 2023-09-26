@@ -5,6 +5,7 @@ import { getUserSparks } from "@/store/userSparksSlice";
 import Cookies from "js-cookie";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { socket } from "../../../app/Main/Main";
 
 const HomeSection = () => {
   const { signed } = useSelector((state) => state.auth);
